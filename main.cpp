@@ -1,8 +1,5 @@
-#include "Test.hpp"
-
-
+#include "Headers.hpp"
 
 int main()
 {
-		Test t;
 }
