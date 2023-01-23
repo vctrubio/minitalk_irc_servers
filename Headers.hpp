@@ -20,4 +20,5 @@
 #include <iostream>
 #include <iomanip>
 #include <dirent.h>
+#include <unistd.h>
 #endif
