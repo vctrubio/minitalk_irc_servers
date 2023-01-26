@@ -21,4 +21,11 @@
 #include <iomanip>
 #include <dirent.h>
 #include <unistd.h>
+
+#include <stdexcept>
+#include <exception>
+
+using namespace std;
 #endif
+
+
