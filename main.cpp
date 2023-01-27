@@ -15,24 +15,44 @@ map<string, string>	parser(int ac, char **av)
 {
 	map<string, string>	rtn;
 
-	if (ac != 1)
+	try 
 	{
-		cerr << "Invalid args" << endl;
+		if (ac != 2)
+			throw "invalid arguments";
 	}
+	catch (const char* e) {
+        std::cout << e << std::endl;
+    }
+
 	rtn["test"] = "noshow";
 	return (rtn);
 }
 
+
 int main(int ac, char **av)
 {
-	map<string, string>	args;
+	cout << "init.\n";
 
-	args = parser(ac, av);
+	map<string, string>	clients;
 
-	map<string, string>::iterator it = args.begin();
-	if (it != args.end()) {
-		std::cout << it->first << std::endl;
-}
-	std::cout << "init.\n";
+	clients["AMiguel"] = "Homosapien";
+	clients["Dico"] = "Girrafe";
+	clients["Alex"] = "Poolio";
 
+	cout << "clients size: " << clients.size() << endl;
+	//cout << "1: " << clients["Miguel"] << endl;
+	map<string, string>::iterator itr;
+
+	clients.insert(pair<string, string>("Zimba", "The Whale"));
+	
+	if (clients["Dico"] <= clients["asdasAlex"])
+			cout << "YESMAN.\n";
+
+
+	itr = clients.begin();
+	while (itr != clients.end())
+	{
+		cout << (*itr).first << " : " << itr->second << endl;
+		itr++;
+	}
 }
