@@ -13,6 +13,5 @@
 int main(int ac, char **av)
 {
 	cout << "init.\n";
-
 	
 }
