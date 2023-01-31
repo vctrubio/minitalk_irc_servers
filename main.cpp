@@ -1,5 +1,5 @@
 #include "Headers.hpp"
-
+#define BUFFER_SIZE 204
 /*
  * socket() - returns a socket descriptor that represents the endpoint
  * bind() - after socket descriptor, bind unique name to the socket. Servers must bind a name to be accesible from the network
@@ -9,42 +9,62 @@
  * close() - release any system resources acquired by the socket
  */
 
+class Server
+{
+public:
+    sockaddr_in addr;
+    int         port;
+    int         socketFd;
+    int         result;
+};
 
-int main() {
-  int socket_desc = socket(AF_INET, SOCK_STREAM, 0);
-  if (socket_desc == -1) {
-    std::cerr << "Could not create socket" << std::endl;
-    return 1;
+int main()
+{
+  Server  server;
+
+  cout << "init\n";
+
+  //socket
+  server.port = PORT;
+  server.socketFd = socket(AF_INET, SOCK_STREAM, 0);
+
+  //bind
+  server.addr.sin_family = AF_INET;
+  server.addr.sin_port = htons(PORT);
+  server.addr.sin_addr.s_addr = INADDR_ANY;
+  server.result = bind(server.socketFd, reinterpret_cast<sockaddr*>(&server.addr), sizeof(server.addr));
+  printf("server.result = %d\n", server.result);
+
+  //listen
+  listen(server.socketFd, 30);
+  printf("Listening on port %d\n", PORT);
+
+  //accept
+  while (true)
+  {
+    sockaddr_in client_address;
+    socklen_t   client_address_len = sizeof(client_address);
+    int         client_socket = accept(server.socketFd, reinterpret_cast<sockaddr*>(&client_address), &client_address_len);
+    if (client_socket == -1) {
+      std::cerr << "Failed to accept incoming connection" << std::endl;
+      continue;
+    }
+    std::cout << "Accepted incoming connection from " << inet_ntoa(client_address.sin_addr) << ":" << ntohs(client_address.sin_port) << std::endl;
+    // ft read_n_write
+    char buffer[BUFFER_SIZE];
+    int bytes_read;
+    while ((bytes_read = read(client_socket, buffer, BUFFER_SIZE)) > 0)
+    {
+      int bytes_written = write(client_socket, buffer, bytes_read);
+      if (bytes_written == -1) {
+        std::cerr << "Failed to write data to client" << std::endl;
+        break;
+      }
+    }
+    close(client_socket);
   }
 
-  printf("Init server\n");
-
-  sockaddr_in server;
-  server.sin_family = AF_INET;
-  server.sin_addr.s_addr = INADDR_ANY;
-  server.sin_port = htons(8080);
-
-  if (bind(socket_desc, (sockaddr*) &server, sizeof(server)) < 0) {
-    std::cerr << "Bind failed" << std::endl;
-    return 1;
-  }
-
-  listen(socket_desc, 3);
-
-  sockaddr_in client;
-  socklen_t client_len = sizeof(client);
-
-  int new_socket = accept(socket_desc, (sockaddr*) &client, &client_len);
-  if (new_socket < 0) {
-    std::cerr << "Accept failed" << std::endl;
-    return 1;
-  }
-
-  char* message = "Hello client, I am the server";
-  send(new_socket, message, strlen(message), 0);
-
-  close(socket_desc);
-  close(new_socket);
-
-  return 0;
+  cout << "exit\n";
+  close(server.socketFd);
+  return (42);
 }
