@@ -25,6 +25,12 @@
 #include <stdexcept>
 #include <exception>
 
+#include <sys/socket.h>
+#include <sys/un.h>
+#include <arpa/inet.h>
+
+#define PORT 8080
+
 using namespace std;
 #endif
 

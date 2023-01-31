@@ -26,4 +26,5 @@ int createMap(int ac, char **av)
 		cout << (*itr).first << " : " << itr->second << endl;
 		itr++;
 	}
+	return (1);
 }
