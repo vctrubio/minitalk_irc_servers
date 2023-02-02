@@ -37,7 +37,7 @@ int main()
 
   //listen
   listen(server.socketFd, 30);
-  printf("Listening on port %d\n", PORT);
+  printf("Listening on port %d - address: %d\n", PORT, (int)server.addr);
 
   //accept
   while (true)
