@@ -18,7 +18,7 @@ public:
     int         result;
 };
 
-int main()
+int main2()
 {
   Server  server;
 
