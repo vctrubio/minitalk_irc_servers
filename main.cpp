@@ -1,4 +1,4 @@
-#include "Headers.hpp"
+#include "include/Headers.hpp"
 
 #define MAX_CLIENTS 10
 
@@ -73,12 +73,10 @@ void	while_socket_listen(int sockfd,sockaddr_in sockaddr)
 		bzero(buffer, BUFF_SIZE);
 		close(connection);
 	}
-	//close(connection); the close statement is a bug
 }
 
-int main()
+int initServer()
 {
-	
 	int			sockfd;
 	sockaddr_in	sockaddr;
 
@@ -93,4 +91,14 @@ int main()
 	while_socket_listen(sockfd, sockaddr);
 	close(sockfd);
 	return (1);
+}
+
+
+int main()
+{
+	initServer();
+
+
+	cout << "Safe Exit\n";
+	return (0);
 }

@@ -29,6 +29,7 @@
 #include <sys/un.h>
 #include <arpa/inet.h>
 
+#define MAX_CLIENTS 10
 #define PORT 8000
 #define BUFF_SIZE 1000
 
