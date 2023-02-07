@@ -14,6 +14,7 @@ public:
     int rtnSocket(){return (_socket);};
 };
 
-int initServer();
+int 	initServer();
+void	classInitServer();
 
 #endif

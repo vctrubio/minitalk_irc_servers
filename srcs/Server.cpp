@@ -95,3 +95,12 @@ int initServer()
 	close(sockfd);
 	return (1);
 }
+
+void	classInitServer()
+{
+	Server	server;
+
+	cout << "classINITserver\n";
+	
+
+}
