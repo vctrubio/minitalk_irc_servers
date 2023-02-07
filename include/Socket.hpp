@@ -3,5 +3,10 @@
 
 #include "Headers.hpp"
 
+class Socket
+{
+
+};
+
 
 #endif

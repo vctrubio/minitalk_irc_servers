@@ -1,6 +1,4 @@
-#include "include/Headers.hpp"
-
-#define MAX_CLIENTS 10
+#include "../include/Server.hpp"
 
 void	init_sockaddr(sockaddr_in *sockaddr)
 {
@@ -35,6 +33,11 @@ bool	bind_n_listen_socket(int sockfd, sockaddr_in sockaddr)
 	}
 	return (true);
 }
+
+/*
+This checks/listens for a connection, in a queu tho- if A connects before B, but B sends a mssg first, it will wait for A to send.
+It also closes the connection, inside the loop, as it should? but that means u have to run telnet localhost PORT again ...
+*/
 
 void	while_socket_listen(int sockfd,sockaddr_in sockaddr)
 {
@@ -91,14 +94,4 @@ int initServer()
 	while_socket_listen(sockfd, sockaddr);
 	close(sockfd);
 	return (1);
-}
-
-
-int main()
-{
-	initServer();
-
-
-	cout << "Safe Exit\n";
-	return (0);
 }
