@@ -2,16 +2,16 @@
 #define SERVER_HPP
 
 #include "Headers.hpp"
+#include "Socket.hpp"
 
 class Server
 {
-    int         _socket;
-    sockaddr_in sockaddr;
+	Socket	_socket;
+	int		_port;
 public:
     Server(){};
-    Server(int socket) :_socket(socket){};
     
-    int rtnSocket(){return (_socket);};
+    Socket rtnSocket(){return (_socket);};
 };
 
 int 	initServer();

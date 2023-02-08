@@ -5,7 +5,11 @@
 
 class Socket
 {
+	sockaddr_in	_hint;
+	int			_port;
+	int			_sockedFd;
 
+	int			_clientSocket[MAX_CLIENTS];
 };
 
 

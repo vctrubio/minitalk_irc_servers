@@ -6,8 +6,6 @@ int main()
 	classInitServer();
 	initServer();
 
-
-
 	cout << "Safe Exit\n";
 	return (0);
 }

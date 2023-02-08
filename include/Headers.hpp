@@ -26,7 +26,10 @@
 #include <exception>
 
 #include <sys/socket.h>
+#include <sys/select.h>
 #include <sys/un.h>
+#include <sys/time.h>
+#include <sys/types.h>
 #include <arpa/inet.h>
 
 #define MAX_CLIENTS 10

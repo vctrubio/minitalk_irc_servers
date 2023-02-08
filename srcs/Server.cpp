@@ -78,6 +78,7 @@ void	while_socket_listen(int sockfd,sockaddr_in sockaddr)
 	}
 }
 
+//simple initServer reading from only 1 socket at a time...
 int initServer()
 {
 	int			sockfd;
@@ -96,11 +97,12 @@ int initServer()
 	return (1);
 }
 
+
+
+//we need to implement geeksforgeeks multiple socket with classes
 void	classInitServer()
 {
 	Server	server;
 
 	cout << "classINITserver\n";
-	
-
 }
