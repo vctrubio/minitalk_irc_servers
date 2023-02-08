@@ -17,10 +17,6 @@ public:
 
 	string	&rtnNick() {return (_nickname);};
 	string	&rtnUser() {return (_username);}; 
-
-
-
-
 };
 
 

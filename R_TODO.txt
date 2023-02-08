@@ -1,0 +1,3 @@
+-implement classes of Server, Socket , Client
+-simple server that opens a PORT and listens to multiple clients at the same time
+-write it in CPP, so throw and expections should be seen
