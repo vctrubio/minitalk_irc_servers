@@ -1,10 +1,8 @@
 #include "Server.hpp"
 
 
-Server::Server(int port)
+Server::Server(int port) :_port(port), _socket(port)
 {
-	_port = port;
-	_socket = Socket(port); //it is getting initialized twice though.
 	cout << "INIT server\n";
 }
 
