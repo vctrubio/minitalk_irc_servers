@@ -29,7 +29,7 @@ int main_(int argc , char *argv[])
          
     //set of socket descriptors 
     fd_set readfds;  
-         
+    
     //a message
     std::string message = "ECHO Daemon v1.0 \r\n";  
 
@@ -48,8 +48,7 @@ int main_(int argc , char *argv[])
      
     //set master socket to allow multiple connections , 
     //this is just a good habit, it will work without this 
-    if( setsockopt(master_socket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, 
-          sizeof(opt)) < 0 )  
+    if( setsockopt(master_socket, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, sizeof(opt)) < 0 )  
     {  
         perror("setsockopt");  
         exit(EXIT_FAILURE);  
@@ -74,7 +73,7 @@ int main_(int argc , char *argv[])
         perror("listen");  
         exit(EXIT_FAILURE);  
     }  
-         
+        
     //accept the incoming connection 
     addrlen = sizeof(address);  
     puts("Waiting for connections ...");  
@@ -103,7 +102,7 @@ int main_(int argc , char *argv[])
                 max_sd = sd;  
         }  
      
-        //wait for an activity on one of the sockets , timeout is NULL , 
+        //wait for an activity on one of the  sockets , timeout is NULL , 
         //so wait indefinitely 
         activity = select( max_sd + 1 , &readfds , NULL , NULL , NULL);  
        

@@ -111,7 +111,7 @@ void	Socket::runSocket()
 				else
 				{
 					buffer[valread] = '\0';
-					cout << YELLOW << "RECV MSSG: " << buffer << ENDC << endl;
+					cout << YELLOW << "RECV MSSG: " << buffer << ENDC;
 				}
 			}
 		}

@@ -31,3 +31,7 @@ https://www.geeksforgeeks.org/socket-programming-in-cc-handling-multiple-clients
 https://github.com/MCCiupek/ft_irc —resources at the end
 https://github.com/avan-pra/ft_irc
 https://ircgod.com/posts/
+
+
+How its meant
+https://www.youtube.com/watch?v=mccMiP9qr-s
