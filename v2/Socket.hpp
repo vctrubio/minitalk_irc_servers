@@ -21,7 +21,7 @@ class Socket
 
 public:
 	Socket();
-	Socket(int port) :_port(port){cout << "Socket on " << port << endl;};
+	Socket(int port);
 	Socket(const Socket &oldSocket);
 	Socket& operator= (const Socket &oldSocket);
 	~Socket();

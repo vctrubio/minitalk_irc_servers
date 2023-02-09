@@ -10,8 +10,7 @@ int main()
 	
 	Server	server(PORT);
 
-	server.print();
-	server.test();
+//	server.print();
 
 	return 1;
 }
