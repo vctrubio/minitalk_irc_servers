@@ -22,6 +22,7 @@ public:
 //
 	void	print();
 	void	test();
+	void	runSocket() {_socket.runSocket();};
 };
 
 #endif

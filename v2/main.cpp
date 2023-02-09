@@ -10,7 +10,7 @@ int main()
 	
 	Server	server(PORT);
 
-//	server.print();
+	server.runSocket();
 
 	return 1;
 }

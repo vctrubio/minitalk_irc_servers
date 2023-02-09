@@ -7,17 +7,18 @@ class Socket
 {
 	int			_port;
 	int			_sockFd;
-	
+
 	sockaddr_in	_addr;
 	sockaddr_in	_client;
 	socklen_t	_cSize;
 
+	
 	//select()
 	int			_activity;
 	int			_clientSocket[MAX_CLIENTS];
 	int			_sd, _max_sd, _valRead;
 	int			_newSocket;
-	fd_set		_readfds;
+	fd_set		_readFds;
 
 public:
 	Socket();
@@ -27,8 +28,9 @@ public:
 	~Socket();
 	
 	void	print(){cout << "SOCKET: " << _port << endl;};
-	void	initAddr();
+	void	runSocket();
 };
+
 
 //example of expection
 
