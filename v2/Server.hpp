@@ -6,12 +6,11 @@
 
 class Client;
 
-class Server 
+class Server
 {
-	Client	*clients;
+	Client	**clients;
 	int		_port;
 	Socket	_socket;
-
 
 public:
 	Server(int port);

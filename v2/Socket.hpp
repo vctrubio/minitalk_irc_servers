@@ -9,14 +9,13 @@ class Socket
 	int			_sockFd;
 
 	sockaddr_in	_addr;
-	sockaddr_in	_client;
-	socklen_t	_cSize;
+	// sockaddr_in	_client;
+	// socklen_t	_cSize;
 
-	
 	//select()
 	int			_activity;
 	int			_clientSocket[MAX_CLIENTS];
-	int			_sd, _max_sd, _valRead;
+	int			_sd, _max_sd;
 	int			_newSocket;
 	fd_set		_readFds;
 

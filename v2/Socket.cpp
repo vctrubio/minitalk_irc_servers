@@ -2,7 +2,7 @@
 
 Socket::Socket()
 {
-	cout << "INIT socket\n";
+	cout << "INIT socket BAAAAAD\n";
 }
 
 Socket::Socket(int port)
@@ -20,7 +20,7 @@ Socket::Socket(int port)
 	}
 
 	_addr.sin_family = AF_INET;
-	_addr.sin_addr.s_addr = INADDR_ANY;
+	_addr.sin_addr.s_addr = INADDR_ANY; //IP = 0...?
 	_addr.sin_port = htons(PORT);
 	
 	if (bind(_sockFd, (struct sockaddr*)&_addr, sizeof(_addr)) < 0 )
@@ -32,7 +32,6 @@ Socket::Socket(int port)
 	cout << GREEN << "Server IP: " << _addr.sin_addr.s_addr << endl;
 	cout << BLUE << "Listening on port " << GREEN << PORT << ENDC << endl;
 	cout << GREEN << "Welcome USEME\n" << ENDC;
-
 }
 
 Socket::Socket(const Socket &oldSocket)
@@ -104,7 +103,7 @@ void	Socket::runSocket()
 				{
 					//user disconnected...
 					getpeername(sd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen);
-					cout << RED << "User X Disconnected\n" << ENDC;
+					cout << RED << "User nickname Disconnected\n" << ENDC;
 					close(sd);
 					_clientSocket[i] = 0;
 				}
