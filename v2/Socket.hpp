@@ -10,8 +10,6 @@ class Socket
 	int			_port;
 	int			_sockFd;
 
-	Channel		*_channel;
-
 	sockaddr_in	_addr;
 	// sockaddr_in	_client;
 	// socklen_t	_cSize;
@@ -32,7 +30,6 @@ public:
 	
 	void	print(){cout << "SOCKET: " << _port << endl;};
 	void	runSocket();
-	void	setChannel(Channel *channel) {_channel = channel;};
 	void	sendMssg(string mmsg);
 };
 

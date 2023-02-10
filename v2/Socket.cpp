@@ -118,7 +118,7 @@ void	Socket::runSocket()
 				{
 					buffer[valread] = '\0';
 					// this->sendMssg(buffer);
-					cout << YELLOW << " FROM SD: " << sd << "RECV MSSG: " << buffer <<  ENDC;
+					cout << YELLOW << " FROM SD: " << sd << "I is: " << i << "RECV MSSG: " << buffer <<  ENDC;
 				}
 			}
 		}

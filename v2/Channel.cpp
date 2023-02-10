@@ -2,7 +2,7 @@
 
 Channel::Channel(int port, string name) : _port(port), _name(name)
 {
-	cout << GREEN << "Channel Created on Port: " << _port << endl;
+	cout << GREEN << "Channel " << rtnName() << " Created on Port: " << _port << ENDC << endl;
 }
 
 Channel::Channel(const Channel &oldChannel)
@@ -47,3 +47,12 @@ void	Channel::sendMssg()
 		}
 	}
 }
+
+
+void	Channel::join(Client *client)
+{
+	_clients.push_front(client);
+	client->addChannel(this);
+}
+
+

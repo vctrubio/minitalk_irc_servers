@@ -14,7 +14,10 @@ void	showme(list<Client*> cl)
 
 	ptr = cl.front();
 	cout << ptr->rtnName() << endl;
-	ptr->
+
+	Channel *ch;
+	ch = ptr->_channels.front();
+	cout << "Connected TO " <<  ch->rtnName() << endl;
 }
 
 
@@ -28,16 +31,19 @@ int main()
 
 
 	Channel	one(PORT, "Lupita");
+	Channel	two(PORT, "Gupito");
 	Client	bob("Bob");
 	Client	billy("billy");
 	list<Client*> cl = one.rtnList();
 
 	one.join(&bob);
+	one.join(&bob); //no need to add again, validation working.
 	one.join(&billy);
-	cout << "SIZE = " << one.rtnList().size() << endl;
+	two.join(&bob);
 
-	server.addChannel(&one);
-	showme(one.rtnList());
+	// server.addChannel(&one);
+	// server.addChannel(&two);
+	// showme(one.rtnList());
 
 	// server.runSocket();
 	return 1;

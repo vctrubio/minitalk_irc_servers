@@ -23,7 +23,7 @@ public:
 	void	print();
 	void	test();
 	void	runSocket() {_socket.runSocket();};
-	void	addChannel(Channel *channel) {_socket.setChannel(channel);};  
+	// void	addChannel(Channel *channel) {_socket.setChannel(channel);};  
 };
 
 #endif

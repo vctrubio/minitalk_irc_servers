@@ -6,6 +6,7 @@
 
 //create a channel, that has many users and shows mssg between users
 
+class Client;
 
 class Channel
 {
@@ -22,7 +23,7 @@ public:
 	~Channel();
 
 	list<Client*>	rtnList(){return _clients;}; 
-	void			join(Client *client) {_clients.push_front(client);};
+	void			join(Client *client);
 	void			putMssg(Client &client);
 	string			rtnMssg() {return _mssg;};
 	string			rtnName() {return _name;};
