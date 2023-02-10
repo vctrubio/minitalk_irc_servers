@@ -40,7 +40,7 @@ int main_(int argc , char *argv[])
     }  
          
     //create a master socket 
-    if( (master_socket = socket(AF_INET , SOCK_STREAM , 0)) == 0)  
+    if( (master_socket = socket(AF_INET, SOCK_STREAM , 0)) == 0)  
     {  
         perror("socket failed");  
         exit(EXIT_FAILURE);  

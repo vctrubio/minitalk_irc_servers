@@ -3,7 +3,7 @@
 
 int main()
 {
-	classInitServer();
+	// classInitServer(); V2
 	initServer();
 
 	cout << "Safe Exit\n";
