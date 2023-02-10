@@ -45,6 +45,13 @@ Socket& Socket::operator= (const Socket &oldSocket)
 Socket::~Socket()
 {}
 
+//
+void	Socket::sendMssg(string mmsg)
+{
+	
+}
+
+
 
 //
 void	Socket::runSocket()
@@ -53,7 +60,7 @@ void	Socket::runSocket()
 	int			max_sd, sd, valread;
 	int			tmp_socket;
 	char		buffer[265];
-	string		welcome_mssg = "Welcome MSSG:\n";
+	string		welcome_mssg = "Welcome MSSG:::\n";
 
 
 	cout << "Waiting for connection...\n";
@@ -103,16 +110,18 @@ void	Socket::runSocket()
 				{
 					//user disconnected...
 					getpeername(sd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen);
-					cout << RED << "User nickname Disconnected\n" << ENDC;
+					cout << RED << "User nickname Disconnected" << ENDC << endl;
 					close(sd);
 					_clientSocket[i] = 0;
 				}
 				else
 				{
 					buffer[valread] = '\0';
-					cout << YELLOW << "RECV MSSG: " << buffer << ENDC;
+					// this->sendMssg(buffer);
+					cout << YELLOW << " FROM SD: " << sd << "RECV MSSG: " << buffer <<  ENDC;
 				}
 			}
 		}
+		//Display mssg in USERS
 	}
 }

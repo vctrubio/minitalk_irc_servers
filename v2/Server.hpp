@@ -5,10 +5,11 @@
 #include "Socket.hpp"
 
 class Client;
+class Channel;
 
 class Server
 {
-	Client	**clients;
+	//this can be a list or vector - Client	**clients;
 	int		_port;
 	Socket	_socket;
 
@@ -22,6 +23,7 @@ public:
 	void	print();
 	void	test();
 	void	runSocket() {_socket.runSocket();};
+	void	addChannel(Channel *channel) {_socket.setChannel(channel);};  
 };
 
 #endif

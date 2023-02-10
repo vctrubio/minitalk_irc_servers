@@ -1,7 +1,11 @@
-ˆ¸#include "Client.hpp"
+#include "Client.hpp"
 
 Client::Client()
-{}
+{
+	_name = "Unamed";
+	_refresh = false;
+}
+
 
 Client::Client(const Client &oldClient)
 {}
