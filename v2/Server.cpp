@@ -1,7 +1,9 @@
 #include "Server.hpp"
 
-Server::Server(int port): Socket(port)
-{}
+Server::Server(string password): _password(password)
+{
+    cout << "Server up and running.\n";
+}
 
 Server::~Server()
 {}

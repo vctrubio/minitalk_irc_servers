@@ -2,10 +2,9 @@
 #define SOCKET_HPP
 
 #include "Headers.hpp"
+#include "Server.hpp"
 
-class Channel;
-
-class Socket
+class Socket : public Server
 {
 	int			_port;
 	int			_sockFd;
@@ -23,7 +22,7 @@ class Socket
 
 public:
 	Socket();
-	Socket(int port);
+	Socket(int port, string password);
 	~Socket();
 	
 	void	runSocket();

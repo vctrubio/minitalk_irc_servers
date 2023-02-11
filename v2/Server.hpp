@@ -4,11 +4,8 @@
 #include "Headers.hpp"
 #include "Client.hpp"
 #include "Channel.hpp"
-#include "Socket.hpp"
 
-
-
-class Server : public Socket
+class Server
 {
 	string	_password;
 	map<int, Client *>		_clients;
@@ -17,7 +14,8 @@ class Server : public Socket
 	vector<Channel *>		_channels;
 	typedef vector<Channel *>::iterator itr_channels;
 public:
-	Server(int port);
+	Server(){};
+	Server(string password);
 	~Server();
 };
 

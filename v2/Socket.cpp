@@ -5,8 +5,8 @@ Socket::Socket()
 	cout << "INIT socket BAAAAAD\n";
 }
 
-Socket::Socket(int port)
-	:_port(port)
+Socket::Socket(int port, string password)
+	:_port(port), Server(password)
 {
 	int opt = 1; //for setsockopt (geeksforgeeks)
 
