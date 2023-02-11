@@ -16,8 +16,6 @@ class Client
 public:
 	Client();
 	Client(string name): _name(name), _refresh(false){};
-	Client(const Client &oldClient);
-	Client& operator= (const Client &oldClient);
 	~Client();
 	
 	string	rtnName() {return _name;};

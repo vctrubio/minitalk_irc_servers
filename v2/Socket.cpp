@@ -34,23 +34,8 @@ Socket::Socket(int port)
 	cout << GREEN << "Welcome USEME\n" << ENDC;
 }
 
-Socket::Socket(const Socket &oldSocket)
-{}
-
-Socket& Socket::operator= (const Socket &oldSocket)
-{
-	return (*this);
-}
-
 Socket::~Socket()
 {}
-
-//
-void	Socket::sendMssg(string mmsg)
-{
-	
-}
-
 
 
 //

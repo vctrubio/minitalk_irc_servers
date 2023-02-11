@@ -23,13 +23,9 @@ class Socket
 public:
 	Socket();
 	Socket(int port);
-	Socket(const Socket &oldSocket);
-	Socket& operator= (const Socket &oldSocket);
 	~Socket();
 	
-	void	print(){cout << "SOCKET: " << _port << endl;};
 	void	runSocket();
-	void	sendMssg(string mmsg);
 };
 
 
