@@ -8,11 +8,10 @@
 class Channel
 {
 	string				_topic;
-	vector<Client *>	_clients;
-	Client*				_admin;
+	vector<Client *>	_clients; 
+	Client*				_admin; //later
 public:
 	Channel(string topic);
-	Channel& operator= (const Channel &oldChannel);
 	~Channel();
 
 	void			addClient(Client *client);

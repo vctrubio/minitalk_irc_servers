@@ -65,8 +65,9 @@ void Socket::runSocket()
 				cout << BLUE << "SD: " << sd << ENDC << " on ClientSocket " << i << endl;
 				FD_SET(sd, &_readFds);
 				addClient(sd, "Alexa");
+				cout << "MAX SD: " << max_sd << endl;
 			}
-			if (sd > max_sd) // MAX_SIZE so ignore connection?
+			if (sd > max_sd) // MAX_SIZE so ignore connection? CANNOT will stall program
 				max_sd = sd;
 		}
 

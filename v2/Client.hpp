@@ -11,7 +11,7 @@ class Client
 	string	_mssg;
 	bool	_refresh;
 
-    list<Channel *>              _channels;
+    list<Channel *>              _channels; //dont need it.
 
 public:
 	Client();
