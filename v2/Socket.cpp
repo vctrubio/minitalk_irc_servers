@@ -120,6 +120,8 @@ void Socket::runSocket()
 							Channel *channel = new Channel("TESTING CHANNEL");
 							channel->addClient(getClient(sd));
 							// join channel if not already
+							channel->sendMssg(buffer);
+							// send(sd, buffer, strlen(buffer), 0); TO SEND TO CLIENT
 						}
 						else
 							cout << RED << "Command not found\n"
@@ -131,6 +133,14 @@ void Socket::runSocket()
 						printClients();
 					}
 				}
+			}
+		}
+		//see if users have _refresh to false and if so print message on screen
+		for (map<int, Client *>::iterator it = _clients.begin(); it != _clients.end(); ++it)
+		{
+			if (it->second->status() == true)
+			{
+				cout << "MESSAGE->" << BLUE << it->second->rtnMssg() << endl; //OK working need to send this to the user console.
 			}
 		}
 	}

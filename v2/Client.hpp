@@ -20,9 +20,9 @@ public:
 	
 	string	rtnName() {return _name;};
 	void	putMssg(string str) {_mssg = str; _refresh = true;};
-	string	rtnMssg() {return _mssg;};
+	string	rtnMssg() {_refresh = false; return _mssg;};
 	void	refresh(){_refresh = false;};
-
+	bool	status() {return _refresh;};
 	list<Channel *>	 channels(){return _channels;};
 };
 

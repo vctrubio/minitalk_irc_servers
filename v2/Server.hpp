@@ -8,6 +8,8 @@
 class Server
 {
 	string	_password;
+	
+protected:
 	map<int, Client *>		_clients;
 	typedef map<int, Client *>::iterator itr_clients;
 
