@@ -19,6 +19,7 @@ public:
 	~Client();
 	
 	string	rtnName() {return _name;};
+	
 	void	putMssg(string str) {_mssg = str; _refresh = true;};
 	string	rtnMssg() {_refresh = false; return _mssg;};
 	void	refresh(){_refresh = false;};
