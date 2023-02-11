@@ -13,15 +13,18 @@ class Server
 	int		_port;
 	Socket	_socket;
 
+protected:
+	map<int, Client *>		_clients;
+	typedef map<int, Client *>::iterator itr_clients;
+
+	vector<Channel *>		_channels;
+	typedef vector<Channel *>::iterator itr_channels;
+
 public:
 	Server(int port);
-	Server(const Server &oldServer);
-	Server& operator= (const Server &oldServer);
 	~Server();
 
 //
-	void	print();
-	void	test();
 	void	runSocket() {_socket.runSocket();};
 	// void	addChannel(Channel *channel) {_socket.setChannel(channel);};  
 };

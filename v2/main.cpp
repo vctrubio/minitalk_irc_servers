@@ -30,21 +30,21 @@ int main()
 	Server	server(PORT);
 
 
-	Channel	one(PORT, "Lupita");
-	Channel	two(PORT, "Gupito");
-	Client	bob("Bob");
-	Client	billy("billy");
-	list<Client*> cl = one.rtnList();
+	// Channel	one(PORT, "Lupita");
+	// Channel	two(PORT, "Gupito");
+	// Client	bob("Bob");
+	// Client	billy("billy");
+	// list<Client*> cl = one.rtnList();
 
-	one.join(&bob);
-	one.join(&bob); //no need to add again, validation working.
-	one.join(&billy);
-	two.join(&bob);
+	// one.join(&bob);
+	// one.join(&bob); //no need to add again, validation working.
+	// one.join(&billy);
+	// two.join(&bob);
 
 	// server.addChannel(&one);
 	// server.addChannel(&two);
 	// showme(one.rtnList());
 
-	// server.runSocket();
+	server.runSocket();
 	return 1;
 }
