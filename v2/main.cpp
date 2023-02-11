@@ -2,13 +2,15 @@
 #include "Socket.hpp"
 #include "Client.hpp"
 #include "Channel.hpp"
+#include "Server.hpp"
 
 int main()
 {
 	cout << "Up and Running\n";
 	
-	Socket	socket(PORT);
+	Socket	serv(PORT); //works
+	//Server	serv(PORT); //does not And I WANT TO KNOW WHYYYYYYY
+	serv.runSocket();
 
-	socket.runSocket();
 	return 1;
 }

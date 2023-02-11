@@ -31,7 +31,6 @@ Socket::Socket(int port)
 	cout << BLUE << "The server is up and runnig" << endl;
 	cout << GREEN << "Server IP: " << _addr.sin_addr.s_addr << endl;
 	cout << BLUE << "Listening on port " << GREEN << PORT << ENDC << endl;
-	cout << GREEN << "Welcome USEME\n" << ENDC;
 }
 
 Socket::~Socket()
