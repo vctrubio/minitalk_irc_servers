@@ -14,7 +14,6 @@ class Socket
 	// sockaddr_in	_client;
 	// socklen_t	_cSize;
 
-	//select()
 	int			_activity;
 	int			_clientSocket[MAX_CLIENTS];
 	int			_sd, _max_sd;

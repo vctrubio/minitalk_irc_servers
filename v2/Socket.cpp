@@ -21,7 +21,7 @@ Socket::Socket(int port)
 
 	_addr.sin_family = AF_INET;
 	_addr.sin_addr.s_addr = INADDR_ANY; //IP = 0...?
-	_addr.sin_port = htons(port);
+	_addr.sin_port = htons(PORT);
 	
 	if (bind(_sockFd, (struct sockaddr*)&_addr, sizeof(_addr)) < 0 )
 		cout << RED << "Failed to bind\n" << ENDC;
@@ -31,10 +31,27 @@ Socket::Socket(int port)
 	cout << BLUE << "The server is up and runnig" << endl;
 	cout << GREEN << "Server IP: " << _addr.sin_addr.s_addr << endl;
 	cout << BLUE << "Listening on port " << GREEN << PORT << ENDC << endl;
+	cout << GREEN << "Welcome USEME\n" << ENDC;
+}
+
+Socket::Socket(const Socket &oldSocket)
+{}
+
+Socket& Socket::operator= (const Socket &oldSocket)
+{
+	return (*this);
 }
 
 Socket::~Socket()
 {}
+
+//
+void	Socket::sendMssg(string mmsg)
+{
+	
+}
+
+
 
 //
 void	Socket::runSocket()
@@ -46,7 +63,7 @@ void	Socket::runSocket()
 	string		welcome_mssg = "Welcome MSSG:::\n";
 
 
-	cout << RED <<"runSocket...\n" << ENDC;
+	cout << "Waiting for connection...\n";
 	while (42)
 	{
 		FD_ZERO(&_readFds);
@@ -60,7 +77,7 @@ void	Socket::runSocket()
 				FD_SET(sd, &_readFds);
 			if (sd > max_sd)
 				max_sd = sd;
-			cout << "SD: " << sd << "ON: _clientSocket: " << i << endl;
+			cout << BLUE << "SD: " << sd << ENDC << " on ClientSocket " << i << endl;
 		}
 		
 		_activity = select(max_sd + 1, &_readFds, NULL, NULL, NULL);
@@ -102,7 +119,7 @@ void	Socket::runSocket()
 				{
 					buffer[valread] = '\0';
 					// this->sendMssg(buffer);
-					cout << YELLOW << " FROM SD: " << sd << "I is: " << i << "RECV MSSG: " << buffer <<  ENDC;
+					cout << YELLOW << " FROM SD: " << sd << "RECV MSSG: " << buffer <<  ENDC;
 				}
 			}
 		}

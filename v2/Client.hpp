@@ -2,7 +2,6 @@
 #define CLIENT_HPP
 
 #include "Headers.hpp"
-#include "Channel.hpp"
 
 class Channel;
 
@@ -12,6 +11,7 @@ class Client
 	string	_mssg;
 	bool	_refresh;
 
+    std::list<Channel *>              _channels;
 
 public:
 	Client();
@@ -24,9 +24,6 @@ public:
 	void	putMssg(string str) {_mssg = str; _refresh = true;};
 	string	rtnMssg() {return _mssg;};
 	void	refresh(){_refresh = false;};
-
-    std::list<Channel *>              _channels;
-	void	addChannel(Channel *channel);
 };
 
 #endif

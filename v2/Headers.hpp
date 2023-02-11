@@ -46,5 +46,3 @@
 
 using namespace std;
 #endif
-
-
