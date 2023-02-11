@@ -21,6 +21,7 @@ public:
 	void	addClient(int i, string name);
 	void	removeClient(int i);
 	void	printClients();
+	Client	*getClient(int key);
 };
 
 #endif

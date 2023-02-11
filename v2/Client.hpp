@@ -11,7 +11,7 @@ class Client
 	string	_mssg;
 	bool	_refresh;
 
-    std::list<Channel *>              _channels;
+    list<Channel *>              _channels;
 
 public:
 	Client();
@@ -22,6 +22,8 @@ public:
 	void	putMssg(string str) {_mssg = str; _refresh = true;};
 	string	rtnMssg() {return _mssg;};
 	void	refresh(){_refresh = false;};
+
+	list<Channel *>	 channels(){return _channels;};
 };
 
 #endif

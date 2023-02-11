@@ -6,27 +6,31 @@ Socket::Socket()
 }
 
 Socket::Socket(int port, string password)
-	:_port(port), Server(password)
+	: _port(port), Server(password)
 {
-	int opt = 1; //for setsockopt (geeksforgeeks)
+	int opt = 1; // for setsockopt (geeksforgeeks)
 
 	_sockFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (_sockFd < 0)
-		cout << RED << "Failed to create socket\n" << ENDC;
+		cout << RED << "Failed to create socket\n"
+			 << ENDC;
 	else
 	{
-		if (setsockopt(_sockFd, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, sizeof(opt)) < 0 )
-			cout << RED << "Failed to setSockOpt\n" << ENDC;
+		if (setsockopt(_sockFd, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, sizeof(opt)) < 0)
+			cout << RED << "Failed to setSockOpt\n"
+				 << ENDC;
 	}
 
 	_addr.sin_family = AF_INET;
-	_addr.sin_addr.s_addr = INADDR_ANY; //IP = 0...?
+	_addr.sin_addr.s_addr = INADDR_ANY; // IP = 0...?
 	_addr.sin_port = htons(PORT);
-	
-	if (bind(_sockFd, (struct sockaddr*)&_addr, sizeof(_addr)) < 0 )
-		cout << RED << "Failed to bind\n" << ENDC;
+
+	if (bind(_sockFd, (struct sockaddr *)&_addr, sizeof(_addr)) < 0)
+		cout << RED << "Failed to bind\n"
+			 << ENDC;
 	if (listen(_sockFd, MAX_CLIENTS) < 0)
-		cout << RED << "Failed to listen\n" << ENDC;
+		cout << RED << "Failed to listen\n"
+			 << ENDC;
 
 	cout << BLUE << "The server is up and runnig" << endl;
 	cout << GREEN << "Server IP: " << _addr.sin_addr.s_addr << endl;
@@ -34,18 +38,17 @@ Socket::Socket(int port, string password)
 }
 
 Socket::~Socket()
-{}
-
+{
+}
 
 //
-void	Socket::runSocket()
+void Socket::runSocket()
 {
-	int	addrlen = sizeof(_addr);
-	int			max_sd, sd, valread;
-	int			tmp_socket;
-	char		buffer[265];
-	string		welcome_mssg = "Welcome MSSG:::\n";
-
+	int addrlen = sizeof(_addr);
+	int max_sd, sd, valread;
+	int tmp_socket;
+	char buffer[265];
+	string welcome_mssg = "Welcome MSSG:::Instruction. /JOIN to join a channel\n";
 
 	cout << "Waiting for connection...\n";
 	while (42)
@@ -53,25 +56,30 @@ void	Socket::runSocket()
 		FD_ZERO(&_readFds);
 		FD_SET(_sockFd, &_readFds);
 		max_sd = _sockFd;
-		
+
 		for (int i = 0; i < MAX_CLIENTS; i++)
 		{
 			sd = _clientSocket[i];
 			if (sd > 0)
+			{
+				cout << BLUE << "SD: " << sd << ENDC << " on ClientSocket " << i << endl;
 				FD_SET(sd, &_readFds);
-			if (sd > max_sd)
+				addClient(sd, "Alexa");
+			}
+			if (sd > max_sd) // MAX_SIZE so ignore connection?
 				max_sd = sd;
-			cout << BLUE << "SD: " << sd << ENDC << " on ClientSocket " << i << endl;
 		}
-		
+
 		_activity = select(max_sd + 1, &_readFds, NULL, NULL, NULL);
 		if ((_activity < 0) && (errno != EINTR))
-			cout << RED << "EINTR _activity ERROR\n" << ENDC;
+			cout << RED << "EINTR _activity ERROR\n"
+				 << ENDC;
 
 		if (FD_ISSET(_sockFd, &_readFds))
 		{
 			if ((tmp_socket = accept(_sockFd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen)) < 0)
-				cout << RED << "Error: tmp_socket\n" << ENDC;
+				cout << RED << "Error: tmp_socket\n"
+					 << ENDC;
 			cout << GREEN << "New Connection Established: tmp_socket " << tmp_socket << " |ip & port tbd|" << ENDC << endl;
 			send(tmp_socket, welcome_mssg.c_str(), welcome_mssg.length(), 0);
 			cout << "Welcome MSSG SENT!\n";
@@ -91,22 +99,39 @@ void	Socket::runSocket()
 			sd = _clientSocket[i];
 			if (FD_ISSET(sd, &_readFds))
 			{
-				if ((valread = read(sd, buffer, 254)) == 0) 
+				if ((valread = read(sd, buffer, 254)) == 0)
 				{
-					//user disconnected...
+					// user disconnected...
 					getpeername(sd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen);
-					cout << RED << "User nickname Disconnected" << ENDC << endl;
+					removeClient(sd);
 					close(sd);
 					_clientSocket[i] = 0;
+					cout << RED << "User nickname Disconnected" << ENDC << endl;
 				}
 				else
 				{
 					buffer[valread] = '\0';
 					// this->sendMssg(buffer);
-					cout << YELLOW << " FROM SD: " << sd << "RECV MSSG: " << buffer <<  ENDC;
+					if (buffer[0] == '/')
+					{
+						if (strncmp(buffer, "/join", 5) == 0)
+						{
+							// creeate a channel if not already existed.
+							Channel *channel = new Channel("TESTING CHANNEL");
+							channel->addClient(getClient(sd));
+							// join channel if not already
+						}
+						else
+							cout << RED << "Command not found\n"
+								 << ENDC;
+					}
+					else
+					{
+						cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
+						printClients();
+					}
 				}
 			}
 		}
-		//Display mssg in USERS
 	}
 }

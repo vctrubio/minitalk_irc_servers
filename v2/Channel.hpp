@@ -2,8 +2,8 @@
 #define CHANNEL_HPP
 
 #include "Headers.hpp"
+#include "Client.hpp"
 
-class Client;
 
 class Channel
 {
@@ -14,6 +14,10 @@ public:
 	Channel(string topic);
 	Channel& operator= (const Channel &oldChannel);
 	~Channel();
+
+	void			addClient(Client *client);
+	void			sendMssg(string messg);
+
 };
 
 #endif

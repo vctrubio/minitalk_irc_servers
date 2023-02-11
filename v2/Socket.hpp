@@ -3,6 +3,7 @@
 
 #include "Headers.hpp"
 #include "Server.hpp"
+#include "Channel.hpp"
 
 class Socket : public Server
 {
