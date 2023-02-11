@@ -17,6 +17,10 @@ public:
 	Server(){};
 	Server(string password);
 	~Server();
+
+	void	addClient(int i, string name);
+	void	removeClient(int i);
+	void	printClients();
 };
 
 #endif

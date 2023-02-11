@@ -19,12 +19,11 @@ class Socket : public Server
 	int			_newSocket;
 	fd_set		_readFds;
 
-
 public:
 	Socket();
 	Socket(int port, string password);
 	~Socket();
-	
+
 	void	runSocket();
 };
 
