@@ -42,6 +42,12 @@ Socket::~Socket()
 }
 
 //
+void Socket::ft_add_user(int i)
+{
+	Client	*new_connection = new Client("Newbie", i); //adding client... NEEDS UI
+	addClient(new_connection);
+}
+
 void Socket::runSocket()
 {
 	int addrlen = sizeof(_addr);
@@ -51,6 +57,7 @@ void Socket::runSocket()
 	string welcome_mssg = "Welcome MSSG:::Instruction. /JOIN to join a channel\n";
 
 	cout << "Waiting for connection...\n";
+	Channel *channel = new Channel("TESTING CHANNEL");
 	while (42)
 	{
 		FD_ZERO(&_readFds);
@@ -64,8 +71,7 @@ void Socket::runSocket()
 			{
 				cout << BLUE << "SD: " << sd << ENDC << " on ClientSocket " << i << endl;
 				FD_SET(sd, &_readFds);
-				addClient(sd, "Alexa");
-				cout << "MAX SD: " << max_sd << endl;
+//				cout << "MAX SD: " << max_sd << endl;
 			}
 			if (sd > max_sd) // MAX_SIZE so ignore connection? CANNOT will stall program
 				max_sd = sd;
@@ -82,8 +88,8 @@ void Socket::runSocket()
 				cout << RED << "Error: tmp_socket\n"
 					 << ENDC;
 			cout << GREEN << "New Connection Established: tmp_socket " << tmp_socket << " |ip & port tbd|" << ENDC << endl;
+			ft_add_user(tmp_socket);
 			send(tmp_socket, welcome_mssg.c_str(), welcome_mssg.length(), 0);
-			cout << "Welcome MSSG SENT!\n";
 
 			for (int i = 0; i < MAX_CLIENTS; i++)
 			{
@@ -102,12 +108,11 @@ void Socket::runSocket()
 			{
 				if ((valread = read(sd, buffer, 254)) == 0)
 				{
-					// user disconnected...
 					getpeername(sd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen);
-					removeClient(sd);
+					cout << "User " << RED << " Disconnected " << ENDC << endl; 
+					removeClient(getClient(sd));
 					close(sd);
 					_clientSocket[i] = 0;
-					cout << RED << "User nickname Disconnected" << ENDC << endl;
 				}
 				else
 				{
@@ -118,10 +123,8 @@ void Socket::runSocket()
 						if (strncmp(buffer, "/join", 5) == 0)
 						{
 							// creeate a channel if not already existed.
-							Channel *channel = new Channel("TESTING CHANNEL");
-							channel->addClient(getClient(sd));
 							// join channel if not already
-							channel->sendMssg(buffer);
+							channel->addClient(getClient(sd));
 						}
 						else
 							cout << RED << "Command not found\n"
@@ -129,20 +132,24 @@ void Socket::runSocket()
 					}
 					else
 					{
+						/*
 						cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
-						printClients();
+						*/
+						// IF CLIENT HAS CHANNEL, POST TO CHANNEL	
+						if (getClient(sd)->hasChannel())
+							channel->post(buffer, sd);
 					}
 				}
 			}
 		}
-		//see if users have _refresh to false and if so print message on screen
-		for (map<int, Client *>::iterator it = _clients.begin(); it != _clients.end(); ++it)
+		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
 		{
-			if (it->second->status() == true)
-			{
-				it->second->rtnMssg();
-				send(it->first, "BUFFER\n", strlen("BUFFER1"), 0);
-			}
+			if ((*it)->status() == true)
+				send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
+			cout << (**it);
+			cout << RED << "DEBUG PURPOSES^^\n" << ENDC;
+
 		}
+		cout << BLUE <<"LOOPED: " << ENDC << endl;
 	}
 }

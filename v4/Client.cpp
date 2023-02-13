@@ -12,6 +12,7 @@ Client::Client(string name, int id): _name(name), _id(id), _refresh(false)
 	_user = name + "_username";
 	gethostname(_host, 60);
 
+	cout << RED << "New Client: " << _user << " : " << _id << ENDC << endl;
 }
 
 Client::~Client()

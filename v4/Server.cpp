@@ -9,15 +9,23 @@ Server::~Server()
 {}
 
 
-void	Server::addClient(int i, string name)
+void	Server::addClient(Client *client)
 {
-    Client  *client = new Client(name, i);
-    _clients[i] = client;
+	_clients.push_back(client);
 }
 
-void	Server::removeClient(int i)
+void	Server::removeClient(Client *client)
 {
-   _clients.erase(i);
+   itr_clients it;
+
+    for (it = _clients.begin(); it != _clients.end(); ++it)
+    {
+        if (*it == client)
+        {
+            _clients.erase(it);
+            break;
+        }
+    }	
 }
 
 void Server::printClients()
@@ -27,22 +35,43 @@ void Server::printClients()
         cout << "No clients in list\n";
         return ;
     }
-    for (map<int, Client *>::iterator it = _clients.begin(); it != _clients.end(); ++it) {
-         cout << "Key: " << it->first << ", Name: " << it->second->rtnName() << endl;
-         {
-            // if (it->second.channels->empty())
-            // {
-                // show channels connected to
-            // }
-         }
-    }
 }
 
-Client*  Server::getClient(int key) {
-    map<int, Client *>::iterator it = _clients.find(key);
-    if (it != _clients.end()) {
-        Client *client = it->second;
-        return client;
-    }
-    throw std::out_of_range("Key not found in map");
+void	Server::printChannels()
+{
+	cout << "Server: Printing\n";	
+	for (itr_channels it = _channels.begin(); it != _channels.end(); ++it) {
+		Channel *channel = *it;	
+		cout << (*channel);
+	}
+
+
+}
+
+Client	*Server::getClient(int key) 
+{
+
+		for (itr_clients it = _clients.begin(); it != _clients.end(); ++it) {
+		Client *client= *it;
+		if (client->id() == key)
+			return client;
+	}
+	
+	throw std::out_of_range("Key not found in map");
+}
+
+void	Server::addChannel(Channel *channel)
+{
+	_channels.push_back(channel);
+}
+
+void	Server::rmChannel(Channel *channel)
+{
+	std::vector<Channel *>::iterator it = std::find(_channels.begin(), _channels.end(), channel);
+	if (it != _channels.end())
+	{
+		_channels.erase(it);
+		//would be nice to call descontructor on Channel & Gucci
+	}
+
 }

@@ -9,17 +9,24 @@ int main()
 	cout << "Up and Running\n";
 	
 	Socket	serv(PORT, "password");
-	Client	victor("Victor", 7);
+
+	/*Client	victor("Victor", 7);
 	Client	dictor("Dictor", 7);
 	Client	gugu("gusta", 7);
 	Channel lolita("treers");
+	Channel lupita("luuuuupapapluuuuupapapa");
 
 	lolita.addClient(&victor);
 	lolita.addClient(&gugu);
 	lolita.addClient(&dictor);
-	//serv.runSocket();
 
 	//cout << "testing:\n" << victor;
-	cout << lolita << endl;
+	serv.addChannel(&lolita);
+	serv.addChannel(&lupita);
+//	serv.printChannels();
+*/
+
+	cout << GREEN << "RUN SOCKET()\n" << ENDC;
+	serv.runSocket();
 	return 1;
 }

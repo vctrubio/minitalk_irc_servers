@@ -27,6 +27,9 @@ public:
 	Socket(int port, string password);
 	~Socket();
 
+
+	void 	ft_add_user(int i);
+
 	void	runSocket();
 };
 
