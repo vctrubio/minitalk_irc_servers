@@ -14,6 +14,7 @@ Channel::~Channel()
 void	Channel::addClient(Client *client)
 {
 	_clients.push_back(client);
+	client->subscribe(this);
 }
 
 void	Channel::sendMssg(string mssg)
@@ -22,4 +23,20 @@ void	Channel::sendMssg(string mssg)
 	{
 		(*it)->putMssg(mssg);
     }
+}
+
+
+std::ostream& operator<<(std::ostream& os, Channel& channel)
+{
+	vector<Client *> _clients = channel.clients();
+
+	os << GREEN << "Channel: " << channel.topic() << endl << ENDC;
+	for (int i = 0; i < _clients.size(); i++)
+	{
+		Client *client = _clients[i];
+		os << "Client " << i << ": " << *client << std::endl;
+	}	
+
+	return os;
+
 }

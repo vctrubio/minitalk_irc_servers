@@ -16,7 +16,10 @@ public:
 
 	void			addClient(Client *client);
 	void			sendMssg(string messg);
-
+	string			topic(){return _topic;};
+	vector<Client*>		clients() {return _clients;};
 };
+
+std::ostream& operator<<(std::ostream& os, Channel& channel);
 
 #endif

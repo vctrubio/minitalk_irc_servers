@@ -11,7 +11,7 @@ Server::~Server()
 
 void	Server::addClient(int i, string name)
 {
-    Client  *client = new Client(name);
+    Client  *client = new Client(name, i);
     _clients[i] = client;
 }
 
