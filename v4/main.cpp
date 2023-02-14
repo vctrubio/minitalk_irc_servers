@@ -4,13 +4,18 @@
 #include "Channel.hpp"
 #include "Server.hpp"
 
+
+
+
+
 int main()
 {
 	cout << "Up and Running\n";
 	
 	Socket	serv(PORT, "password");
 
-	/*Client	victor("Victor", 7);
+/*
+	Client	victor("Victor", 7);
 	Client	dictor("Dictor", 7);
 	Client	gugu("gusta", 7);
 	Channel lolita("treers");

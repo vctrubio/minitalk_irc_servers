@@ -14,8 +14,7 @@ class Client
 	bool	_refresh;
 	int		_id;
 
-    list<Channel *>              _channels;
-
+    list<Channel *>	_channels;
 public:
 	Client();
 	Client(string name, int id);

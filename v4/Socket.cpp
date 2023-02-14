@@ -148,7 +148,6 @@ void Socket::runSocket()
 				send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
 			cout << (**it);
 			cout << RED << "DEBUG PURPOSES^^\n" << ENDC;
-
 		}
 		cout << BLUE <<"LOOPED: " << ENDC << endl;
 	}

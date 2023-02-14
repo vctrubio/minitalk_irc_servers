@@ -25,7 +25,7 @@ public:
 	void	removeClient(Client *client);
 	void	printClients();
 	void	printChannels();
-	
+
 	void	rmChannel(Channel *channel);
 	void	addChannel(Channel *channel);
 };
