@@ -68,5 +68,6 @@
 		"vector": "cpp",
 		"algorithm": "cpp",
 		"filesystem": "cpp"
-	}
+	},
+	"C_Cpp.errorSquiggles": "disabled"
 }
