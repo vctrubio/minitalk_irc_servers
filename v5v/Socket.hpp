@@ -18,8 +18,7 @@ class Socket : public Server
 
 	int			_activity;
 	int			_clientSocket[MAX_CLIENTS];
-	int			_sd, _max_sd;
-	int			_newSocket;
+	int			_sd, _max_sd, _newSocket ; //not using atm
 	fd_set		_readFds;
 
 public:

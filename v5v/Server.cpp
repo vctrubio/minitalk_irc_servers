@@ -83,19 +83,32 @@ void	Server::rmChannel(Channel *channel)
 
 void	Server::find_cmd(vector<string> str)
 {
-	cout << "INIT find_cmd:"  << str.front() << endl;
 
 	vector<string>::iterator it;
 	for (it = str.begin(); it != str.end(); it++)
 	{
-		if (*it == "/join" && it ==str.begin())
+		cout << "INIT find_cmd:"  << (*it) << endl;
+
+		if (*it == "/join" && it == str.begin())
 		{
-			Channel *ptr = addChannel(*it);
-			_requestCall->addChannel(ptr);
+			cout << "DO THE JOIN\n";
+			it++; //needs validatiion for args
+			Channel *ptr = addChannel((*it)); //always returns a channel, so need to throw if alreraedy exist;
+			ptr->addClient(_requestCall);
 		}
+		else if (*it == "/leave" && it == str.begin())
+		{
+			// it++; //needs validatiion for args
+			cout << "YESasdadsasdasdasdsadasdsadsa\n";
+			// else throw front channel if no args passed
+			Channel *ptr = _requestCall->channels().front();
+			cout << "LEAVING - " << ptr << endl;
+			ptr->rmClient(_requestCall);
+		}
+		else 
+		{
+			cout << YELLOW << "IT : " << (*it) << " vs: " << str.front() << ENDC << endl;
+		}
+
 	}
-	// if (str.front() == "/join")
-	// {
-		
-	// }
 }

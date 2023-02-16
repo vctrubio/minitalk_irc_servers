@@ -14,7 +14,8 @@ class Client
 	bool	_refresh;
 	int		_id;
 
-    list<Channel *>	_channels;
+    vector<Channel *>			_channels; //first element is the one he is connected to
+    vector<Channel *>::iterator	_itC;
 	
 public:
 	Client();
@@ -34,13 +35,15 @@ public:
 	string	user(){return _user;};
 	string	host(){return _host;};
 	string	mssg(){return _mssg;};
-	void	subscribe(Channel *channel) {_channels.push_front(channel);};
+	void	subscribe(Channel *channel) {_channels.insert(_channels.begin(), channel);};
+	void	desubscribe(Channel *channel) {for (_itC = _channels.begin(); _itC != _channels.end(); _itC++) {if (*_itC == channel){ _channels.erase(_itC); cout << RED << "FOUND: " << ENDC << endl;}};};
 
-	list<Channel *>	 channels(){return _channels;};
-	bool			hasChannel() { return _channels.empty() ? false : true;};
-	void			addChannel(Channel *channel);
-
+	vector<Channel *>	channels(){return _channels;};
+	bool				hasChannel() { return _channels.empty() ? false : true;};
 };
+//maybe make friends with Channel to be able to add channel;
+
+
 
 std::ostream& operator<<(std::ostream& os, Client& client);
 

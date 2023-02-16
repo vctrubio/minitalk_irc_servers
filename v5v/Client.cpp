@@ -19,12 +19,6 @@ Client::~Client()
 {}
 
 
-void	Client::addChannel(Channel *channel)
-{
-
-}
-
-
 std::ostream& operator<<(std::ostream& os, Client& client)
 {
 	os << "Client information:" << std::endl;
@@ -36,12 +30,16 @@ std::ostream& operator<<(std::ostream& os, Client& client)
 	os << "ID: " << client.id() << std::endl;
 
 	os << "Channel:" ;
+	if (client.channels().size() > 0)
 	{
-		if (client.channels().size() > 0)
+		vector<Channel*>::iterator 	it;
+		vector<Channel*>			ptr = client.channels();
+		int i = -1;
+		while(++i < ptr.size())
 		{
-			Channel	*ptr = client.channels().front();
-			os << ptr << endl;
+			os << i << " : " << ptr[i] << "; ";
 		}
 	}
+	os << endl;
 	return os;
 }

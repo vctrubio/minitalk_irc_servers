@@ -14,6 +14,13 @@ int main()
 	
 	Socket	serv(PORT, "password");
 
+	cout << GREEN << "RUN SOCKET()\n" << ENDC;
+	serv.runSocket();
+	return 1;
+}
+
+
+
 /*
 	Client	victor("Victor", 7);
 	Client	dictor("Dictor", 7);
@@ -30,8 +37,3 @@ int main()
 	serv.addChannel(&lupita);
 //	serv.printChannels();
 */
-
-	cout << GREEN << "RUN SOCKET()\n" << ENDC;
-	serv.runSocket();
-	return 1;
-}

@@ -18,6 +18,20 @@ void	Channel::addClient(Client *client)
 	client->subscribe(this);
 }
 
+void	Channel::rmClient(Client *client)
+{
+	cout << RED << "RMCLIENT\n" << ENDC << endl;
+	for (_itC = _clients.begin(); _itC != _clients.end(); _itC++)
+	{
+		if ((*_itC) == client)
+		{
+			// _clients.erase(_itC);
+			client->desubscribe(this);
+			break;
+		}
+	}
+}
+
 void	Channel::post(string mssg, int id)
 {
 	for (vector<Client *>::iterator it = _clients.begin(); it != _clients.end(); ++it)

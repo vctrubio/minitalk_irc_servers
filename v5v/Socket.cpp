@@ -120,19 +120,20 @@ void Socket::runSocket()
 				else
 				{
 					buffer[valread] = '\0';
-					_requestCall = getClient(_sd);
+					_requestCall = getClient(sd);
 					init_cmd(buffer, sd);
 				}
 			}
 		}
+		cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;
 		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
 		{
 			if ((*it)->status() == true)
 				send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
 			cout << (**it);
-			cout << RED << "DEBUG PURPOSES^^\n" << ENDC;
 		}
-		cout << BLUE <<"LOOPED: " << ENDC << endl;
+		cout << endl << "----------------------" << endl;
+		// cout << BLUE <<"LOOPED: " << ENDC << endl;
 	}
 }
 
@@ -166,20 +167,9 @@ void	Socket::init_cmd(string buffer, int sd)
 	*/
 	if (buffer[0] == '/')
 	{
-		//search for command
 		find_cmd(ptr);
-
-		/*if (strncmp(buffer, "/join", 5) == 0)
-
-		{
-			// creeate a channel if not already existed.
-			// join channel if not already
-			channel->addClient(getClient(sd));
-		}
-		else
-			cout << RED << "Command not found\n"
-					<< ENDC;
 	}
+	/*
 	else
 	{
 
@@ -189,6 +179,6 @@ void	Socket::init_cmd(string buffer, int sd)
 		if (getClient(sd)->hasChannel())
 			channel->post(buffer, sd);
 	}
-					*/
 	}
+*/
 }

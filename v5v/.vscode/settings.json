@@ -10,6 +10,12 @@
         "string_view": "cpp",
         "iosfwd": "cpp",
         "iostream": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "__bit_reference": "cpp",
+        "__hash_table": "cpp",
+        "__tree": "cpp",
+        "filesystem": "cpp",
+        "initializer_list": "cpp",
+        "unordered_map": "cpp"
     }
 }
