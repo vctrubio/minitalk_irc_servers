@@ -119,7 +119,7 @@ void Socket::runSocket()
 				}
 				else
 				{
-					buffer[valread] = '\0';
+					buffer[valread] = '\0'; //this is giving me afucking new LINE 
 					_requestCall = getClient(sd);
 					init_cmd(buffer, sd);
 				}

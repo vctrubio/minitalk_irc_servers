@@ -42,7 +42,8 @@ void Client::desubscribe(Channel *channel)
 
 void	Client::putMssg(string mssg, Client *it, string channel_name)
 {
-	_mssg = "[" + channel_name + "]" + it->user() + ": " + mssg;
+	// _mssg = "[" + channel_name + "]"+ it->user() + ": " + mssg; //but we have a newline so its prerrty gay
+	_mssg = " -incoming from- " + channel_name + it->user() + " : " + mssg;
 	_refresh = true;
 }
 
