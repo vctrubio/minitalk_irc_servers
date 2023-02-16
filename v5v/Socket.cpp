@@ -168,22 +168,12 @@ void	Socket::init_cmd(string buffer, int sd)
 {
 	vector<string>	ptr = buildVector(buffer);
 	
-	/* we have our vectors + sd
-	now, join, leave
-	*/
 	if (buffer[0] == '/')
-	{
 		find_cmd(ptr);
-	}
-	/*
 	else
 	{
 		 //cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
-
-		// IF CLIENT HAS CHANNEL, POST TO CHANNEL	
-		if (getClient(sd)->hasChannel())
-			channel->post(buffer, sd);
+		if (getClient(sd)->hasChannel()) // IF CLIENT HAS CHANNEL, POST TO CHANNEL	
+			getClient(sd)->channels().front()->post(buffer, sd);
 	}
-	}
-*/
 }

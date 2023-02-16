@@ -83,12 +83,11 @@ void	Server::rmChannel(Channel *channel)
 
 void	Server::find_cmd(vector<string> str)
 {
-
 	vector<string>::iterator it;
-	for (it = str.begin(); it != str.end(); it++)
+		
+	for (it = str.begin(); it != str.end(); it++)  //if its just /join or leave /leave as one arguments, its not working str.end is str.begin()
 	{
 		cout << "INIT find_cmd:"  << (*it) << endl;
-		//if its just /join or leave /leave as one arguments, its not working
 		if (*it == "/join" && it == str.begin())
 		{
 			cout << "DO THE JOIN\n";

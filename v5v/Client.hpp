@@ -24,7 +24,7 @@ public:
 	
 	string	rtnName() {return _name;};
 	
-	void	putMssg(string str) {_mssg = str; _refresh = true;};
+	void	putMssg(string str, Client *it,  string channel_name);
 	string	rtnMssg() {_refresh = false; return _mssg;};
 	void	voidMssg() {_refresh = false; cout << _mssg;};
 	void	refresh(){_refresh = false;};

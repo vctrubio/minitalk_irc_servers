@@ -63,7 +63,7 @@ void	Channel::post(string mssg, int id)
 	{
 		if ((*it)->id() == id)
 			continue;
-		(*it)->putMssg(mssg);
+		(*it)->putMssg(mssg, (*it), topic());
     }
 }
 

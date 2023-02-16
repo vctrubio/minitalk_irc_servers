@@ -40,6 +40,13 @@ void Client::desubscribe(Channel *channel)
 	
 }
 
+void	Client::putMssg(string mssg, Client *it, string channel_name)
+{
+	_mssg = "[" + channel_name + "]" + it->user() + ": " + mssg;
+	_refresh = true;
+}
+
+
 std::ostream& operator<<(std::ostream& os, Client& client)
 {
 	os << "Client information:" << std::endl;
