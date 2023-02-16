@@ -42,15 +42,24 @@ Socket::~Socket()
 }
 
 //
+void Socket::ft_add_user(int i)
+{
+	string welcome_mssg = "Welcome MSSG:::Instruction. /JOIN to join a channel\n";
+
+	Client	*new_connection = new Client("Newcumber", i); //adding client... NEEDS UI
+	addClient(new_connection);
+	send(i, welcome_mssg.c_str(), welcome_mssg.length(), 0);
+}
+
 void Socket::runSocket()
 {
 	int addrlen = sizeof(_addr);
 	int max_sd, sd, valread;
 	int tmp_socket;
 	char buffer[265];
-	string welcome_mssg = "Welcome MSSG:::Instruction. /JOIN to join a channel\n";
 
 	cout << "Waiting for connection...\n";
+	Channel *channel = new Channel("TESTING CHANNEL");
 	while (42)
 	{
 		FD_ZERO(&_readFds);
@@ -64,26 +73,23 @@ void Socket::runSocket()
 			{
 				cout << BLUE << "SD: " << sd << ENDC << " on ClientSocket " << i << endl;
 				FD_SET(sd, &_readFds);
-				addClient(sd, "Alexa");
-				cout << "MAX SD: " << max_sd << endl;
 			}
-			if (sd > max_sd) // MAX_SIZE so ignore connection? CANNOT will stall program
+			if (sd > max_sd)
 				max_sd = sd;
+			//test if client > client_size
 		}
 
 		_activity = select(max_sd + 1, &_readFds, NULL, NULL, NULL);
 		if ((_activity < 0) && (errno != EINTR))
-			cout << RED << "EINTR _activity ERROR\n"
-				 << ENDC;
+			cout << RED << "EINTR _activity ERROR\n" << ENDC;
 
 		if (FD_ISSET(_sockFd, &_readFds))
 		{
 			if ((tmp_socket = accept(_sockFd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen)) < 0)
-				cout << RED << "Error: tmp_socket\n"
-					 << ENDC;
+				cout << RED << "Error: tmp_socket\n" << ENDC;
+			
 			cout << GREEN << "New Connection Established: tmp_socket " << tmp_socket << " |ip & port tbd|" << ENDC << endl;
-			send(tmp_socket, welcome_mssg.c_str(), welcome_mssg.length(), 0);
-			cout << "Welcome MSSG SENT!\n";
+			ft_add_user(tmp_socket);
 
 			for (int i = 0; i < MAX_CLIENTS; i++)
 			{
@@ -102,47 +108,83 @@ void Socket::runSocket()
 			{
 				if ((valread = read(sd, buffer, 254)) == 0)
 				{
-					// user disconnected...
 					getpeername(sd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen);
-					removeClient(sd);
+					cout << "User " << RED << " Disconnected " << ENDC << endl; 
+					removeClient(getClient(sd));
 					close(sd);
 					_clientSocket[i] = 0;
-					cout << RED << "User nickname Disconnected" << ENDC << endl;
 				}
 				else
 				{
 					buffer[valread] = '\0';
-					// this->sendMssg(buffer);
-					if (buffer[0] == '/')
-					{
-						if (strncmp(buffer, "/join", 5) == 0)
-						{
-							// creeate a channel if not already existed.
-							Channel *channel = new Channel("TESTING CHANNEL");
-							channel->addClient(getClient(sd));
-							// join channel if not already
-							channel->sendMssg(buffer);
-						}
-						else
-							cout << RED << "Command not found\n"
-								 << ENDC;
-					}
-					else
-					{
-						cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
-						printClients();
-					}
+					init_cmd(buffer, sd);
 				}
 			}
 		}
-		//see if users have _refresh to false and if so print message on screen
-		for (map<int, Client *>::iterator it = _clients.begin(); it != _clients.end(); ++it)
+		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
 		{
-			if (it->second->status() == true)
-			{
-				it->second->rtnMssg();
-				send(it->first, "BUFFER\n", strlen("BUFFER1"), 0);
-			}
+			if ((*it)->status() == true)
+				send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
+			cout << (**it);
+			cout << RED << "DEBUG PURPOSES^^\n" << ENDC;
 		}
+		cout << BLUE <<"LOOPED: " << ENDC << endl;
+	}
+}
+
+
+vector<string>	buildVector(string str)
+{
+	vector<string>		tokens;
+	string				t;
+	std::stringstream 	ss(str);
+
+	while (std::getline(ss, t, ' ')) {
+        tokens.push_back(t);
+    }
+
+	//print DEBUG //does not take into considerations quotes "hi buddy"
+	cout << "Token Created:\n";
+	vector<string>::iterator it;
+	for (it = tokens.begin(); it != tokens.end(); it++)
+		cout << *it << endl;
+	cout << "--------------\n";
+	return (tokens);
+}
+
+
+void	Socket::init_cmd(string buffer, int sd)
+{
+	vector<string>	ptr = buildVector(buffer);
+	
+	/* we have our vectors + sd
+	now, join, leave
+	*/
+	if (buffer[0] == '/')
+	{
+		//search for command
+		find_cmd(ptr);
+
+		/*if (strncmp(buffer, "/join", 5) == 0)
+
+		{
+			// creeate a channel if not already existed.
+			// join channel if not already
+			channel->addClient(getClient(sd));
+		}
+		else
+			cout << RED << "Command not found\n"
+					<< ENDC;
+	}
+	else
+	{
+
+		   //cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
+
+		// IF CLIENT HAS CHANNEL, POST TO CHANNEL	
+		if (getClient(sd)->hasChannel())
+			channel->post(buffer, sd);
+	}
+					*/
 	}
 }

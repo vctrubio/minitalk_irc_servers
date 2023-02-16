@@ -4,7 +4,6 @@
 #include "Headers.hpp"
 #include "Client.hpp"
 
-
 class Channel
 {
 	string				_topic;
@@ -15,8 +14,12 @@ public:
 	~Channel();
 
 	void			addClient(Client *client);
-	void			sendMssg(string messg);
-
+	void			post(string messg, int id);
+	string			topic(){return _topic;};
+	vector<Client*>	clients() {return _clients;};
+	int				size(){return _clients.size();};
 };
+
+std::ostream& operator<<(std::ostream& os, Channel& channel);
 
 #endif

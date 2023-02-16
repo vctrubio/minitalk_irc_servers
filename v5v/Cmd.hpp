@@ -5,9 +5,13 @@
 
 class Cmd
 {
+    map<string, void (*)(vector<string>)>	_cmd;
+
 public:
 	Cmd(){};
 	~Cmd(){};
+
+	void	find_cmd(vector<string>);
 };
 
 #endif

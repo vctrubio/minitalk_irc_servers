@@ -5,6 +5,8 @@
 #include "Server.hpp"
 #include "Channel.hpp"
 
+class Client;
+
 class Socket : public Server
 {
 	int			_port;
@@ -25,6 +27,9 @@ public:
 	Socket(int port, string password);
 	~Socket();
 
+
+	void 	ft_add_user(int i);
+	void	init_cmd(string, int);
 	void	runSocket();
 };
 

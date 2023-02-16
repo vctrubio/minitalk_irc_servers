@@ -1,0 +1,12 @@
+{
+    "files.associations": {
+        "map": "cpp",
+        "vector": "cpp",
+        "__split_buffer": "cpp",
+        "array": "cpp",
+        "deque": "cpp",
+        "list": "cpp",
+        "string": "cpp",
+        "string_view": "cpp"
+    }
+}
