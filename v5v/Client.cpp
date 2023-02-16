@@ -18,6 +18,27 @@ Client::Client(string name, int id): _name(name), _id(id), _refresh(false)
 Client::~Client()
 {}
 
+void Client::subscribe(Channel *channel)
+{
+	_channels.insert(_channels.begin(), channel);
+}
+
+void Client::desubscribe(Channel *channel)
+{
+
+	if (_channels.size() == 0)
+		return ;
+
+	for (_itC = _channels.begin(); _itC != _channels.end(); _itC++) 
+	{
+		if (*_itC == channel)
+		{
+			_channels.erase(_itC); 
+			return ;
+		}
+	};
+	
+}
 
 std::ostream& operator<<(std::ostream& os, Client& client)
 {

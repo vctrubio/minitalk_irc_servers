@@ -20,16 +20,16 @@ void	Channel::addClient(Client *client)
 
 void	Channel::rmClient(Client *client)
 {
-	cout << RED << "RMCLIENT\n" << ENDC << endl;
 	for (_itC = _clients.begin(); _itC != _clients.end(); _itC++)
 	{
 		if ((*_itC) == client)
 		{
-			// _clients.erase(_itC);
+			_clients.erase(_itC);
 			client->desubscribe(this);
 			break;
 		}
 	}
+	cout << RED << "RMCLIENT " << client->rtnName() << " :FROM Channel: " << topic() << ENDC << endl;
 }
 
 void	Channel::post(string mssg, int id)

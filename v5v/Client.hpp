@@ -35,8 +35,8 @@ public:
 	string	user(){return _user;};
 	string	host(){return _host;};
 	string	mssg(){return _mssg;};
-	void	subscribe(Channel *channel) {_channels.insert(_channels.begin(), channel);};
-	void	desubscribe(Channel *channel) {for (_itC = _channels.begin(); _itC != _channels.end(); _itC++) {if (*_itC == channel){ _channels.erase(_itC); cout << RED << "FOUND: " << ENDC << endl;}};};
+	void	subscribe(Channel *channel);
+	void	desubscribe(Channel *channel);
 
 	vector<Channel *>	channels(){return _channels;};
 	bool				hasChannel() { return _channels.empty() ? false : true;};

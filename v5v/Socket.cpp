@@ -172,8 +172,7 @@ void	Socket::init_cmd(string buffer, int sd)
 	/*
 	else
 	{
-
-		   //cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
+		 //cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
 
 		// IF CLIENT HAS CHANNEL, POST TO CHANNEL	
 		if (getClient(sd)->hasChannel())

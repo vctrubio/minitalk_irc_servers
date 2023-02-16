@@ -88,7 +88,7 @@ void	Server::find_cmd(vector<string> str)
 	for (it = str.begin(); it != str.end(); it++)
 	{
 		cout << "INIT find_cmd:"  << (*it) << endl;
-
+		//if its just /join or leave /leave as one arguments, its not working
 		if (*it == "/join" && it == str.begin())
 		{
 			cout << "DO THE JOIN\n";
@@ -96,19 +96,20 @@ void	Server::find_cmd(vector<string> str)
 			Channel *ptr = addChannel((*it)); //always returns a channel, so need to throw if alreraedy exist;
 			ptr->addClient(_requestCall);
 		}
-		else if (*it == "/leave" && it == str.begin())
+		else if (*it == "/leave" && *it == str.front())
 		{
-			// it++; //needs validatiion for args
-			cout << "YESasdadsasdasdasdsadasdsadsa\n";
-			// else throw front channel if no args passed
-			Channel *ptr = _requestCall->channels().front();
-			cout << "LEAVING - " << ptr << endl;
+			it++; //needs validatiion for args if (it)
+			// else throw front channel if no args passed //check if there is also .front()
+			Channel *ptr = _requestCall->channels().front(); //we have segfaults here but watevr, 
+			cout << "CHANNEL TO LEAVE : " << ptr << " : " << ptr->topic() << endl;
 			ptr->rmClient(_requestCall);
 		}
-		else 
-		{
-			cout << YELLOW << "IT : " << (*it) << " vs: " << str.front() << ENDC << endl;
-		}
+		// else 
+		// {
+		// 	cout << YELLOW << "IT : " << (*it) << " vs: " << str.front() << ENDC << endl;
+		// }
+
 
 	}
+
 }
