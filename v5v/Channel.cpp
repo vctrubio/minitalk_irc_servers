@@ -16,6 +16,31 @@ void	Channel::addClient(Client *client)
 {
 	_clients.push_back(client);
 	client->subscribe(this);
+
+	char *welcome = strdup("Joined# ");
+	strcat(welcome, GREEN);
+	strcat(welcome, topic().c_str());
+
+	if (_clients.size() > 0)
+	{
+		cout << _clients.size() << " SIZE IS\n";
+		strcat(welcome, ENDC);
+		strcat(welcome, "Online: ");
+		strcat(welcome, BLUE);
+		string	name;
+		for (_itC = _clients.begin(); _itC != _clients.end(); _itC++)
+		{
+			name += "[";
+			name += (*_itC)->user();
+			name += " : ";
+			name += (*_itC)->name();
+			name += "]";
+		}
+		strcat(welcome, name.c_str());
+	}
+	strcat(welcome, ENDC);
+	strcat(welcome, "\n");
+	send(client->id(), welcome, strlen(welcome), 0);
 }
 
 void	Channel::rmClient(Client *client)
@@ -52,8 +77,7 @@ std::ostream& operator<<(std::ostream& os, Channel& channel)
 	{
 		Client *client = _clients[i];
 		os << "Client " << i << ": " << *client << std::endl;
-	}	
-
+	}
 	return os;
 
 }

@@ -132,6 +132,12 @@ void Socket::runSocket()
 				send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
 			cout << (**it);
 		}
+		cout << endl << "----------CH------------" << endl;
+		if (_channels.size() > 0)
+		{
+			Channel *ptr = _channels.front();
+			cout << "Address:: " << (*ptr);
+		}
 		cout << endl << "----------------------" << endl;
 		// cout << BLUE <<"LOOPED: " << ENDC << endl;
 	}

@@ -49,7 +49,7 @@ void	Server::printChannels()
 Client	*Server::getClient(int key) 
 {
 
-		for (itr_clients it = _clients.begin(); it != _clients.end(); ++it) {
+	for (itr_clients it = _clients.begin(); it != _clients.end(); ++it) {
 		Client *client= *it;
 		if (client->id() == key)
 			return client;
@@ -94,7 +94,11 @@ void	Server::find_cmd(vector<string> str)
 			cout << "DO THE JOIN\n";
 			it++; //needs validatiion for args
 			Channel *ptr = addChannel((*it)); //always returns a channel, so need to throw if alreraedy exist;
-			ptr->addClient(_requestCall);
+			if (!_requestCall->hasChannel(ptr))
+			{
+				cout << "ADDING NOT SEEN BEFORE\n";
+				ptr->addClient(_requestCall);
+			}
 		}
 		else if (*it == "/leave" && *it == str.front())
 		{

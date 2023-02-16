@@ -40,6 +40,7 @@ public:
 
 	vector<Channel *>	channels(){return _channels;};
 	bool				hasChannel() { return _channels.empty() ? false : true;};
+	bool				hasChannel(Channel *channel) {for(_itC = _channels.begin(); _itC != _channels.end(); _itC++) {if(*_itC == channel) return true;} return false;};
 };
 //maybe make friends with Channel to be able to add channel;
 
