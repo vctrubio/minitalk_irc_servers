@@ -4,13 +4,13 @@
 #include "Headers.hpp"
 #include "Client.hpp"
 #include "Channel.hpp"
-#include "Cmd.hpp"
 
-class Server : public Cmd
+class Server
 {
 	string	_password;
-	
+	friend class Cmd;
 protected:
+	Client*					_requestCall; //who is making the SD
 	vector<Client *>		_clients;
 	typedef vector<Client *>::iterator itr_clients;
 
@@ -28,8 +28,9 @@ public:
 	void	printChannels();
 
 	void	rmChannel(Channel *channel);
-	void	addChannel(Channel *channel);
+	Channel	*addChannel(string &topic);
 	int		size(){return _clients.size();};
+	void	find_cmd(vector<string> str);
 
 };
 

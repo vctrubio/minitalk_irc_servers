@@ -1,5 +1,6 @@
 #include "Channel.hpp"
 
+// Channel::Channel(string topic, Client *admin): _topic(topic), _admin(admin)
 Channel::Channel(string topic): _topic(topic)
 {
 	cout << "Channeld # " << _topic << " created \n";

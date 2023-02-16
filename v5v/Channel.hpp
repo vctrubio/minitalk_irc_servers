@@ -10,6 +10,7 @@ class Channel
 	vector<Client *>	_clients; 
 	Client*				_admin; //later
 public:
+	// Channel(string topic, Client *admin);
 	Channel(string topic);
 	~Channel();
 

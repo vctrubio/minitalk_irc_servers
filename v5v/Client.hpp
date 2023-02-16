@@ -15,6 +15,7 @@ class Client
 	int		_id;
 
     list<Channel *>	_channels;
+	
 public:
 	Client();
 	Client(string name, int id);
@@ -36,7 +37,9 @@ public:
 	void	subscribe(Channel *channel) {_channels.push_front(channel);};
 
 	list<Channel *>	 channels(){return _channels;};
-	bool	hasChannel() { return _channels.empty() ? false : true;};
+	bool			hasChannel() { return _channels.empty() ? false : true;};
+	void			addChannel(Channel *channel);
+
 };
 
 std::ostream& operator<<(std::ostream& os, Client& client);

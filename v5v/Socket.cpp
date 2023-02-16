@@ -48,6 +48,8 @@ void Socket::ft_add_user(int i)
 
 	Client	*new_connection = new Client("Newcumber", i); //adding client... NEEDS UI
 	addClient(new_connection);
+
+
 	send(i, welcome_mssg.c_str(), welcome_mssg.length(), 0);
 }
 
@@ -59,7 +61,8 @@ void Socket::runSocket()
 	char buffer[265];
 
 	cout << "Waiting for connection...\n";
-	Channel *channel = new Channel("TESTING CHANNEL");
+	// string testChannel = "ChannelTest";
+	// addChannel(testChannel);
 	while (42)
 	{
 		FD_ZERO(&_readFds);
@@ -117,6 +120,7 @@ void Socket::runSocket()
 				else
 				{
 					buffer[valread] = '\0';
+					_requestCall = getClient(_sd);
 					init_cmd(buffer, sd);
 				}
 			}
@@ -144,11 +148,11 @@ vector<string>	buildVector(string str)
     }
 
 	//print DEBUG //does not take into considerations quotes "hi buddy"
-	cout << "Token Created:\n";
-	vector<string>::iterator it;
-	for (it = tokens.begin(); it != tokens.end(); it++)
-		cout << *it << endl;
-	cout << "--------------\n";
+	// cout << "Token Created:\n";
+	// vector<string>::iterator it;
+	// for (it = tokens.begin(); it != tokens.end(); it++)
+	// 	cout << *it << endl;
+	// cout << "--------------\n";
 	return (tokens);
 }
 

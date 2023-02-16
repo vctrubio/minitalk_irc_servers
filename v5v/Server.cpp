@@ -42,10 +42,8 @@ void	Server::printChannels()
 	cout << "Server: Printing\n";	
 	for (itr_channels it = _channels.begin(); it != _channels.end(); ++it) {
 		Channel *channel = *it;	
-		cout << (*channel);
+		cout << (*channel).topic() << " ; ";
 	}
-
-
 }
 
 Client	*Server::getClient(int key) 
@@ -60,9 +58,16 @@ Client	*Server::getClient(int key)
 	throw std::out_of_range("Key not found in map");
 }
 
-void	Server::addChannel(Channel *channel)
+Channel*	Server::addChannel(string &topic)
 {
-	_channels.push_back(channel);
+
+	for (itr_channels it = _channels.begin(); it != _channels.end(); it++)
+	{
+		if ((*it)->topic() == topic)
+			return *it;
+	}
+	_channels.push_back(new Channel(topic));
+	return (_channels.back());
 }
 
 void	Server::rmChannel(Channel *channel)
@@ -70,8 +75,27 @@ void	Server::rmChannel(Channel *channel)
 	std::vector<Channel *>::iterator it = std::find(_channels.begin(), _channels.end(), channel);
 	if (it != _channels.end())
 	{
-		_channels.erase(it);
-		//would be nice to call descontructor on Channel & Gucci
+		_channels.erase(it); //How TO CALL descontructor on Channel?¿
 	}
 
+}
+
+
+void	Server::find_cmd(vector<string> str)
+{
+	cout << "INIT find_cmd:"  << str.front() << endl;
+
+	vector<string>::iterator it;
+	for (it = str.begin(); it != str.end(); it++)
+	{
+		if (*it == "/join" && it ==str.begin())
+		{
+			Channel *ptr = addChannel(*it);
+			_requestCall->addChannel(ptr);
+		}
+	}
+	// if (str.front() == "/join")
+	// {
+		
+	// }
 }

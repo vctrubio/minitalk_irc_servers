@@ -19,6 +19,12 @@ Client::~Client()
 {}
 
 
+void	Client::addChannel(Channel *channel)
+{
+
+}
+
+
 std::ostream& operator<<(std::ostream& os, Client& client)
 {
 	os << "Client information:" << std::endl;
