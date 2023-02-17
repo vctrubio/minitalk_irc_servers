@@ -6,7 +6,9 @@ Server::Server(string password): _password(password)
 }
 
 Server::~Server()
-{}
+{
+}
+
 
 
 void	Server::addClient(Client *client)
@@ -39,7 +41,7 @@ void Server::printClients()
 
 void	Server::printChannels()
 {
-	cout << "Server: Printing\n";	
+	cout << "Servers Online: \n";	
 	for (itr_channels it = _channels.begin(); it != _channels.end(); ++it) {
 		Channel *channel = *it;	
 		cout << (*channel).topic() << " ; ";
@@ -75,9 +77,9 @@ void	Server::rmChannel(Channel *channel)
 	std::vector<Channel *>::iterator it = std::find(_channels.begin(), _channels.end(), channel);
 	if (it != _channels.end())
 	{
-		_channels.erase(it); //How TO CALL descontructor on Channel?¿
+		_channels.erase(it);
+		delete *it;
 	}
-
 }
 
 

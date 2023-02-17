@@ -17,23 +17,3 @@ int main()
 	
 	return 1;
 }
-
-
-
-
-/*
-	Client	victor("Victor", 7);
-	Client	dictor("Dictor", 7);
-	Client	gugu("gusta", 7);
-	Channel lolita("treers");
-	Channel lupita("luuuuupapapluuuuupapapa");
-
-	lolita.addClient(&victor);
-	lolita.addClient(&gugu);
-	lolita.addClient(&dictor);
-
-	//cout << "testing:\n" << victor;
-	serv.addChannel(&lolita);
-	serv.addChannel(&lupita);
-//	serv.printChannels();
-*/

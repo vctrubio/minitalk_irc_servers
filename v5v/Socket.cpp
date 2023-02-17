@@ -1,14 +1,11 @@
 #include "Socket.hpp"
 
-Socket::Socket()
-{
-	cout << "INIT socket BAAAAAD\n";
-}
+Socket::Socket(){}
 
 Socket::Socket(int port, string password)
 	: _port(port), Server(password)
 {
-	int opt = 1; // for setsockopt (geeksforgeeks)
+	int opt = 1; 
 
 	_sockFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (_sockFd < 0)
@@ -68,8 +65,6 @@ void Socket::runSocket()
 	char buffer[265];
 
 	cout << "Waiting for connection...\n";
-	// string testChannel = "ChannelTest";
-	// addChannel(testChannel);
 	while (42)
 	{
 		FD_ZERO(&_readFds);
@@ -86,7 +81,7 @@ void Socket::runSocket()
 			}
 			if (sd > max_sd)
 				max_sd = sd;
-			//test if client > client_size
+			// TO TEST if client > client_size
 		}
 
 		_activity = select(max_sd + 1, &_readFds, NULL, NULL, NULL);
@@ -143,10 +138,14 @@ void Socket::runSocket()
 		if (_channels.size() > 0)
 		{
 			for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end(); it++)
-			cout << "Address:: " << (**it) << endl;
+			{cout << "Address:: " << (**it) << endl;
+				/* if (!(*it)->size())
+					delete *it;
+				breakpoint: pointer being freed was not allocated
+				*/
+			}
 		}
 		cout << endl << "----------------------" << endl;
-		// cout << BLUE <<"LOOPED: " << ENDC << endl;
 	}
 }
 
@@ -158,8 +157,8 @@ vector<string>	buildVector(string str)
 	std::stringstream 	ss(str);
 
 	while (std::getline(ss, t, ' ')) {
-        tokens.push_back(t);
-    }
+		tokens.push_back(t);
+	}
 
 	//print DEBUG //does not take into considerations quotes "hi buddy"
 	// cout << "Token Created:\n";
@@ -174,12 +173,12 @@ vector<string>	buildVector(string str)
 void	Socket::init_cmd(string buffer, int sd)
 {
 	vector<string>	ptr = buildVector(buffer);
-	
+
 	if (buffer[0] == '/')
 		find_cmd(ptr);
 	else
 	{
-		 //cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
+		//cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
 		if (getClient(sd)->hasChannel()) // IF CLIENT HAS CHANNEL, POST TO CHANNEL	
 			getClient(sd)->channels().front()->post(buffer, sd);
 	}
