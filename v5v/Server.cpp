@@ -87,6 +87,15 @@ void	Server::find_cmd(vector<string> str)
 	
 	//1 arg ≠ working str.end is str.begin()
 	//it++ needs validation
+	
+
+	if (str.begin() == str.end() && str.begin()->compare("/leave") == 0) //this isnt working, but you get the point
+	{
+		Channel *ptr = _requestCall->channels().front(); //
+		cout << "CHANNEL TO LEAVE : " << ptr << " : " << ptr->topic() << endl;
+		ptr->rmClient(_requestCall);
+	}
+
 	for (it = str.begin(); it != str.end(); it++)  
 	{
 		cout << "INIT find_cmd:"  << (*it) << endl;

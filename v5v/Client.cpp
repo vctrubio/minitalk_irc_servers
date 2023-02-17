@@ -60,6 +60,12 @@ void Client::desubscribe(Channel *channel)
 		if (*_itC == channel)
 		{
 			_channels.erase(_itC); 
+			char *mssg = strdup("Leaving Channel# ");
+			strcat(mssg, RED);
+			//strcat(mssg, channel->topic()); Doesnt fucking work cuase they are not friends and you can't add the header Channel in Clients because of fucking CPP stupid compilations
+			strcat(mssg, ENDC);
+			strcat(mssg, "\n");
+			send(_id, mssg, strlen(mssg), 0);
 			return ;
 		}
 	};

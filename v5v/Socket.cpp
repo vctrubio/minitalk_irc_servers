@@ -142,8 +142,8 @@ void Socket::runSocket()
 		cout << endl << "----------CH------------" << endl;
 		if (_channels.size() > 0)
 		{
-			Channel *ptr = _channels.front();
-			cout << "Address:: " << (*ptr);
+			for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end(); it++)
+			cout << "Address:: " << (**it) << endl;
 		}
 		cout << endl << "----------------------" << endl;
 		// cout << BLUE <<"LOOPED: " << ENDC << endl;
