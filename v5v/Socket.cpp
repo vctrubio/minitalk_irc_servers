@@ -44,13 +44,20 @@ Socket::~Socket()
 //
 void Socket::ft_add_user(int i)
 {
-	string welcome_mssg = "Welcome MSSG:::Instruction. /JOIN to join a channel\n";
-
-	Client	*new_connection = new Client("Newcumber", i); //adding client... NEEDS UI
+	string	name = "Guest_" + to_string(i); 
+	Client	*new_connection = new Client(name, i);
 	addClient(new_connection);
 
-
-	send(i, welcome_mssg.c_str(), welcome_mssg.length(), 0);
+	string	host = new_connection->rtnHost();
+	char	*mssg = strdup("Welcome: ");
+	strcat(mssg, GREEN);
+	strcat(mssg, host.c_str());
+	strcat(mssg, ENDC);
+	strcat(mssg, "\n\
+	/nick [nickname] to change your nickname\n\
+	/name [name] to change your name\n\
+	/help for more help.\n");
+	send(i, mssg, strlen(mssg), 0);
 }
 
 void Socket::runSocket()

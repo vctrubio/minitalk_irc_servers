@@ -6,8 +6,6 @@
 
 
 
-
-
 int main()
 {
 	cout << "Up and Running\n";
@@ -16,8 +14,10 @@ int main()
 
 	cout << GREEN << "RUN SOCKET()\n" << ENDC;
 	serv.runSocket();
+	
 	return 1;
 }
+
 
 
 

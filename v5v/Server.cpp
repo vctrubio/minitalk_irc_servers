@@ -84,14 +84,16 @@ void	Server::rmChannel(Channel *channel)
 void	Server::find_cmd(vector<string> str)
 {
 	vector<string>::iterator it;
-		
-	for (it = str.begin(); it != str.end(); it++)  //if its just /join or leave /leave as one arguments, its not working str.end is str.begin()
+	
+	//1 arg ≠ working str.end is str.begin()
+	//it++ needs validation
+	for (it = str.begin(); it != str.end(); it++)  
 	{
 		cout << "INIT find_cmd:"  << (*it) << endl;
 		if (*it == "/join" && it == str.begin())
 		{
 			cout << "DO THE JOIN\n";
-			it++; //needs validatiion for args
+			it++; 
 			Channel *ptr = addChannel((*it)); //always returns a channel, so need to throw if alreraedy exist;
 			if (!_requestCall->hasChannel(ptr))
 			{
@@ -101,18 +103,22 @@ void	Server::find_cmd(vector<string> str)
 		}
 		else if (*it == "/leave" && *it == str.front())
 		{
-			it++; //needs validatiion for args if (it)
+			it++; 
 			// else throw front channel if no args passed //check if there is also .front()
 			Channel *ptr = _requestCall->channels().front(); //we have segfaults here but watevr, 
 			cout << "CHANNEL TO LEAVE : " << ptr << " : " << ptr->topic() << endl;
 			ptr->rmClient(_requestCall);
 		}
-		// else 
-		// {
-		// 	cout << YELLOW << "IT : " << (*it) << " vs: " << str.front() << ENDC << endl;
-		// }
-
-
+		else if (*it == "/nick" && *it == str.front())
+		{
+			it++;
+			_requestCall->setUser(*it);	
+		}
+		else if (*it == "/name" && *it == str.front())
+		{
+			it++;
+			_requestCall->setName(*it);	
+		}
 	}
 
-}
+	}

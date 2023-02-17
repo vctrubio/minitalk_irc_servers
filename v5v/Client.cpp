@@ -18,6 +18,32 @@ Client::Client(string name, int id): _name(name), _id(id), _refresh(false)
 Client::~Client()
 {}
 
+void	Client::setUser(string str)
+{
+	_user = str;
+	char *mssg = strdup("Nickname changed to: ");
+	strcat(mssg, GREEN);
+	strcat(mssg, str.c_str());
+	strcat(mssg, ENDC);
+	strcat(mssg, "\n");
+	send(_id, mssg, strlen(mssg), 0);
+}
+
+
+void	Client::setName(string str)
+{
+	_name = str;
+	char *mssg = strdup("Name changed to: ");
+	strcat(mssg, GREEN);
+	strcat(mssg, str.c_str());
+	strcat(mssg, ENDC);
+	strcat(mssg, "\n");
+	send(_id, mssg, strlen(mssg), 0);
+}
+
+
+
+
 void Client::subscribe(Channel *channel)
 {
 	_channels.insert(_channels.begin(), channel);

@@ -23,6 +23,7 @@ public:
 	~Client();
 	
 	string	rtnName() {return _name;};
+	char*	rtnHost() {return _host;};
 	
 	void	putMssg(string str, Client *it,  string channel_name);
 	string	rtnMssg() {_refresh = false; return _mssg;};
@@ -37,6 +38,9 @@ public:
 	string	mssg(){return _mssg;};
 	void	subscribe(Channel *channel);
 	void	desubscribe(Channel *channel);
+
+	void	setName(string str);
+	void	setUser(string str);
 
 	vector<Channel *>	channels(){return _channels;};
 	bool				hasChannel() { return _channels.empty() ? false : true;};
