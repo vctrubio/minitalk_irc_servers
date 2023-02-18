@@ -4,6 +4,7 @@
 #include "Headers.hpp"
 #include "Server.hpp"
 #include "Channel.hpp"
+#include "Utils.hpp"
 
 class Client;
 
@@ -22,9 +23,9 @@ class Socket : public Server
 	fd_set		_readFds;
 
 public:
-	Socket();
+	Socket(){};
 	Socket(int port, string password);
-	~Socket();
+	~Socket(){};
 
 
 	void 	ft_add_user(int i);

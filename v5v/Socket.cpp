@@ -1,7 +1,5 @@
 #include "Socket.hpp"
 
-Socket::Socket(){}
-
 Socket::Socket(int port, string password)
 	: _port(port), Server(password)
 {
@@ -34,10 +32,6 @@ Socket::Socket(int port, string password)
 	cout << BLUE << "Listening on port " << GREEN << PORT << ENDC << endl;
 }
 
-Socket::~Socket()
-{
-}
-
 //
 void Socket::ft_add_user(int i)
 {
@@ -57,6 +51,20 @@ void Socket::ft_add_user(int i)
 	send(i, mssg, strlen(mssg), 0);
 }
 
+void	Socket::init_cmd(string buffer, int sd)
+{
+	vector<string>	ptr = buildVector(buffer);
+
+	if (buffer[0] == '/')
+		find_cmd(ptr);
+	else
+	{
+		//cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
+		if (getClient(sd)->hasChannel()) // IF CLIENT HAS CHANNEL, POST TO CHANNEL	
+			getClient(sd)->channels().front()->post(buffer, sd);
+	}
+}
+
 void Socket::runSocket()
 {
 	int addrlen = sizeof(_addr);
@@ -64,7 +72,6 @@ void Socket::runSocket()
 	int tmp_socket;
 	char buffer[265];
 
-	cout << "Waiting for connection...\n";
 	while (42)
 	{
 		FD_ZERO(&_readFds);
@@ -75,10 +82,7 @@ void Socket::runSocket()
 		{
 			sd = _clientSocket[i];
 			if (sd > 0)
-			{
-				cout << BLUE << "SD: " << sd << ENDC << " on ClientSocket " << i << endl;
 				FD_SET(sd, &_readFds);
-			}
 			if (sd > max_sd)
 				max_sd = sd;
 			// TO TEST if client > client_size
@@ -86,12 +90,12 @@ void Socket::runSocket()
 
 		_activity = select(max_sd + 1, &_readFds, NULL, NULL, NULL);
 		if ((_activity < 0) && (errno != EINTR))
-			cout << RED << "EINTR _activity ERROR\n" << ENDC;
+			cout << RED << "EINTR _activity ERROR\n" << ENDC; //throw
 
 		if (FD_ISSET(_sockFd, &_readFds))
 		{
 			if ((tmp_socket = accept(_sockFd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen)) < 0)
-				cout << RED << "Error: tmp_socket\n" << ENDC;
+				cout << RED << "Error: tmp_socket\n" << ENDC; //throw
 			
 			cout << GREEN << "New Connection Established: tmp_socket " << tmp_socket << " |ip & port tbd|" << ENDC << endl;
 			ft_add_user(tmp_socket);
@@ -121,7 +125,7 @@ void Socket::runSocket()
 				}
 				else
 				{
-					buffer[valread] = '\0'; //this is giving me afucking new LINE 
+					buffer[valread] = '\0'; //this F is giving me afucking new LINE 
 					_requestCall = getClient(sd);
 					init_cmd(buffer, sd);
 				}
@@ -137,49 +141,28 @@ void Socket::runSocket()
 		cout << endl << "----------CH------------" << endl;
 		if (_channels.size() > 0)
 		{
-			for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end(); it++)
-			{cout << "Address:: " << (**it) << endl;
-				/* if (!(*it)->size())
+			for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end();)
+			{
+				cout << "Address:: " << (**it) << endl;
+				if (!(*it)->size())
+				{   
+					cout << RED << "CHANNEL EMPTY NEEDS TO BE DELETED\n" << ENDC;
+					it = _channels.erase(it);
 					delete *it;
-				breakpoint: pointer being freed was not allocated
-				*/
+					//i believe this may be working
+				}
+				else
+				{
+					++it;
+				}
 			}
 		}
 		cout << endl << "----------------------" << endl;
 	}
 }
 
-
-vector<string>	buildVector(string str)
-{
-	vector<string>		tokens;
-	string				t;
-	std::stringstream 	ss(str);
-
-	while (std::getline(ss, t, ' ')) {
-		tokens.push_back(t);
-	}
-
-	//print DEBUG //does not take into considerations quotes "hi buddy"
-	// cout << "Token Created:\n";
-	// vector<string>::iterator it;
-	// for (it = tokens.begin(); it != tokens.end(); it++)
-	// 	cout << *it << endl;
-	// cout << "--------------\n";
-	return (tokens);
-}
-
-
-void	Socket::init_cmd(string buffer, int sd)
-{
-	vector<string>	ptr = buildVector(buffer);
-
-	if (buffer[0] == '/')
-		find_cmd(ptr);
-	else
-	{
-		//cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
-		if (getClient(sd)->hasChannel()) // IF CLIENT HAS CHANNEL, POST TO CHANNEL	
-			getClient(sd)->channels().front()->post(buffer, sd);
-	}
-}
+/* some segfaults,
+some bus erros
+some Heap corruption detected, free list is damaged at 0x600002ba0040
+some life problems....
+*/
