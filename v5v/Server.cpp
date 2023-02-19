@@ -90,6 +90,10 @@ void	Server::find_cmd(vector<string> str)
 	//1 arg ≠ working str.end is str.begin()
 	//it++ needs validation
 	
+	//1 commands, like leave and quite
+	//2 commands like join X nick X 
+	//focusing on NOW- /msg NICK [msg]
+	
 
 	if (str.begin() == str.end() && str.begin()->compare("/leave") == 0) //this isnt working, but you get the point
 	{

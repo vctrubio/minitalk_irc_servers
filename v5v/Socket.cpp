@@ -35,7 +35,7 @@ Socket::Socket(int port, string password)
 //
 void Socket::ft_add_user(int i)
 {
-	string	name = "Guest_" + to_string(i); 
+	char*	name = getenv("USER");
 	Client	*new_connection = new Client(name, i);
 	addClient(new_connection);
 
