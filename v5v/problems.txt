@@ -1,0 +1,15 @@
+ok so first we have a newline in channels that i dont like
+second need to work on presentation
+
+
+
+
+
+TODO
+/leave X
+/topic X [new_topic]: Display or set the topic of channel X
+/whois X
+
+
+
+When someone joins, post to channel, new user 

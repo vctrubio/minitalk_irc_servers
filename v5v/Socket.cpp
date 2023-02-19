@@ -131,13 +131,19 @@ void Socket::runSocket()
 				}
 			}
 		}
-		cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;
 		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
 		{
 			if ((*it)->status() == true)
+			{
 				send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
-			cout << (**it);
+			}
+			if ((*it)->hasChannel())
+				send((*it)->id(), (*it)->prompt(), strlen((*it)->prompt()), 0);
 		}
+		///*
+		cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;
+		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
+			cout << (**it);
 		cout << endl << "----------CH------------" << endl;
 		if (_channels.size() > 0)
 		{
@@ -158,6 +164,7 @@ void Socket::runSocket()
 			}
 		}
 		cout << endl << "----------------------" << endl;
+		//*/
 	}
 }
 

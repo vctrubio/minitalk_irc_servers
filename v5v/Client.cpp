@@ -18,6 +18,23 @@ Client::Client(string name, int id): _name(name), _id(id), _refresh(false)
 Client::~Client()
 {}
 
+
+char*	Client::prompt()
+{
+	if (Channel *ptr = _channels.front())
+	{
+
+		char* topic = strdup(GREEN);
+		strcat(topic, ptr->topic().c_str());
+		strcat(topic, ENDC);
+		strcat(topic, "#");
+		return (topic);
+	} //not really working man , atleast not how i want it to
+	return(strdup(""));
+}
+
+
+
 void	Client::setUser(string str)
 {
 	_user = str;
@@ -29,7 +46,6 @@ void	Client::setUser(string str)
 	send(_id, mssg, strlen(mssg), 0);
 }
 
-
 void	Client::setName(string str)
 {
 	_name = str;
@@ -40,8 +56,6 @@ void	Client::setName(string str)
 	strcat(mssg, "\n");
 	send(_id, mssg, strlen(mssg), 0);
 }
-
-
 
 
 void Client::subscribe(Channel *channel)

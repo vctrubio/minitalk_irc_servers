@@ -4,6 +4,8 @@
 #include "Headers.hpp"
 #include "Client.hpp"
 
+class Client;
+
 class Channel
 {
 	string						_topic;

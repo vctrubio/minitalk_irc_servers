@@ -31,6 +31,7 @@ public:
 	void 	ft_add_user(int i);
 	void	init_cmd(string, int);
 	void	runSocket();
+	void	debug(string);
 };
 
 

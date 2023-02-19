@@ -2,6 +2,7 @@
 #define CLIENT_HPP
 
 #include "Headers.hpp"
+#include "Channel.hpp"
 
 class Channel;
 
@@ -30,6 +31,7 @@ public:
 	string	rtnMssg() {_refresh = false; return _mssg;};
 	void	voidMssg() {_refresh = false; cout << _mssg;};
 	void	refresh(){_refresh = false;};
+	char*	prompt();
 	
 	bool	status() {return _refresh;};
 	int		id() {return _id;};

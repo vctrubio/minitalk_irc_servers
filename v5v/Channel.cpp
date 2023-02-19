@@ -1,8 +1,10 @@
 #include "Channel.hpp"
 
 // Channel::Channel(string topic, Client *admin): _topic(topic), _admin(admin)
-Channel::Channel(string topic): _topic(topic)
+Channel::Channel(string topic)
 {
+	string tmp = topic;
+	_topic = tmp; //FUCKKING NEW LINEp
 	cout << "Channeld # " << _topic << " created \n";
 }
 
@@ -23,7 +25,7 @@ void	Channel::addClient(Client *client)
 
 	if (_clients.size() > 0)
 	{
-		cout << _clients.size() << " SIZE IS\n";
+		cout << _clients.size() << " SIZE IS\n"; //not working 
 		strcat(welcome, ENDC);
 		strcat(welcome, "Online: ");
 		strcat(welcome, YELLOW);
