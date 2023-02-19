@@ -1,11 +1,11 @@
 ok so first we have a newline in channels that i dont like
-second need to work on presentation
+second need to work on presentation, but maybe thats last. how the message is presented and terminal output basically
 
 
+OK- need to deal with 1 subject commands
+2 ....
+3 /msg USER topic 
 
-
-
-TODO
 /leave X
 /topic X [new_topic]: Display or set the topic of channel X
 /whois X
@@ -13,3 +13,13 @@ TODO
 
 
 When someone joins, post to channel, new user 
+
+
+
+
+
+
+
+
+
+-note, segfaults and bus error because we aint throwing anything
