@@ -24,7 +24,9 @@ void	Server::removeClient(Client *client)
     {
         if (*it == client)
         {
+			cout << "User " << (*it)->rtnName() << RED << " Disconnected " << ENDC << endl; 
             _clients.erase(it);
+			delete *it;
             break;
         }
     }	

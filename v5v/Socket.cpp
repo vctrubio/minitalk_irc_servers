@@ -115,16 +115,16 @@ void Socket::runSocket()
 			sd = _clientSocket[i];
 			if (FD_ISSET(sd, &_readFds))
 			{
-				if ((valread = read(sd, buffer, 254)) == 0)
+				if ((valread = read(sd, buffer, 254)) == 0 || strcmp(buffer, "/exit") == 0)
 				{
 					getpeername(sd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen);
-					cout << "User " << RED << " Disconnected " << ENDC << endl; 
 					removeClient(getClient(sd));
 					close(sd);
 					_clientSocket[i] = 0;
 				}
 				else
 				{
+					cout << "BUFFER: " << buffer << "| valread " << valread << endl;
 					buffer[valread] = '\0'; //this F is giving me afucking new LINE 
 					_requestCall = getClient(sd);
 					init_cmd(buffer, sd);

@@ -16,7 +16,10 @@ Client::Client(string name, int id): _name(name), _id(id), _refresh(false)
 }
 
 Client::~Client()
-{}
+{
+	cout << "Client Deconstructor.\n";
+}
+
 
 
 char*	Client::prompt()
