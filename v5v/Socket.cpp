@@ -105,7 +105,7 @@ void Socket::runSocket()
 				if (_clientSocket[i] == 0)
 				{
 					_clientSocket[i] = tmp_socket;
-					cout << "ºAdding to list of _clientrSocket as " << i << endl;
+					cout << "ºAdding to list of _clientrSocket as " << i <<  "SD: " << sd << endl;
 					break;
 				}
 			}
@@ -118,19 +118,22 @@ void Socket::runSocket()
 				if ((valread = read(sd, buffer, 254)) == 0 || strncmp(buffer, "/exit", 5) == 0)
 				{
 					getpeername(sd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen);
-					removeClient(getClient(sd));
+					removeClient(getClient(sd)); // SD is always 0 from what i can see.....
 					close(sd);
 					_clientSocket[i] = 0;
+					if (_clients.empty()) cout << RED << "EMPTY Client list, shouild be set to null so no segfault?\n" << ENDC;
 				}
 				else
 				{
-					cout << "BUFFER: " << buffer << "| valread " << valread << endl;
-					buffer[valread] = '\0'; //this F is giving me afucking new LINE 
+					//cout << "BUFFER: " << buffer << "| valread " << valread << endl;
+					buffer[valread] = '\0'; 
 					_requestCall = getClient(sd);
 					init_cmd(buffer, sd);
 				}
 			}
 		}
+		cout << GREEN << "TESTDEBUG\n" << ENDC;
+
 		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
 		{
 			if ((*it)->status() == true)

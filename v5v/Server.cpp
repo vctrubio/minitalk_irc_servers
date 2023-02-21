@@ -14,6 +14,7 @@ Server::~Server()
 void	Server::addClient(Client *client)
 {
 	_clients.push_back(client);
+	//will this always work or do we need a try and catch?
 }
 
 void	Server::removeClient(Client *client)
@@ -53,13 +54,14 @@ void	Server::printChannels()
 Client	*Server::getClient(int key) 
 {
 
-	for (itr_clients it = _clients.begin(); it != _clients.end(); ++it) {
+	for (itr_clients it = _clients.begin(); it != _clients.end(); ++it)
+	{
 		Client *client= *it;
 		if (client->id() == key)
 			return client;
 	}
-	
-	throw std::out_of_range("Key not found in map");
+
+	throw std::out_of_range("Key not found in map"); //needs a fucking try dummy
 }
 
 Channel*	Server::addChannel(string &topic)
