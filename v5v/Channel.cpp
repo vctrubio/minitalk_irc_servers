@@ -69,7 +69,6 @@ void	Channel::post(string mssg, int id)
     }
 }
 
-
 std::ostream& operator<<(std::ostream& os, Channel& channel)
 {
 	vector<Client *> _clients = channel.clients();
@@ -78,7 +77,7 @@ std::ostream& operator<<(std::ostream& os, Channel& channel)
 	for (int i = 0; i < _clients.size(); i++)
 	{
 		Client *client = _clients[i];
-		os << "Client " << i << ": " << *client << std::endl;
+		os << "Client " << i << ": " << (*client).rtnName() << std::endl;
 	}
 	return os;
 

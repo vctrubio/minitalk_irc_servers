@@ -15,7 +15,7 @@ class Client
 	bool	_refresh;
 	int		_id;
 
-    vector<Channel *>			_channels; //first element is the one he is connected to
+    vector<Channel *>			_channels; //first element is the one he is connected to .front()
     vector<Channel *>::iterator	_itC;
 	
 public:

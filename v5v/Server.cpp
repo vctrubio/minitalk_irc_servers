@@ -78,8 +78,8 @@ Channel*	Server::addChannel(string &topic)
 
 void	Server::rmChannel(Channel *channel)
 {
-	std::vector<Channel *>::iterator it = std::find(_channels.begin(), _channels.end(), channel);
-	if (it != _channels.end())
+	std::vector<Channel *>::iterator it = find(_channels.begin(), _channels.end(), channel);
+	if ((*it) == channel)
 	{
 		_channels.erase(it);
 		delete *it;
@@ -112,7 +112,7 @@ void	Server::find_cmd(vector<string> str)
 		if (*it == "/join" && it == str.begin())
 		{
 			cout << "DO THE JOIN\n";
-			it++; 
+			it++;
 			Channel *ptr = addChannel((*it)); //always returns a channel, so need to throw if alreraedy exist;
 			if (!_requestCall->hasChannel(ptr))
 			{

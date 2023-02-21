@@ -125,6 +125,7 @@ void Socket::runSocket()
 				}
 				else
 				{
+					//valread = buffer + 2 ('\r\n')
 					//cout << "BUFFER: " << buffer << "| valread " << valread << endl;
 					buffer[valread] = '\0'; 
 					_requestCall = getClient(sd);

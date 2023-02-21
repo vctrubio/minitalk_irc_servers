@@ -1,6 +1,6 @@
 ok so first we have a newline in channels that i dont like
 second need to work on presentation, but maybe thats last. how the message is presented and terminal output basically
-
+When someone joins, post to channel, new user 
 
 OK- need to deal with 1 subject commands
 2 ....
@@ -12,14 +12,6 @@ OK- need to deal with 1 subject commands
 
 
 
-When someone joins, post to channel, new user 
-
-
-
-
-
-
-
-
-
 -note, segfaults and bus error because we aint throwing anything
+
+-----------------------------
