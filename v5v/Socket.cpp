@@ -115,7 +115,7 @@ void Socket::runSocket()
 			sd = _clientSocket[i];
 			if (FD_ISSET(sd, &_readFds))
 			{
-				if ((valread = read(sd, buffer, 254)) == 0 || strcmp(buffer, "/exit") == 0)
+				if ((valread = read(sd, buffer, 254)) == 0 || strncmp(buffer, "/exit", 5) == 0)
 				{
 					getpeername(sd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen);
 					removeClient(getClient(sd));
