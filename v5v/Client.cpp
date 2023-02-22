@@ -20,20 +20,28 @@ Client::~Client()
 	cout << "Client Deconstructor.\n";
 }
 
+void	Client::setFront(Channel *ptr)
+{
+  std::vector<Channel*>::iterator it = std::find(_channels.begin(), _channels.end(), ptr);
+  if (it != _channels.end()) {
+    std::rotate(_channels.begin(), it, it + 1);
+  }
+}
 
 
-char*	Client::prompt()
+string	Client::prompt()
 {
 	if (Channel *ptr = _channels.front())
 	{
-
-		char* topic = strdup(GREEN);
-		strcat(topic, ptr->topic().c_str());
-		strcat(topic, ENDC);
-		strcat(topic, "#");
+		string topic = GREEN;
+		topic += ptr->topic();
+		topic += ENDC;
+		topic += "#";
 		return (topic);
 	} //not really working man , atleast not how i want it to
-	return(strdup(""));
+	string empt = "";
+	return (empt);
+
 }
 
 
@@ -41,23 +49,23 @@ char*	Client::prompt()
 void	Client::setUser(string str)
 {
 	_user = str;
-	char *mssg = strdup("Nickname changed to: ");
-	strcat(mssg, GREEN);
-	strcat(mssg, str.c_str());
-	strcat(mssg, ENDC);
-	strcat(mssg, "\n");
-	send(_id, mssg, strlen(mssg), 0);
+	string mssg = "Nickname changed to: ";
+	mssg += GREEN;
+	mssg += str;
+	mssg += ENDC;
+	mssg += "\n";
+	send(_id, mssg.c_str(), mssg.size(), 0);
 }
 
 void	Client::setName(string str)
 {
 	_name = str;
-	char *mssg = strdup("Name changed to: ");
-	strcat(mssg, GREEN);
-	strcat(mssg, str.c_str());
-	strcat(mssg, ENDC);
-	strcat(mssg, "\n");
-	send(_id, mssg, strlen(mssg), 0);
+	string mssg = "Name changed to: ";
+	mssg += GREEN;
+	mssg += str;
+	mssg += ENDC;
+	mssg += "\n";
+	send(_id, mssg.c_str(), mssg.size(), 0);
 }
 
 
@@ -77,12 +85,11 @@ void Client::desubscribe(Channel *channel)
 		if (*_itC == channel)
 		{
 			_channels.erase(_itC); 
-			char *mssg = strdup("Leaving Channel# ");
-			strcat(mssg, RED);
-			//strcat(mssg, channel->topic()); Doesnt fucking work cuase they are not friends and you can't add the header Channel in Clients because of fucking CPP stupid compilations
-			strcat(mssg, ENDC);
-			strcat(mssg, "\n");
-			send(_id, mssg, strlen(mssg), 0);
+			string mssg = "Leaving Channel# ...\n";
+			// strcat(mssg, RED);
+			// //strcat(mssg, channel->topic()); Doesnt fucking work cuase they are not friends and you can't add the header Channel in Clients because of fucking CPP stupid compilations
+			// strcat(mssg, ENDC);
+			send(_id, mssg.c_str(), mssg.size(), 0);
 			return ;
 		}
 	};

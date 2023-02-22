@@ -58,7 +58,10 @@ Client	*Server::getClient(int key)
 	{
 		Client *client= *it;
 		if (client->id() == key)
+		{
+			cout << RED << "getClient ID: " << client->id() << " VS: " << key << ENDC << endl;
 			return client;
+		}
 	}
 
 	throw std::out_of_range("Key not found in map"); //needs a fucking try dummy
@@ -111,13 +114,16 @@ void	Server::find_cmd(vector<string> str)
 		cout << "INIT find_cmd:"  << (*it) << endl;
 		if (*it == "/join" && it == str.begin())
 		{
-			cout << "DO THE JOIN\n";
 			it++;
-			Channel *ptr = addChannel((*it)); //always returns a channel, so need to throw if alreraedy exist;
+			Channel *ptr = addChannel((*it));
 			if (!_requestCall->hasChannel(ptr))
 			{
-				cout << "ADDING NOT SEEN BEFORE\n";
 				ptr->addClient(_requestCall);
+			}
+			else
+			{
+				cout << "Client already has channel, so adding to front of channel....\n";
+				_requestCall->setFront(ptr);
 			}
 		}
 		else if (*it == "/leave" && *it == str.front())

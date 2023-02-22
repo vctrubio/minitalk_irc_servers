@@ -40,15 +40,13 @@ void Socket::ft_add_user(int i)
 	addClient(new_connection);
 
 	string	host = new_connection->rtnHost();
-	char	*mssg = strdup("Welcome: ");
-	strcat(mssg, GREEN);
-	strcat(mssg, host.c_str());
-	strcat(mssg, ENDC);
-	strcat(mssg, "\n\
-	/nick [nickname] to change your nickname\n\
-	/name [name] to change your name\n\
-	/help for more help.\n");
-	send(i, mssg, strlen(mssg), 0);
+	string mssg = "Welcome: ";
+
+	mssg +=  GREEN;
+	mssg +=  host;
+	mssg +=  ENDC;
+	mssg +=  "\n nick [nickname] to change your nickname\nname [name] to change your name\nhelp for more help.\n";
+	send(i, mssg.c_str(), mssg.size(), 0);
 }
 
 void	Socket::init_cmd(string buffer, int sd)
@@ -121,7 +119,7 @@ void Socket::runSocket()
 					removeClient(getClient(sd)); // SD is always 0 from what i can see.....
 					close(sd);
 					_clientSocket[i] = 0;
-					if (_clients.empty()) cout << RED << "EMPTY Client list, shouild be set to null so no segfault?\n" << ENDC;
+					if (_clients.empty()) cout << RED << "EMPTY Client list, s houild be set to null so no segfault?\n" << ENDC;
 				}
 				else
 				{
@@ -142,7 +140,7 @@ void Socket::runSocket()
 				send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
 			}
 			if ((*it)->hasChannel())
-				send((*it)->id(), (*it)->prompt(), strlen((*it)->prompt()), 0);
+				send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
 		}
 		///*
 		cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;

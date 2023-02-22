@@ -31,7 +31,7 @@ public:
 	string	rtnMssg() {_refresh = false; return _mssg;};
 	void	voidMssg() {_refresh = false; cout << _mssg;};
 	void	refresh(){_refresh = false;};
-	char*	prompt();
+	string	prompt();
 	
 	bool	status() {return _refresh;};
 	int		id() {return _id;};
@@ -44,6 +44,7 @@ public:
 
 	void	setName(string str);
 	void	setUser(string str);
+	void	setFront(Channel* ptr);
 
 	vector<Channel *>	channels(){return _channels;};
 	bool				hasChannel() { return _channels.empty() ? false : true;};
