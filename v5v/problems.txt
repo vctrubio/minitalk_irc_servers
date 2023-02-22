@@ -15,3 +15,7 @@ OK- need to deal with 1 subject commands
 -note, segfaults and bus error because we aint throwing anything
 
 -----------------------------
+What I'm doing
+-throw catch and release
+-fdgetClient is not always working, it will now
+----
