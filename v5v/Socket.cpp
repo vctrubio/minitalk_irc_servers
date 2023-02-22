@@ -157,6 +157,7 @@ void Socket::runSocket()
 					cout << RED << "CHANNEL EMPTY NEEDS TO BE DELETED\n" << ENDC;
 					it = _channels.erase(it);
 					delete *it;
+					break;
 					//i believe this may be working
 				}
 				else

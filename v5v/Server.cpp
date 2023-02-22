@@ -2,7 +2,6 @@
 
 Server::Server(string password): _password(password)
 {
-    cout << "Server up and running.\n";
 }
 
 Server::~Server()
@@ -53,17 +52,12 @@ void	Server::printChannels()
 
 Client	*Server::getClient(int key) 
 {
-
 	for (itr_clients it = _clients.begin(); it != _clients.end(); ++it)
 	{
 		Client *client= *it;
 		if (client->id() == key)
-		{
-			cout << RED << "getClient ID: " << client->id() << " VS: " << key << ENDC << endl;
 			return client;
-		}
 	}
-
 	throw std::out_of_range("Key not found in map"); //needs a fucking try dummy
 }
 
@@ -104,6 +98,7 @@ void	Server::find_cmd(vector<string> str)
 
 	if (str.begin() == str.end() && str.begin()->compare("/leave") == 0) //this isnt working, but you get the point
 	{
+		cout << RED << "EASY LEEAVE\n";
 		Channel *ptr = _requestCall->channels().front(); //
 		cout << "CHANNEL TO LEAVE : " << ptr << " : " << ptr->topic() << endl;
 		ptr->rmClient(_requestCall);
@@ -117,22 +112,21 @@ void	Server::find_cmd(vector<string> str)
 			it++;
 			Channel *ptr = addChannel((*it));
 			if (!_requestCall->hasChannel(ptr))
-			{
 				ptr->addClient(_requestCall);
-			}
 			else
-			{
-				cout << "Client already has channel, so adding to front of channel....\n";
 				_requestCall->setFront(ptr);
-			}
 		}
 		else if (*it == "/leave" && *it == str.front())
 		{
-			it++; 
-			// else throw front channel if no args passed //check if there is also .front()
-			Channel *ptr = _requestCall->channels().front(); //we have segfaults here but watevr, 
-			cout << "CHANNEL TO LEAVE : " << ptr << " : " << ptr->topic() << endl;
-			ptr->rmClient(_requestCall);
+			it++; // else throw front channel if no args passed //check if there is also .front()
+			Channel *ptr = _requestCall->rtnChannel(*it); //we have segfaults here but watevr, 
+			if (ptr)
+			{
+				cout << "CHANNEL TO LEAVE HARDWAY: " << ptr << " : " << ptr->topic() << endl;
+				ptr->rmClient(_requestCall);
+			}
+			else
+				cout << "CHANNEL TO LEAVE: SORRY NOT FOUND\n";
 		}
 		else if (*it == "/nick" && *it == str.front())
 		{

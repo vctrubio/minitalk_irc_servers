@@ -28,6 +28,16 @@ void	Client::setFront(Channel *ptr)
   }
 }
 
+Channel*	Client::rtnChannel(string topic)
+{
+	for (_itC = _channels.begin(); _itC != _channels.end(); _itC++)
+	{
+		if ((*_itC)->topic() == topic)
+			return (*_itC);
+	}
+	return nullptr;
+};
+
 
 string	Client::prompt()
 {

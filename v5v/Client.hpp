@@ -47,6 +47,7 @@ public:
 	void	setFront(Channel* ptr);
 
 	vector<Channel *>	channels(){return _channels;};
+	Channel*			rtnChannel(string topic);
 	bool				hasChannel() { return _channels.empty() ? false : true;};
 	bool				hasChannel(Channel *channel) {for(_itC = _channels.begin(); _itC != _channels.end(); _itC++) {if(*_itC == channel) return true;} return false;};
 };

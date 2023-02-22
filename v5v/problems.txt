@@ -11,11 +11,8 @@ OK- need to deal with 1 subject commands
 /whois X
 
 
-
--note, segfaults and bus error because we aint throwing anything
-
+- it stalls when its over MAX_CLIENTS
 -----------------------------
 What I'm doing
 -throw catch and release
--fdgetClient is not always working, it will now
 ----
