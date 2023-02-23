@@ -156,7 +156,7 @@ void Socket::runSocket()
 			{
 				if (!(*it)->size())
 				{   
-					cout << RED << "CHANNEL EMPTY NEEDS TO BE DELETED\n" << ENDC;
+				//	cout << RED << "CHANNEL EMPTY NEEDS TO BE DELETED\n" << ENDC;
 					Channel *ptr = *it;
 					it = _channels.erase(it);
 					delete ptr;

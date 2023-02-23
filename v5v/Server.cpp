@@ -19,15 +19,17 @@ void	Server::removeClient(Client *client)
 {
    itr_clients it;
 
-    for (it = _clients.begin(); it != _clients.end(); ++it)
+    for (it = _clients.begin(); it != _clients.end();) 
     {
         if (*it == client)
         {
 			cout << "User " << (*it)->rtnName() << RED << " Disconnected " << ENDC << endl; 
-            _clients.erase(it);
-			delete *it;
-            break;
+            Client *ptr = *it;
+			it = _clients.erase(it);
+			delete ptr;
         }
+		else
+			it++;
     }	
 }
 
