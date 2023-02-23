@@ -36,6 +36,8 @@
 #define MAX_CLIENTS 5
 #define PORT 8000
 #define BUFF_SIZE 1000
+#define WIDTH 100
+#define HEIGHT 20
 
 # define BLACK	"\033[0;30m"
 # define RED	"\033[0;31m"
