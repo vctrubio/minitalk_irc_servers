@@ -27,7 +27,7 @@ void	Channel::addClient(Client *client)
 	{
 		cout << _clients.size() << " SIZE IS\n"; //not working 
 		welcome += ENDC;
-		welcome += "Online: ";
+		welcome += " |Online: ";
 		welcome += YELLOW;
 		string	name;
 		for (_itC = _clients.begin(); _itC != _clients.end(); _itC++)

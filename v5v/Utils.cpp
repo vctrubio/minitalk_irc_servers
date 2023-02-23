@@ -94,7 +94,7 @@ void	putHistory(vector<Post*> history, string &out)
 	vector<Post*>::iterator it = history.begin();
 
 	int size;
-	//need to substr
+	//need to trunc if too long into two lines
 	while (*it)
 	{
 		for (size = 0; size < WIDTH + 2;)
@@ -155,7 +155,7 @@ void	putChannel(Channel *channel, string &out, int i, int p)
 	out += "\n";
 	putUnderScore(out);
 
-	//if message history, put message history, or new message
+	//if message history, put message history
 	if (!channel->history.empty())
 		putHistory(channel->history, out);
 }

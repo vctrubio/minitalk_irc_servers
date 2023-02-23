@@ -116,21 +116,25 @@ void Socket::runSocket()
 				if ((valread = read(sd, buffer, 254)) == 0 || strncmp(buffer, "/exit", 5) == 0)
 				{
 					getpeername(sd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen);
-					removeClient(getClient(sd)); // SD is always 0 from what i can see.....
+					removeClient(getClient(sd));
 					close(sd);
 					_clientSocket[i] = 0;
-					if (_clients.empty()) cout << RED << "EMPTY Client list, s houild be set to null so no segfault?\n" << ENDC;
 				}
 				else
 				{
-					//valread = buffer + 2 ('\r\n')
-					//cout << "BUFFER: " << buffer << "| valread " << valread << endl;
+					// FIRST: CHECK TO SEE IF 2 CHARS at teh END EXIST (PROTOCOL IN IRC) Not always granted
+					// cout << "BUFFER: " << buffer << ":"<< strlen(buffer) << "| valread " << valread << endl;
 					buffer[valread] = '\0'; 
+					string trimBuffer = string(buffer);
+					trimBuffer.resize(valread - 2);
+					// cout << "BUFFER: " << trimBuffer << ":"<< trimBuffer.length() << "| valread " << valread << endl;
 					_requestCall = getClient(sd);
-					init_cmd(buffer, sd);
+					init_cmd(trimBuffer, sd);
 				}
 			}
 		}
+
+
 		//all this extra loop must be converted into an actual function...
 		if (!_clients.empty())
 		{
@@ -144,7 +148,6 @@ void Socket::runSocket()
 					send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
 			}
 		}
-		///*
 		cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;
 		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
 			cout << (**it);
@@ -164,13 +167,7 @@ void Socket::runSocket()
 					it++;
 			}
 		}
+		printChannels();
 		cout << endl << "----------------------" << endl;
-		//*/
 	}
 }
-
-/* some segfaults,
-some bus erros
-some Heap corruption detected, free list is damaged at 0x600002ba0040
-some life problems....
-*/

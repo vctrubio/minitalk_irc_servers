@@ -7,7 +7,7 @@
 vector<string>	buildVector(string str);
 
 
-//FOR UI
+//FOR UI Interface
 void	welcome(string name);
 void	putUnderScore(string &out);
 void	putLine(string &out, char c);

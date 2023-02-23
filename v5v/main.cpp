@@ -57,7 +57,7 @@ void	TestInterface()
 	{
 		vector<Channel*>::iterator it;;
 		it = _channels.begin();
-		int p = 0; //to find position, if P = 0; make channel green because thats the one connected to
+		int p = 0; //to find position, if P = 0; make channel GREEN because thats the one connected to
 		while (*it)
 		{
 			putChannel(*it, ptr, (*it)->size(), p);
@@ -87,16 +87,12 @@ int main()
 {
 	//What is would like to connect as a USER, change cout to send() for it to work with sockfds
 	//welcome("Papito");	//send welcome mss
-	TestInterface();		//a loop that is send everytime to the user
+	// TestInterface();		//a loop that is send everytime to the user
 
-
-	
 	//
+	Socket	serv(PORT, "password");
 
-
-	//Socket	serv(PORT, "password");
-
-/*	try 
+	try 
 	{
 		serv.runSocket();
 	}
@@ -104,7 +100,6 @@ int main()
 	{
 		cerr << "Error Cought: " << e.what() << endl;
 	}
-*/
 
 	return 1;
 }
