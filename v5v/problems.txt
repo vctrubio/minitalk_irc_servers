@@ -1,5 +1,4 @@
 ok so first we have a newline in channels that i dont like
-second need to work on presentation, but maybe thats last. how the message is presented and terminal output basically
 When someone joins, post to channel, new user 
 
 OK- need to deal with 1 subject commands
@@ -14,5 +13,5 @@ OK- need to deal with 1 subject commands
 - it stalls when its over MAX_CLIENTS
 -----------------------------
 What I'm doing
--throw catch and release
+-presentation (UI)
 ----

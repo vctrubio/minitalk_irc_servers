@@ -95,7 +95,7 @@ void Socket::runSocket()
 			if ((tmp_socket = accept(_sockFd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen)) < 0)
 				cout << RED << "Error: tmp_socket\n" << ENDC; //throw
 			
-			cout << GREEN << "New Connection Established: tmp_socket " << tmp_socket << " |ip & port tbd|" << ENDC << endl;
+		//	cout << GREEN << "New Connection Established: tmp_socket " << tmp_socket << " |ip & port tbd|" << ENDC << endl;
 			ft_add_user(tmp_socket);
 
 			for (int i = 0; i < MAX_CLIENTS; i++)
@@ -103,7 +103,7 @@ void Socket::runSocket()
 				if (_clientSocket[i] == 0)
 				{
 					_clientSocket[i] = tmp_socket;
-					cout << "ºAdding to list of _clientrSocket as " << i <<  "SD: " << sd << endl;
+		//			cout << "ºAdding to list of _clientrSocket as " << i <<  "SD: " << sd << endl;
 					break;
 				}
 			}
@@ -131,7 +131,6 @@ void Socket::runSocket()
 				}
 			}
 		}
-		cout << GREEN << "TESTDEBUG\n" << ENDC;
 		//all this extra loop must be converted into an actual function...
 		if (!_clients.empty())
 		{
