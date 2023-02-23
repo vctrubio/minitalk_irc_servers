@@ -133,14 +133,17 @@ void Socket::runSocket()
 		}
 		cout << GREEN << "TESTDEBUG\n" << ENDC;
 		//all this extra loop must be converted into an actual function...
-		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
+		if (!_clients.empty())
 		{
-			if ((*it)->status() == true)
+			for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
 			{
-				send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
+				if ((*it)->status() == true)
+				{
+					send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
+				}
+				if ((*it)->hasChannel())
+					send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
 			}
-			if ((*it)->hasChannel())
-				send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
 		}
 		///*
 		cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;
