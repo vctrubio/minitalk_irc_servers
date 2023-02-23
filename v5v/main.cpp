@@ -16,9 +16,7 @@ void	TestInterface()
 	vector<string>	msg;
 	vector<Channel*>	_channels;
 
-	cout << "TEST\n";
 	string ptr = YELLOW;
-
 	if (name.length() > WIDTH)
 		name = name.substr(0, WIDTH);
 

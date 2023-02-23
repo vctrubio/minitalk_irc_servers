@@ -95,10 +95,8 @@ void	putHistory(vector<Post*> history, string &out)
 
 	int size;
 	//need to substr
-	cout << "HELLO WORLDasdadsajkdlasjdaj dklaj lskd\n";
 	while (*it)
 	{
-		cout << "HERE IS FRON\n";
 		for (size = 0; size < WIDTH + 2;)
 		{
 			if (size == 0 || size == WIDTH + 1)
