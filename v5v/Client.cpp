@@ -17,6 +17,11 @@ Client::Client(string name, int id): _name(name), _id(id), _refresh(false)
 
 Client::~Client()
 {
+	for (_itC = _channels.begin(); _itC != _channels.end(); _itC++)
+	{
+		if (*_itC)
+			desubscribe(*_itC);
+	}
 	cout << "Client Deconstructor.\n";
 }
 

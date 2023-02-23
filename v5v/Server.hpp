@@ -29,7 +29,7 @@ public:
 
 	void	rmChannel(Channel *channel);
 	Channel	*addChannel(string &topic);
-	int		size(){return _clients.size();};
+	int		size(){ if (!_channels.empty()) return _clients.size(); return 0;};
 	void	find_cmd(vector<string> str);
 };
 

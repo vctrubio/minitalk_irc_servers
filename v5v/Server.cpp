@@ -9,7 +9,6 @@ Server::~Server()
 }
 
 
-
 void	Server::addClient(Client *client)
 {
 	_clients.push_back(client);

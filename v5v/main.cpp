@@ -9,7 +9,16 @@
 int main()
 {
 	Socket	serv(PORT, "password");
-	serv.runSocket();
-	
+
+	try 
+	{
+		serv.runSocket();
+	}
+	catch (exception &e)
+	{
+		cerr << "Error Cought: " << e.what() << endl;
+	}
+
+
 	return 1;
 }

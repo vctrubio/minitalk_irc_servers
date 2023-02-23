@@ -132,7 +132,7 @@ void Socket::runSocket()
 			}
 		}
 		cout << GREEN << "TESTDEBUG\n" << ENDC;
-
+		//all this extra loop must be converted into an actual function...
 		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
 		{
 			if ((*it)->status() == true)
@@ -147,23 +147,19 @@ void Socket::runSocket()
 		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
 			cout << (**it);
 		cout << endl << "----------CH------------" << endl;
-		if (_channels.size() > 0)
+		if (!_channels.empty())
 		{
-			for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end();)
+			for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end();) 
 			{
-				cout << "Address:: " << (**it) << endl;
 				if (!(*it)->size())
 				{   
 					cout << RED << "CHANNEL EMPTY NEEDS TO BE DELETED\n" << ENDC;
+					Channel *ptr = *it;
 					it = _channels.erase(it);
-					delete *it;
-					break;
-					//i believe this may be working
+					delete ptr;
 				}
 				else
-				{
-					++it;
-				}
+					it++;
 			}
 		}
 		cout << endl << "----------------------" << endl;
