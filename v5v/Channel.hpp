@@ -3,8 +3,10 @@
 
 #include "Headers.hpp"
 #include "Client.hpp"
+#include "Post.hpp"
 
 class Client;
+class Post;
 
 class Channel
 {
@@ -18,6 +20,7 @@ public:
 	Channel(string topic);
 	~Channel();
 
+	vector<Post*>	history; //to add, display, messages, now posting directly here and not user;	
 	void			addClient(Client *client);
 	void			rmClient(Client *client);
 

@@ -3,128 +3,10 @@
 #include "Client.hpp"
 #include "Channel.hpp"
 #include "Server.hpp"
+#include "Post.hpp"
 
 
-void	welcome(string name)
-{
-
-	string	mssg = GREEN;
-	mssg += "Connected\n";
-	mssg += ENDC;
-	mssg += "UI: Please provide a big enough screen; you should see this message in a single line (80CHARS_MIN)\n";
-	mssg += "/help for CMD instructions.\n";
-	mssg += "/doc for IRC documentation.\n";
-	mssg += "/join channel to connect to #channels\n";
-
-	cout << mssg;	
-//	send(sockfd, mssg.c_str(), mssg.size(), 0);
-}
-
-void	putUnderScore(string &out)
-{
-	int i = 0;
-	for (int size = 0; size < WIDTH + 1;) //topic_underline
-	{
-		if (size == 0 || size == WIDTH)
-			out += "|";
-		else
-		{
-			if (i % 2 == 0)
-				out += '-';
-			else
-				out += ' ';
-			i++;
-		}
-		++size;
-	}
-	out += "\n";
-}
-
-
-
-
-void	putLine(string &out, char c)
-{
-	for (int size = 0; size < WIDTH + 1;) //topic
-	{
-		if (size == 0 || size == WIDTH)
-			out += "|";
-		else
-			out += c;
-		++size;
-	}
-	out += "\n";
-}
-
-
-
-void	putChannel(Channel *channel, string &out, int i, int p)
-{
-	string	iSize;
-	iSize = "[";
-	iSize += to_string(i);
-	iSize += "]";
-
-	//if p do GREEN
-
-	int marginUnit = WIDTH - iSize.length();
-	cout << "MU: " << marginUnit << endl;
-
-	int size = 0;
-	while (size <= WIDTH)
-	{
-		if (size == 0 || size == WIDTH)
-		{
-			out += "|";
-			size++;
-		}
-		else if (size <= channel->topic().length() - 1)
-		{
-			if (p == 0)
-				out += GREEN;
-			out += channel->topic();
-			size += channel->topic().length();
-		}
-		else if (size >= marginUnit)
-		{
-			out += iSize;
-			if (p == 0)
-				out += ENDC;
-			size += iSize.length();
-		}
-		else 
-		{
-			out += " ";
-			++size;
-		}
-	}
-	out += "\n";
-}
-
-void	putRight(string in, string &out, char c)
-{
-	int size; 
-
-	cout << "in leght = "<< in.length() << endl;
-
-	for (size = 0; size < WIDTH + 2;) //topic
-	{
-		if (size == 0 || size == WIDTH + 1)
-			out += "|";
-		else if (size <= in.length() - 1)
-		{
-			out += in;
-			size += in.length();
-		}
-		else
-			out += c;
-		++size;
-	}
-	out += "\n";
-
-} 
-
-void	interface()
+void	TestInterface()
 {
 	string			buffer;
 	string			topic;
@@ -162,6 +44,17 @@ void	interface()
 	_channels.push_back(&a);
 	_channels.push_back(&b);
 
+	Client peter("PeterPop", 21);
+
+	Post p2(&peter, "what", JOIN);
+	a.history.push_back(&p2);
+
+	Post p3(&peter, "hello world", MSSG);
+	a.history.push_back(&p3);
+
+	Post p4(&peter, "hello world", LEAVE);
+	a.history.push_back(&p4);
+
 	if (!_channels.empty())
 	{
 		vector<Channel*>::iterator it;;
@@ -170,7 +63,6 @@ void	interface()
 		while (*it)
 		{
 			putChannel(*it, ptr, (*it)->size(), p);
-			putUnderScore(ptr);
 			putLine(ptr, '_');
 			p++;
 			it++;
@@ -188,30 +80,19 @@ void	interface()
 		}
 		putLine(ptr, '-');
 	}
-
-
 	buffer += ptr;
-
-
-
-
 	cout << "BUFFER: \n" << buffer << endl;
-
-
-
 }
-
-
 
 
 int main()
 {
 	//What is would like to connect as a USER, change cout to send() for it to work with sockfds
 	//welcome("Papito");	//send welcome mss
-	interface();		//a loop that is send everytime to the user
+	TestInterface();		//a loop that is send everytime to the user
 
 
-
+	
 	//
 
 

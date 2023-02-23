@@ -21,7 +21,6 @@ class Client
 public:
 	Client();
 	Client(string name, int id);
-	Client(int id);
 	~Client();
 	
 	string	rtnName() {return _name;};

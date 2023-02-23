@@ -48,4 +48,14 @@
 # define ENDC	"\033[0m"
 
 using namespace std;
+
+
+enum post
+{
+    JOIN,
+    MSSG,
+    PRIVATE,
+    LEAVE,
+};
+
 #endif
