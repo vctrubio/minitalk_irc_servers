@@ -140,5 +140,4 @@ void	Server::find_cmd(vector<string> str)
 			_requestCall->setName(*it);	
 		}
 	}
-
 	}

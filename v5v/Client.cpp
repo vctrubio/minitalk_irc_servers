@@ -4,10 +4,11 @@ Client::Client()
 {
 	_name = "Bobito";
 	_refresh = false;
+	_refreshChannel = false;
 	_mssg = "";
 }
 
-Client::Client(string name, int id): _name(name), _id(id), _refresh(false)
+Client::Client(string name, int id): _name(name), _id(id), _refresh(false), _refreshChannel(false)
 {
 	_user = name + "_username";
 	gethostname(_host, 60);
@@ -42,17 +43,25 @@ Channel*	Client::rtnChannel(string topic)
 
 string	Client::prompt()
 {
-	if (Channel *ptr = _channels.front())
-	{
-		string topic = GREEN;
-		topic += ptr->topic();
-		topic += ENDC;
-		topic += "#";
-		return (topic);
-	} //not really working man , atleast not how i want it to
-	string empt = "";
-	return (empt);
+	string mssg;
+	int i = 0;
 
+	_itC = _channels.begin();
+	while (*_itC)
+	{
+		if (i == 0)
+			mssg += GREEN;
+		mssg += "#" + (*_itC)->topic();
+		if (i == 0)
+			mssg += ENDC;
+		mssg += "[";
+		mssg += (*_itC)->size();
+		mssg += "] ";
+		_itC++;
+		i++;
+	}
+	mssg += "\n";
+	return mssg;
 }
 
 

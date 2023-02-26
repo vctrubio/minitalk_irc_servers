@@ -14,6 +14,37 @@ Channel::~Channel()
 }
 
 
+void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)
+{
+
+	//JOIN send ChannellName[size][+1]: name has Joined
+	string	mssg;
+
+	_itC = _clients.begin();
+	// cout << RED << "CHANNEL SIZE = " << channel->size() <<  endl << ENDC;  //working here but not working in the loop
+	if (type == JOIN)
+	{
+		mssg = "#" + channel->topic() + "[";
+		mssg += GREEN;
+		mssg += "+1";
+		mssg += ENDC; 
+		mssg += "] ";
+		mssg += GREEN + client->rtnName();
+		mssg += " joined\n";
+		mssg += ENDC;
+		// cout << RED << "TRIGGER JOIN\n" << ENDC;
+		while (*_itC)
+		{
+			if ((*_itC) != client)
+				send((*_itC)->id(), mssg.c_str(), mssg.size(), 0);
+			_itC++;
+		}
+
+	}
+
+}
+
+
 void	Channel::addClient(Client *client)
 {
 	_clients.push_back(client);
@@ -43,6 +74,7 @@ void	Channel::addClient(Client *client)
 	welcome += ENDC;
 	welcome += "\n";
 	send(client->id(), welcome.c_str(), welcome.size(), 0);
+	trigger_mssg(this, client, JOIN);
 }
 
 void	Channel::rmClient(Client *client)

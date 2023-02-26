@@ -13,6 +13,7 @@ class Client
 	char	_host[60]; //hostname
 	string	_mssg;
 	bool	_refresh;
+	bool	_refreshChannel;
 	int		_id;
 
     vector<Channel *>			_channels; //first element is the one he is connected to .front()
@@ -30,6 +31,8 @@ public:
 	string	rtnMssg() {_refresh = false; return _mssg;};
 	void	voidMssg() {_refresh = false; cout << _mssg;};
 	void	refresh(){_refresh = false;};
+	void	refreshChannel(){_refreshChannel = false;};
+	bool	isRefreshChannel(){return _refreshChannel;};
 	string	prompt();
 	
 	bool	status() {return _refresh;};

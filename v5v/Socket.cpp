@@ -58,7 +58,7 @@ void	Socket::init_cmd(string buffer, int sd)
 	else
 	{
 		//cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
-		if (getClient(sd)->hasChannel()) // IF CLIENT HAS CHANNEL, POST TO CHANNEL	
+		if (getClient(sd)->hasChannel())
 			getClient(sd)->channels().front()->post(buffer, sd);
 	}
 }
@@ -144,7 +144,8 @@ void Socket::runSocket()
 				{
 					send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
 				}
-				if ((*it)->hasChannel())
+				(*it)->refreshChannel(); //for teh sake of the next line
+				if ((*it)->hasChannel() && (*it)->isRefreshChannel())
 					send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
 			}
 		}

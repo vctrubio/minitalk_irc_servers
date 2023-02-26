@@ -3,6 +3,7 @@
 
 Post::Post(Client *client, string mssg, post action): _client(client)
 {
+    //add timestamp
     if (action == JOIN)
     {
        _mssg = client->rtnName() +  ": joined";

@@ -23,6 +23,7 @@ public:
 	vector<Post*>	history; //to add, display, messages, now posting directly here and not user;	
 	void			addClient(Client *client);
 	void			rmClient(Client *client);
+	void			trigger_mssg(Channel *channel, Client *client, enum post type);
 
 	void			post(string messg, int id);
 	string			topic(){return _topic;};
