@@ -113,6 +113,12 @@ void	Server::find_cmd(vector<string> str)
 		if (_requestCall->hasChannel())
 			_requestCall->refreshChannel();		
 	}
+	else if (*it == "/channels")
+	{
+		it++;
+		if (_requestCall->hasChannel() && it == str.end())
+			_requestCall->refreshChannel();	
+	}
 	else if (*it == "/nick")
 	{
 		it++;

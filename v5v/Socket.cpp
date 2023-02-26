@@ -45,7 +45,7 @@ void Socket::ft_add_user(int i)
 	mssg +=  GREEN;
 	mssg +=  host;
 	mssg +=  ENDC;
-	mssg +=  "\n/nick [nickname] to change your nickname\n/name [name] to change your name\n/help for more help.\n------------------";
+	mssg +=  "\n/nick [nickname] to change your nickname\n/name [name] to change your name\n/help for more help.\n------------------\n";
 	send(i, mssg.c_str(), mssg.size(), 0);
 }
 
