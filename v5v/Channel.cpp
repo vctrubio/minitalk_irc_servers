@@ -17,7 +17,6 @@ Channel::~Channel()
 void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)
 {
 
-	//JOIN send ChannellName[size][+1]: name has Joined
 	string	mssg;
 
 	_itC = _clients.begin();
@@ -32,7 +31,6 @@ void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)
 		mssg += GREEN + client->rtnName();
 		mssg += " joined\n";
 		mssg += ENDC;
-		// cout << RED << "TRIGGER JOIN\n" << ENDC;
 		while (*_itC)
 		{
 			if ((*_itC) != client)
@@ -88,7 +86,7 @@ void	Channel::rmClient(Client *client)
 			break;
 		}
 	}
-	cout << RED << "RMCLIENT " << client->rtnName() << " :FROM Channel: " << topic() << ENDC << endl;
+	// cout << RED << "RMCLIENT " << client->rtnName() << " :FROM Channel: " << topic() << ENDC << endl;
 }
 
 void	Channel::post(string mssg, int id)

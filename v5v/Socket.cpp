@@ -57,7 +57,7 @@ void	Socket::init_cmd(string buffer, int sd)
 		find_cmd(ptr);
 	else
 	{
-		//cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC;
+		//cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC; //HEREWEARE
 		if (getClient(sd)->hasChannel())
 			getClient(sd)->channels().front()->post(buffer, sd);
 	}
@@ -123,17 +123,16 @@ void Socket::runSocket()
 				else
 				{
 					// FIRST: CHECK TO SEE IF 2 CHARS at teh END EXIST (PROTOCOL IN IRC) Not always granted
-					// cout << "BUFFER: " << buffer << ":"<< strlen(buffer) << "| valread " << valread << endl;
 					buffer[valread] = '\0'; 
 					string trimBuffer = string(buffer);
 					trimBuffer.resize(valread - 2);
+					// cout << "BUFFER: " << buffer << ":"<< strlen(buffer) << "| valread " << valread << endl;
 					// cout << "BUFFER: " << trimBuffer << ":"<< trimBuffer.length() << "| valread " << valread << endl;
 					_requestCall = getClient(sd);
 					init_cmd(trimBuffer, sd);
 				}
 			}
 		}
-
 
 		//all this extra loop must be converted into an actual function...
 		if (!_clients.empty())
@@ -144,9 +143,11 @@ void Socket::runSocket()
 				{
 					send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
 				}
-				(*it)->refreshChannel(); //for teh sake of the next line
 				if ((*it)->hasChannel() && (*it)->isRefreshChannel())
+				{
 					send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
+					(*it)->refreshChannel();
+				}
 			}
 		}
 		cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;
@@ -159,7 +160,6 @@ void Socket::runSocket()
 			{
 				if (!(*it)->size())
 				{   
-				//	cout << RED << "CHANNEL EMPTY NEEDS TO BE DELETED\n" << ENDC;
 					Channel *ptr = *it;
 					it = _channels.erase(it);
 					delete ptr;

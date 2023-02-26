@@ -59,7 +59,7 @@ Client	*Server::getClient(int key)
 		if (client->id() == key)
 			return client;
 	}
-	throw std::out_of_range("Key not found in map"); //needs a fucking try dummy
+	throw std::out_of_range("Key not found in map"); //needs a fucking try/catch dummy
 }
 
 Channel*	Server::addChannel(string &topic)
@@ -87,15 +87,18 @@ void	Server::rmChannel(Channel *channel)
 
 void	Server::find_cmd(vector<string> str)
 {
-	vector<string>::iterator it;
+	vector<string>::iterator it; 
 	
 	//1 arg ≠ working str.end is str.begin()
 	//it++ needs validation
-	
+
 	//1 commands, like leave and quite
 	//2 commands like join X nick X 
 	//focusing on NOW- /msg NICK [msg]
 	
+	
+	//MAKE WHILE
+
 
 	if (str.begin() == str.end() && str.begin()->compare("/leave") == 0) //this isnt working, but you get the point
 	{
@@ -105,9 +108,10 @@ void	Server::find_cmd(vector<string> str)
 		ptr->rmClient(_requestCall);
 	}
 
+	//rfreschCH
 	for (it = str.begin(); it != str.end(); it++)  
 	{
-		cout << "INIT find_cmd:"  << (*it) << endl;
+		// cout << "INIT find_cmd:"  << (*it) << endl;
 		if (*it == "/join" && it == str.begin())
 		{
 			it++;
@@ -140,4 +144,4 @@ void	Server::find_cmd(vector<string> str)
 			_requestCall->setName(*it);	
 		}
 	}
-	}
+}

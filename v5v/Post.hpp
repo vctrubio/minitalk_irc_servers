@@ -10,6 +10,8 @@ class Post
 {
 	Client *	_client;
 	string 		_mssg;
+	//type of mssg enum
+	//timestamp
 public:
 	Post(Client *client, string mssg, post action);
 	// Post(Client *client, post action){};
