@@ -11,8 +11,7 @@ Server::~Server()
 
 void	Server::addClient(Client *client)
 {
-	_clients.push_back(client);
-	//will this always work or do we need a try and catch?
+	_clients.push_back(client); //will this always work or do we need a try and catch?
 }
 
 void	Server::removeClient(Client *client)
@@ -39,7 +38,7 @@ void Server::printClients()
     {
         cout << "No clients in list\n";
         return ;
-    }
+    }	
 }
 
 void	Server::printChannels()
@@ -84,64 +83,45 @@ void	Server::rmChannel(Channel *channel)
 	}
 }
 
-
 void	Server::find_cmd(vector<string> str)
 {
-	vector<string>::iterator it; 
+	vector<string>::iterator 	it = str.begin();
+	Channel 					*ptr;
 	
-	//1 arg ≠ working str.end is str.begin()
-	//it++ needs validation
-
-	//1 commands, like leave and quite
-	//2 commands like join X nick X 
-	//focusing on NOW- /msg NICK [msg]
-	
-	
-	//MAKE WHILE
-
-
-	if (str.begin() == str.end() && str.begin()->compare("/leave") == 0) //this isnt working, but you get the point
+	if (*it == "/leave")
 	{
-		cout << RED << "EASY LEEAVE\n";
-		Channel *ptr = _requestCall->channels().front(); //
-		cout << "CHANNEL TO LEAVE : " << ptr << " : " << ptr->topic() << endl;
-		ptr->rmClient(_requestCall);
+		it++;
+		if (it == str.end())
+			ptr = _requestCall->channels().front();
+		else
+			ptr = _requestCall->rtnChannel(*it);
+		if (ptr)
+			ptr->rmClient(_requestCall);
+		if (_requestCall->hasChannel())
+			_requestCall->refreshChannel();	
 	}
-
-	//rfreschCH
-	for (it = str.begin(); it != str.end(); it++)  
+	if (*it == "/join")
 	{
-		// cout << "INIT find_cmd:"  << (*it) << endl;
-		if (*it == "/join" && it == str.begin())
-		{
-			it++;
-			Channel *ptr = addChannel((*it));
-			if (!_requestCall->hasChannel(ptr))
-				ptr->addClient(_requestCall);
-			else
-				_requestCall->setFront(ptr);
-		}
-		else if (*it == "/leave" && *it == str.front())
-		{
-			it++; // else throw front channel if no args passed //check if there is also .front()
-			Channel *ptr = _requestCall->rtnChannel(*it); //we have segfaults here but watevr, 
-			if (ptr)
-			{
-				cout << "CHANNEL TO LEAVE HARDWAY: " << ptr << " : " << ptr->topic() << endl;
-				ptr->rmClient(_requestCall);
-			}
-			else
-				cout << "CHANNEL TO LEAVE: SORRY NOT FOUND\n";
-		}
-		else if (*it == "/nick" && *it == str.front())
-		{
-			it++;
-			_requestCall->setUser(*it);	
-		}
-		else if (*it == "/name" && *it == str.front())
-		{
-			it++;
-			_requestCall->setName(*it);	
-		}
+		it++;
+		if (it == str.end())
+			return ;
+		ptr = addChannel(*it);
+		if (!_requestCall->hasChannel(ptr))
+			ptr->addClient(_requestCall);
+		else
+			_requestCall->setFront(ptr);
+		if (_requestCall->hasChannel())
+			_requestCall->refreshChannel();		
 	}
+	else if (*it == "/nick")
+	{
+		it++;
+		_requestCall->setUser(*it);
+	}
+	else if (*it == "/name")
+	{
+		it++;
+		_requestCall->setName(*it);	
+	}
+	//......
 }

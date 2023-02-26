@@ -31,8 +31,8 @@ public:
 	string	rtnMssg() {_refresh = false; return _mssg;};
 	void	voidMssg() {_refresh = false; cout << _mssg;};
 	void	refresh(){_refresh = false;};
-	void	refreshChannel(){_refreshChannel = false;};
-	bool	isRefreshChannel(){return _refreshChannel;};
+	void	refreshChannel(){_refreshChannel = true;};
+	bool	isRefreshChannel(){if (_refreshChannel == true) {_refreshChannel = false; return true;} else {return false;}};
 	string	prompt();
 	
 	bool	status() {return _refresh;};

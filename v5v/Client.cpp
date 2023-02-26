@@ -47,7 +47,7 @@ string	Client::prompt()
 	int i = 0;
 
 	_itC = _channels.begin();
-	while (*_itC)
+	while (_itC != _channels.end())
 	{
 		if (i == 0)
 			mssg += GREEN;
@@ -60,11 +60,10 @@ string	Client::prompt()
 		_itC++;
 		i++;
 	}
-	mssg += "\n";
+	if (i > 0)
+		mssg += "\n";
 	return mssg;
 }
-
-
 
 void	Client::setUser(string str)
 {
@@ -105,10 +104,11 @@ void Client::desubscribe(Channel *channel)
 		if (*_itC == channel)
 		{
 			_channels.erase(_itC); 
-			string mssg = "Leaving Channel# ...\n";
-			// strcat(mssg, RED);
-			// //strcat(mssg, channel->topic()); Doesnt fucking work cuase they are not friends and you can't add the header Channel in Clients because of fucking CPP stupid compilations
-			// strcat(mssg, ENDC);
+			string mssg = "Leaving ";
+			mssg += RED;
+			mssg += "#";
+			mssg +=  (*_itC)->topic() + "\n";
+			mssg += ENDC;
 			send(_id, mssg.c_str(), mssg.size(), 0);
 			return ;
 		}
@@ -118,11 +118,12 @@ void Client::desubscribe(Channel *channel)
 
 void	Client::putMssg(string mssg, Client *it, string channel_name)
 {
-	// _mssg = "[" + channel_name + "]"+ it->user() + ": " + mssg; //but we have a newline so its prerrty gay
-	_mssg = " -incoming from- " + channel_name + it->user() + " : " + mssg;
+	if (_channels.front()->topic() != channel_name)
+		_mssg = "[#" + channel_name + "]" + mssg + "\n";
+	else
+		_mssg = mssg + "\n";
 	_refresh = true;
 }
-
 
 std::ostream& operator<<(std::ostream& os, Client& client)
 {

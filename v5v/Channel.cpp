@@ -31,25 +31,41 @@ void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)
 		mssg += GREEN + client->rtnName();
 		mssg += " joined\n";
 		mssg += ENDC;
-		while (*_itC)
+		while (_itC != _clients.end())
 		{
 			if ((*_itC) != client)
 				send((*_itC)->id(), mssg.c_str(), mssg.size(), 0);
 			_itC++;
 		}
-
+	}
+	if (type == LEAVE)
+	{
+		mssg = "#" + channel->topic() + "[";
+		mssg += RED;
+		mssg += "-1";
+		mssg += ENDC; 
+		mssg += "] ";
+		mssg += RED + client->rtnName();
+		mssg += " left\n";
+		mssg += ENDC;
+		while (_itC != _clients.end())
+		{
+			if ((*_itC) != client)
+				send((*_itC)->id(), mssg.c_str(), mssg.size(), 0);
+			_itC++;
+		}
 	}
 
 }
-
 
 void	Channel::addClient(Client *client)
 {
 	_clients.push_back(client);
 	client->subscribe(this);
 
-	string welcome = ("Joined# ");
+	string welcome = ("Joined ");
 	welcome +=  GREEN;
+	welcome += "#";
 	welcome +=  topic();
 
 	if (_clients.size() > 0)
@@ -83,6 +99,7 @@ void	Channel::rmClient(Client *client)
 		{
 			_clients.erase(_itC);
 			client->desubscribe(this);
+			trigger_mssg(this, client, LEAVE);
 			break;
 		}
 	}

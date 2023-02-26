@@ -14,6 +14,6 @@ Post::Post(Client *client, string mssg, post action): _client(client)
     }
     else if (action == MSSG)
     {
-        _mssg = "<" + client->rtnName() + "> git " +  mssg;
+        _mssg = "<" + client->rtnName() + ">  " +  mssg;
     }
 }

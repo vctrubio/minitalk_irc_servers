@@ -45,7 +45,7 @@ void Socket::ft_add_user(int i)
 	mssg +=  GREEN;
 	mssg +=  host;
 	mssg +=  ENDC;
-	mssg +=  "\n nick [nickname] to change your nickname\nname [name] to change your name\nhelp for more help.\n";
+	mssg +=  "\n/nick [nickname] to change your nickname\n/name [name] to change your name\n/help for more help.\n------------------";
 	send(i, mssg.c_str(), mssg.size(), 0);
 }
 
@@ -57,9 +57,12 @@ void	Socket::init_cmd(string buffer, int sd)
 		find_cmd(ptr);
 	else
 	{
-		//cout << YELLOW << " FROM SD: " << sd << " RECV MSSG: " << buffer << ENDC; //HEREWEARE
 		if (getClient(sd)->hasChannel())
-			getClient(sd)->channels().front()->post(buffer, sd);
+		{
+			string	mssg = getClient(sd)->rtnName() + ": ";
+			mssg += buffer;
+			getClient(sd)->channels().front()->post(mssg, sd);
+		}
 	}
 }
 
@@ -143,10 +146,10 @@ void Socket::runSocket()
 				{
 					send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
 				}
-				if ((*it)->hasChannel() && (*it)->isRefreshChannel())
+				if ((*it)->isRefreshChannel())
 				{
+					cout << "HI isRefreshChannel\n";
 					send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
-					(*it)->refreshChannel();
 				}
 			}
 		}
