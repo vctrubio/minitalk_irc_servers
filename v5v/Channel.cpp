@@ -27,8 +27,9 @@ void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)
 		mssg += GREEN;
 		mssg += "+1";
 		mssg += ENDC; 
+		mssg += "][";
+		mssg += to_string(channel->size());
 		mssg += "] ";
-		mssg += channel->size();
 		mssg += GREEN + client->rtnName();
 		mssg += " joined\n";
 		mssg += ENDC;
@@ -45,6 +46,8 @@ void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)
 		mssg += RED;
 		mssg += "-1";
 		mssg += ENDC; 
+		mssg += "][";
+		mssg += to_string(channel->size());
 		mssg += "] ";
 		mssg += RED + client->rtnName();
 		mssg += " left\n";
@@ -71,7 +74,7 @@ void	Channel::addClient(Client *client)
 
 	if (_clients.size() > 0)
 	{
-		cout << _clients.size() << " SIZE IS\n"; //not working 
+		cout << to_string(_clients.size()) << " SIZE IS\n";
 		welcome += ENDC;
 		welcome += " |Online: ";
 		welcome += YELLOW;

@@ -55,7 +55,7 @@ string	Client::prompt()
 		if (i == 0)
 			mssg += ENDC;
 		mssg += "[";
-		mssg += (*_itC)->size();
+		mssg += to_string((*_itC)->size());
 		mssg += "] ";
 		_itC++;
 		i++;

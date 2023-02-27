@@ -86,20 +86,21 @@ void	TestInterface()
 int main()
 {
 	//What is would like to connect as a USER, change cout to send() for it to work with sockfds
-	//welcome("Papito");	//send welcome mss
-	// TestInterface();		//a loop that is send everytime to the user
+	welcome("Papito");	//send welcome mss
+	TestInterface();		//a loop that is send everytime to the user
 
 	//
 	Socket	serv(PORT, "password");
 
-	try 
-	{
-		serv.runSocket();
-	}
-	catch (exception &e)
-	{
-		cerr << "Error Cought: " << e.what() << endl;
-	}
+	
+	// try 
+	// {
+	// 	serv.runSocket();
+	// }
+	// catch (exception &e)
+	// {
+	// 	cerr << "Error Cought: " << e.what() << endl;
+	// }
 
 	return 1;
 }
