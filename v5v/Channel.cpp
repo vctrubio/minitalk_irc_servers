@@ -28,6 +28,7 @@ void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)
 		mssg += "+1";
 		mssg += ENDC; 
 		mssg += "] ";
+		mssg += channel->size();
 		mssg += GREEN + client->rtnName();
 		mssg += " joined\n";
 		mssg += ENDC;

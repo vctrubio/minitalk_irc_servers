@@ -11,3 +11,4 @@
 
 PROBLEMS
 - it stalls when its over MAX_CLIENTS
+- cuts the name and nick last letter

@@ -39,6 +39,7 @@ void Socket::ft_add_user(int i)
 	Client	*new_connection = new Client(name, i);
 	addClient(new_connection);
 
+
 	string	host = new_connection->rtnHost();
 	string mssg = "Welcome: ";
 
@@ -128,7 +129,7 @@ void Socket::runSocket()
 					// FIRST: CHECK TO SEE IF 2 CHARS at teh END EXIST (PROTOCOL IN IRC) Not always granted
 					buffer[valread] = '\0'; 
 					string trimBuffer = string(buffer);
-					trimBuffer.resize(valread - 2);
+					trimBuffer.resize(valread - 1);
 					// cout << "BUFFER: " << buffer << ":"<< strlen(buffer) << "| valread " << valread << endl;
 					// cout << "BUFFER: " << trimBuffer << ":"<< trimBuffer.length() << "| valread " << valread << endl;
 					_requestCall = getClient(sd);
