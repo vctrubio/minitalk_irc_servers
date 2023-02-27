@@ -1,14 +1,13 @@
-- TImestamp, message history on channel, vector of messages
 - all the cmds
 
 - connection server, password ect. 
 
 
 
-
-
-
-
 PROBLEMS
 - it stalls when its over MAX_CLIENTS
-- cuts the name and nick last letter
+
+
+
+TITOR WORKINGON 
+-History of channel mssg - TImestamp, message history on channel, vector of messages
