@@ -126,12 +126,10 @@ void Socket::runSocket()
 				}
 				else
 				{
-					// FIRST: CHECK TO SEE IF 2 CHARS at teh END EXIST (PROTOCOL IN IRC) Not always granted
+					// FIRST: CHECK TO SEE IF 2 CHARS at teh END EXIST (PROTOCOL IN IRC) Not always granted \r\n
 					buffer[valread] = '\0'; 
 					string trimBuffer = string(buffer);
 					trimBuffer.resize(valread - 1);
-					// cout << "BUFFER: " << buffer << ":"<< strlen(buffer) << "| valread " << valread << endl;
-					// cout << "BUFFER: " << trimBuffer << ":"<< trimBuffer.length() << "| valread " << valread << endl;
 					_requestCall = getClient(sd);
 					init_cmd(trimBuffer, sd);
 				}

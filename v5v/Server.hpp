@@ -10,7 +10,7 @@ class Server
 	string	_password;
 	friend class Cmd;
 protected:
-	Client*					_requestCall; //who is making the SD
+	Client*					_requestCall;
 	vector<Client *>		_clients;
 	typedef vector<Client *>::iterator itr_clients;
 

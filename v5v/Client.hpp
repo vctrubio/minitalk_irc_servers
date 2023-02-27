@@ -16,7 +16,7 @@ class Client
 	bool	_refreshChannel;
 	int		_id;
 
-    vector<Channel *>			_channels; //first element is the one he is connected to .front()
+    vector<Channel *>			_channels;
     vector<Channel *>::iterator	_itC;
 	
 public:
@@ -53,8 +53,6 @@ public:
 	bool				hasChannel() { return _channels.empty() ? false : true;};
 	bool				hasChannel(Channel *channel) {for(_itC = _channels.begin(); _itC != _channels.end(); _itC++) {if(*_itC == channel) return true;} return false;};
 };
-//maybe make friends with Channel to be able to add channel;
-
 
 
 std::ostream& operator<<(std::ostream& os, Client& client);

@@ -4,7 +4,7 @@
 Channel::Channel(string topic)
 {
 	string tmp = topic;
-	_topic = tmp; //FUCKKING NEW LINEp
+	_topic = tmp;
 	cout << "Channeld # " << _topic << " created \n";
 }
 
@@ -20,7 +20,6 @@ void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)
 	string	mssg;
 
 	_itC = _clients.begin();
-	// cout << RED << "CHANNEL SIZE = " << channel->size() <<  endl << ENDC;  //working here but not working in the loop
 	if (type == JOIN)
 	{
 		mssg = "#" + channel->topic() + "[";
@@ -107,7 +106,6 @@ void	Channel::rmClient(Client *client)
 			break;
 		}
 	}
-	// cout << RED << "RMCLIENT " << client->rtnName() << " :FROM Channel: " << topic() << ENDC << endl;
 }
 
 void	Channel::post(string mssg, int id)

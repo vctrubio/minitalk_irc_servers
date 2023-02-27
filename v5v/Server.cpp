@@ -11,7 +11,7 @@ Server::~Server()
 
 void	Server::addClient(Client *client)
 {
-	_clients.push_back(client); //will this always work or do we need a try and catch?
+	_clients.push_back(client);
 }
 
 void	Server::removeClient(Client *client)
