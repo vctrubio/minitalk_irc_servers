@@ -83,24 +83,31 @@ void	TestInterface()
 }
 
 
-int main()
+int main(int argc, char **argv)
 {
 	//What is would like to connect as a USER, change cout to send() for it to work with sockfds
-	welcome("Papito");	//send welcome mss
-	TestInterface();		//a loop that is send everytime to the user
-
+	//welcome("Papito");	//send welcome mss
+	//TestInterface();		//a loop that is send everytime to the user
 	//
-	Socket	serv(PORT, "password");
+	if (argc != 4)
+	{
+		cout << "Please provide proper information: \"./irc <host> <port> <password>\"\n";
+		return -1;
+	}
+	int x;
+	std::stringstream str(argv[2]);
+	str >> x;
+	Socket	serv(x, argv[3]);
 
 	
-	// try 
-	// {
-	// 	serv.runSocket();
-	// }
-	// catch (exception &e)
-	// {
-	// 	cerr << "Error Cought: " << e.what() << endl;
-	// }
+	try 
+	{
+		serv.runSocket();
+	}
+	catch (exception &e)
+	{
+		cerr << "Error Cought: " << e.what() << endl;
+	}
 
 	return 1;
 }

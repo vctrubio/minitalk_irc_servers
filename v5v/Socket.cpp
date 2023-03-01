@@ -1,7 +1,7 @@
 #include "Socket.hpp"
 
 Socket::Socket(int port, string password)
-	: _port(port), Server(password)
+	: _port(port), Server(password), _password(password)
 {
 	int opt = 1; 
 
@@ -18,7 +18,7 @@ Socket::Socket(int port, string password)
 
 	_addr.sin_family = AF_INET;
 	_addr.sin_addr.s_addr = INADDR_ANY; // IP = 0...?
-	_addr.sin_port = htons(PORT);
+	_addr.sin_port = htons(_port);
 
 	if (bind(_sockFd, (struct sockaddr *)&_addr, sizeof(_addr)) < 0)
 		cout << RED << "Failed to bind\n"
@@ -29,7 +29,7 @@ Socket::Socket(int port, string password)
 
 	cout << BLUE << "The server is up and runnig" << endl;
 	cout << GREEN << "Server IP: " << _addr.sin_addr.s_addr << endl;
-	cout << BLUE << "Listening on port " << GREEN << PORT << ENDC << endl;
+	cout << BLUE << "Listening on port " << GREEN << _port << ENDC << endl;
 }
 
 //
@@ -73,6 +73,7 @@ void Socket::runSocket()
 	int max_sd, sd, valread;
 	int tmp_socket;
 	char buffer[265];
+	char password[1024];
 
 	while (42)
 	{
@@ -99,7 +100,35 @@ void Socket::runSocket()
 			if ((tmp_socket = accept(_sockFd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen)) < 0)
 				cout << RED << "Error: tmp_socket\n" << ENDC; //throw
 			
+			send(tmp_socket, "Please enter the server's password: ", strlen("Please enter the server's password: "), 0);
+        	valread = read(tmp_socket, password, 1024);
+        	if (valread < 0) {
+        	    std::cerr << "Read error\n";
+        	    close(tmp_socket);
+        	    continue;
+        	}
+			for (int i = 0; i < strlen(password); i++) 
+			{        
+				if (password[i] == '\n') {
+            	    password[i] = '\0';
+				}
+			}
+	        // Compare the client's response with the correct password
+	        if (_password.compare(password) == 0)
+			{
+	            send(tmp_socket, "Connection Successful\n", strlen("Connection Successful\n"), 0);	
+	            // Connection accepted, do something with the client
+	            // ...
+	        }
+			else 
+			{
+				cout << "\nPASSWORD: |" << _password << "| VS INPUT: |" << password << "|\nResult: " << _password.compare(password) << std::endl;	
+	            send(tmp_socket, "Failed to connect\n", strlen("Failed to connect\n"), 0);
+	            close(tmp_socket);
+				continue;
+			}
 		//	cout << GREEN << "New Connection Established: tmp_socket " << tmp_socket << " |ip & port tbd|" << ENDC << endl;
+			
 			ft_add_user(tmp_socket);
 
 			for (int i = 0; i < MAX_CLIENTS; i++)

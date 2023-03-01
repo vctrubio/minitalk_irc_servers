@@ -12,6 +12,7 @@ class Socket : public Server
 {
 	int			_port;
 	int			_sockFd;
+	string	_password;
 
 	sockaddr_in	_addr;
 	// sockaddr_in	_client;
