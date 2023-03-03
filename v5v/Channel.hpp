@@ -13,9 +13,9 @@ class Channel
 	string						_topic;
 	vector<Client *>			_clients; 
     vector<Client *>::iterator	_itC;
+	vector<Post *>				_history;
 
 	Client*				_admin; //later
-	vector<Post *>		_history;
 public:
 	// Channel(string topic, Client *admin); //later
 	Channel(string topic);
@@ -23,7 +23,6 @@ public:
 
 	vector<Post*>	history; //to add, display, messages, now posting directly here and not user;	
 	Client			*getClient(int key);
-
 
 	void			addClient(Client *client);
 	void			rmClient(Client *client);

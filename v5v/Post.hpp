@@ -18,7 +18,6 @@ class Post
 public:
 	Post(Client *client, Channel* channel, string mssg, post action, time_t time);
 	Post(Client *client, string mssg, post action); //just por heaven sake.
-	// Post(Client *client, post action){};
 	string 	mssg(){return _mssg;};
 	~Post(){};
 };
