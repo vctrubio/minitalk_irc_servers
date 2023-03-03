@@ -23,7 +23,8 @@ public:
 	Client();
 	Client(string name, int id);
 	~Client();
-	
+	//I NEED AN EQUAL OPERATION FOR Client *client(ID);
+	Client	&operator=(int id) { _id = id; return *this;};	
 	string	rtnName() {return _name;};
 	char*	rtnHost() {return _host;};
 	

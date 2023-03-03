@@ -94,6 +94,19 @@ void	Channel::addClient(Client *client)
 	trigger_mssg(this, client, JOIN);
 }
 
+Client	*Channel::getClient(int key) 
+{
+	vector<Client *>::iterator it;
+
+	for (it = _clients.begin(); it != _clients.end(); ++it)
+	{
+		Client *client= *it;
+		if (client->id() == key)
+			return client;
+	}
+	throw std::out_of_range("Key not found in map"); //THIS is the same as Server.cpp
+}
+
 void	Channel::rmClient(Client *client)
 {
 	for (_itC = _clients.begin(); _itC != _clients.end(); _itC++)
@@ -110,6 +123,8 @@ void	Channel::rmClient(Client *client)
 
 void	Channel::post(string mssg, int id)
 {
+	Client	*client = getClient(id);
+	_history.push_back(new Post(client, this, mssg, MSSG));
 	for (vector<Client *>::iterator it = _clients.begin(); it != _clients.end(); ++it)
 	{
 		if ((*it)->id() == id)
