@@ -123,8 +123,7 @@ void	Channel::rmClient(Client *client)
 
 void	Channel::post(string mssg, int id)
 {
-	Client	*client = getClient(id);
-	_history.push_back(new Post(client, this, mssg, MSSG));
+	_history.push_back(new Post(getClient(id), this, mssg, MSSG, time(NULL)));
 	for (vector<Client *>::iterator it = _clients.begin(); it != _clients.end(); ++it)
 	{
 		if ((*it)->id() == id)

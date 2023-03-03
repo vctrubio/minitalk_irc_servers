@@ -2,6 +2,7 @@
 #define HEADERS_HPP
 
 #include <cstdlib>
+#include <ctime>
 #include <typeinfo>
 #include <memory>
 #include <limits>

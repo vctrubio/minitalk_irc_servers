@@ -12,11 +12,11 @@ class Post
 	Client*		_client;
 	string 		_mssg;
 	Channel*	_channel;
-
-	//type of mssg enum
+	post		_type;
+	time_t		_time;
 	//timestamp
 public:
-	Post(Client *client, Channel* channel, string mssg, post action);
+	Post(Client *client, Channel* channel, string mssg, post action, time_t time);
 	Post(Client *client, string mssg, post action); //just por heaven sake.
 	// Post(Client *client, post action){};
 	string 	mssg(){return _mssg;};
