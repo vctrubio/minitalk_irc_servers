@@ -45,10 +45,10 @@ void Socket::ft_add_user(int i)
 	mssg +=  GREEN;
 	mssg +=  host;
 	mssg +=  ENDC;
-	mssg += "/help for CMD instructions.\n";
+	mssg +=  "\n/help for CMD instructions.\n";
 	mssg += "/doc for IRC documentation.\n";
 	mssg += "/join channel to connect to #channels\n";
-	mssg +=  "\n/nick [nickname] to change your nickname\n /name [name] to change your name\n"; //are we allowed to change Name tho?
+	mssg +=  "/nick [nickname] to change your nickname\n/name [name] to change your name\n"; //are we allowed to change Name tho?
 	send(i, mssg.c_str(), mssg.size(), 0);
 }
 
