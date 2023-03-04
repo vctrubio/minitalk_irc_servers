@@ -32,21 +32,23 @@ Socket::Socket(int port, string password)
 	cout << BLUE << "Listening on port " << GREEN << _port << ENDC << endl;
 }
 
-//
 void Socket::ft_add_user(int i)
 {
 	char*	name = getenv("USER");
 	Client	*new_connection = new Client(name, i);
+
 	addClient(new_connection);
-
-
+	
 	string	host = new_connection->rtnHost();
-	string mssg = "Welcome: ";
-
+	
+	string mssg = "Connnected: ";
 	mssg +=  GREEN;
 	mssg +=  host;
 	mssg +=  ENDC;
-	mssg +=  "\n/nick [nickname] to change your nickname\n/name [name] to change your name\n/help for more help.\n------------------\n";
+	mssg += "/help for CMD instructions.\n";
+	mssg += "/doc for IRC documentation.\n";
+	mssg += "/join channel to connect to #channels\n";
+	mssg +=  "\n/nick [nickname] to change your nickname\n /name [name] to change your name\n"; //are we allowed to change Name tho?
 	send(i, mssg.c_str(), mssg.size(), 0);
 }
 

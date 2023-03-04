@@ -10,3 +10,4 @@ PROBLEMS
 
 TITOR WORKINGON 
 -History of channel mssg - TImestamp, message history on channel, vector of messages
+.-catch and throw erros, replcae for std::cout
