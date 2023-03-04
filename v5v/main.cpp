@@ -5,19 +5,45 @@
 #include "Server.hpp"
 #include "Post.hpp"
 
+
+int	check_port(char *arg)
+{
+	for (int i = 0; i < strlen(arg); i++)
+	{
+		if (!isdigit(arg[i])) 
+		{
+			return -1;
+		}
+	}
+
+	std::stringstream str(arg);
+	int x;
+	str >> x;
+	cout << "X is : " << x << endl;
+	if (x > 0 && x < 10000)
+		return x;
+	return -1; 
+}
+
+
 int main(int argc, char **argv)
 {
-	if (argc != 4)
+	int	x;
+
+	if (argc != 3)
 	{
-		cout << "Please provide proper information: \"./irc <host> <port> <password>\"\n";
+		cout << "Please provide proper information: \"./irc <port> <password>\"\n";
 		return -1;
 	}
-	int x;
-	std::stringstream str(argv[2]);
-	str >> x;
-	cout << x << "IS X " << ": \n";
-	Socket	serv(x, argv[3]);
 
+	x = check_port(argv[1]);
+	if (x < 1)
+	{	
+		cout << "PORT ≠ Digits 0-9999\n" << endl;
+		return -1;
+	}
+
+	Socket	serv(x, argv[2]);
 	try 
 	{
 		serv.runSocket();

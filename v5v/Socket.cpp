@@ -109,7 +109,9 @@ void Socket::runSocket()
         	}
 			for (int i = 0; i < strlen(password); i++) 
 			{        
-				if (password[i] == '\n') {
+				if (password[i] == '\r') 
+				{
+					cout << "PASSWORD LEN is: " << i << endl;
             	    password[i] = '\0';
 				}
 			}
