@@ -107,7 +107,7 @@ void Client::desubscribe(Channel *channel)
 			string mssg = "Leaving ";
 			mssg += RED;
 			mssg += "#";
-			mssg +=  (*_itC)->topic() + "\n";
+			mssg +=  channel->topic() + "\n";
 			mssg += ENDC;
 			send(_id, mssg.c_str(), mssg.size(), 0);
 			return ;

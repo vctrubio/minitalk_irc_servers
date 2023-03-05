@@ -111,7 +111,7 @@ void Socket::runSocket()
 			}
 			for (int i = 0; i < strlen(password); i++) 
 			{        
-				if (password[i] == '\r') 
+				if (password[i] == '\r' || password[i] == '\n') 
 				{
 					password[i] = '\0';
 					break;

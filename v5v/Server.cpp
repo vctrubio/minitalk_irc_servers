@@ -61,6 +61,17 @@ Client	*Server::getClient(int key)
 	throw std::out_of_range("Key not found in map"); //needs a fucking try/catch dummy
 }
 
+Client	*Server::getClient(string nick) 
+{
+	for (itr_clients it = _clients.begin(); it != _clients.end(); ++it)
+	{
+		Client *client= *it;
+		if (client->user() == nick)
+			return client;
+	}
+	throw std::out_of_range("Key not found in map"); //needs a fucking try/catch dummy
+}
+
 Channel*	Server::addChannel(string &topic)
 {
 
@@ -129,5 +140,49 @@ void	Server::find_cmd(vector<string> str)
 		it++;
 		_requestCall->setName(*it);	
 	}
-	//......
+	else if (*it == "/peers")
+	{
+		vector<Client *>::iterator	_itC;
+		string mssg;
+		for (_itC = _clients.begin(); _itC != _clients.end(); _itC++)
+		{
+			int i = 0;
+			mssg += ++i + 48;
+			mssg += ": [";
+			mssg += (*_itC)->user();
+			mssg += " : ";
+			mssg += (*_itC)->name();
+			mssg += "]\n";
+		}
+		send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
+	}
+	else if (*it == "/dm")
+	{
+		it++;
+		string who = *it;
+		this->getClient(who);
+		it++;
+		string mssg = *it;
+		while (++it != str.end())
+		{
+			mssg += *it;
+			mssg += ' ';
+		}
+		mssg += '\n';
+		send(getClient(who)->id(), mssg.c_str(), mssg.size(), 0);
+	}
+	else if (*it == "/help")
+	{
+		string mssg;
+		mssg +=  "\n/help for CMD instructions.\n";
+		mssg += "/doc for IRC documentation.\n";
+		mssg += "/join channel to connect to #channels\n";
+		mssg +=  "/nick [nickname] to change your nickname\n";
+		mssg += "/name [name] to change your name\n"; //are we allowed to change Name tho? I think so because it's not informative nor anything like it. The machine u use does not need identification.
+		mssg +=  "/channels to view your subscribed channels\n";
+		mssg += "/peers to view who is subscribed in the current channel\n";
+		mssg += "/dm [nickname] to send a private mssg to a certain user\n";
+		send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
+	}
+	
 }
