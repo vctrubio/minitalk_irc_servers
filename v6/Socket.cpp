@@ -162,7 +162,7 @@ void Socket::runSocket()
 					// FIRST: CHECK TO SEE IF 2 CHARS at teh END EXIST (PROTOCOL IN IRC) Not always granted \r\n
 					buffer[valread] = '\0'; 
 					string trimBuffer = string(buffer);
-					trimBuffer.resize(valread - 1);
+					trimBuffer.resize(valread - 2);
 					_requestCall = getClient(sd);
 					init_cmd(trimBuffer, sd);
 				}
