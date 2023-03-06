@@ -1,0 +1,13 @@
+Gustave
+- all the cmds
+
+
+
+PROBLEMS
+- it stalls when its over MAX_CLIENTS
+
+
+
+TITOR WORKINGON 
+-History of channel mssg - TImestamp, message history on channel, vector of messages
+.-catch and throw erros, replcae for std::cout
