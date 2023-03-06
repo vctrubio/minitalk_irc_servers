@@ -14,6 +14,7 @@ class Post
 	Channel*	_channel;
 	post		_type;
 	time_t		_time;
+	char		_strTime[100];
 	//timestamp
 public:
 	Post(Client *client, Channel* channel, string mssg, post action, time_t time);

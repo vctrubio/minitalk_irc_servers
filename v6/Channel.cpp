@@ -137,7 +137,6 @@ void	Channel::sendHistory(Client *client)
 {
 	for (_itP = _history.begin(); _itP != _history.end(); _itP++)
 	{
-		cout << "COUNTING\n";
 		(*_itP)->print(client->id());
 	}
 }

@@ -2,21 +2,22 @@
 
 Post::Post(Client *client, Channel* channel, string mssg, post action, time_t time): _client(client), _channel(channel), _type(action), _time(time)
 {
+    std::strftime(_strTime, sizeof(_strTime), "%Y-%m-%d %H:%M| ", std::localtime(&_time));
     if (action == JOIN)
     {
-       _mssg = client->rtnName() +  ": joined" + "\n";
+        _mssg = string(_strTime);
+        _mssg += client->rtnName() +  ": joined" + "\n";
     }
     else if (action == LEAVE)
     {
-        _mssg = client->rtnName() + ": left" + "\n";
+        _mssg = string(_strTime);
+        _mssg += client->rtnName() + ": left" + "\n";
     }
     else if (action == MSSG)
     {
-		//add timestamp of message
-        _mssg = mssg + "\n";
+        _mssg = string(_strTime);
+        _mssg += mssg + "\n";
     }
-	cout << "COPIED	ºn " << _mssg << endl;
-	print(client->id());
 };
 
 
@@ -26,7 +27,5 @@ Post::Post(Client *client, string mssg, post action): _client(client)
 
 void	Post::print(int sd)
 {
-    cout << "DEBUG::::::\n";
-	cout << "ID FROM POST CALL : " << sd << " MSSG: " << _mssg << endl;
 	send(sd, _mssg.c_str(), _mssg.size(), 0);
 }
