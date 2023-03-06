@@ -182,6 +182,7 @@ void	Server::find_cmd(vector<string> str)
 		mssg +=  "/channels to view your subscribed channels\n";
 		mssg += "/peers to view who is subscribed in the current channel\n";
 		mssg += "/dm [nickname] to send a private mssg to a certain user\n";
+		mssg += "/exit to exit the program\n";
 		send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
 	}
 	

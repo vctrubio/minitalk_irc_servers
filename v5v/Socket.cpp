@@ -48,7 +48,12 @@ void Socket::ft_add_user(int i)
 	mssg +=  "\n/help for CMD instructions.\n";
 	mssg += "/doc for IRC documentation.\n";
 	mssg += "/join channel to connect to #channels\n";
-	mssg +=  "/nick [nickname] to change your nickname\n/name [name] to change your name\n"; //are we allowed to change Name tho?
+	mssg +=  "/nick [nickname] to change your nickname\n";
+	mssg += "/name [name] to change your name\n"; //are we allowed to change Name tho? I think so because it's not informative nor anything like it. The machine u use does not need identification.
+	mssg +=  "/channels to view your subscribed channels\n";
+	mssg += "/peers to view who is subscribed in the current channel\n";
+	mssg += "/dm [nickname] to send a private mssg to a certain user\n";
+	mssg += "/exit to exit the program\n";
 	send(i, mssg.c_str(), mssg.size(), 0);
 }
 
