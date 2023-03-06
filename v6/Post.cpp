@@ -26,6 +26,7 @@ Post::Post(Client *client, string mssg, post action): _client(client)
 
 void	Post::print(int sd)
 {
-	cout << "ID : " << sd << endl;
+    cout << "DEBUG::::::\n";
+	cout << "ID FROM POST CALL : " << sd << " MSSG: " << _mssg << endl;
 	send(sd, _mssg.c_str(), _mssg.size(), 0);
 }

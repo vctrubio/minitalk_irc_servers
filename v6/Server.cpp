@@ -188,13 +188,14 @@ void	Server::find_cmd(vector<string> str)
 	{
 		it++; //if no it it = current channel
 		vector<Post*>::iterator itP;
-		Channel *channel =_requestCall->rtnChannel(*it);
+		Channel *channel;
+		if (it == str.end())
+			channel = _requestCall->channels().front();
+		else
+			channel =_requestCall->rtnChannel(*it);
 		if (!channel)
 			return ;
-		for (itP = channel->history().begin(); itP != channel->history().end(); itP++)
-		{
-			cout << "COUNTING\n";
-			(*itP)->print(_requestCall->id());
-		}
+		channel->sendHistory(_requestCall);
+
 	}
 }

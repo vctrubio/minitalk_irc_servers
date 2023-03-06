@@ -133,6 +133,17 @@ void	Channel::post(string mssg, int id)
     }
 }
 
+void	Channel::sendHistory(Client *client)
+{
+	for (_itP = _history.begin(); _itP != _history.end(); _itP++)
+	{
+		cout << "COUNTING\n";
+		(*_itP)->print(client->id());
+	}
+}
+
+
+
 std::ostream& operator<<(std::ostream& os, Channel& channel)
 {
 	vector<Client *> _clients = channel.clients();
@@ -146,3 +157,6 @@ std::ostream& operator<<(std::ostream& os, Channel& channel)
 	return os;
 
 }
+
+
+

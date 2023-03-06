@@ -23,7 +23,7 @@ public:
 	~Channel();
 
 	vector<Post*>	history(){return _history;};
-
+	void			sendHistory(Client *client);
 	Client			*getClient(int key);
 	void			addClient(Client *client);
 	void			rmClient(Client *client);
