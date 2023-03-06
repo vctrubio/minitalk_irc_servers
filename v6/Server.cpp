@@ -184,5 +184,17 @@ void	Server::find_cmd(vector<string> str)
 		mssg += "/dm [nickname] to send a private mssg to a certain user\n";
 		send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
 	}
-	
+	else if (*it == "/history") 
+	{
+		it++; //if no it it = current channel
+		vector<Post*>::iterator itP;
+		Channel *channel =_requestCall->rtnChannel(*it);
+		if (!channel)
+			return ;
+		for (itP = channel->history().begin(); itP != channel->history().end(); itP++)
+		{
+			cout << "COUNTING\n";
+			(*itP)->print(_requestCall->id());
+		}
+	}
 }

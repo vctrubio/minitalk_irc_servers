@@ -20,6 +20,9 @@ public:
 	Post(Client *client, string mssg, post action); //just por heaven sake.
 	string 	mssg(){return _mssg;};
 	~Post(){};
+
+	void	print(int);
 };
+
 
 #endif

@@ -155,7 +155,4 @@ void	putChannel(Channel *channel, string &out, int i, int p)
 	out += "\n";
 	putUnderScore(out);
 
-	//if message history, put message history
-	if (!channel->history.empty())
-		putHistory(channel->history, out);
 }

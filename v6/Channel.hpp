@@ -14,16 +14,17 @@ class Channel
 	vector<Client *>			_clients; 
     vector<Client *>::iterator	_itC;
 	vector<Post *>				_history;
-
+    vector<Post *>::iterator	_itP;
+	
 	Client*				_admin; //later
 public:
 	// Channel(string topic, Client *admin); //later
 	Channel(string topic);
 	~Channel();
 
-	vector<Post*>	history; //to add, display, messages, now posting directly here and not user;	
-	Client			*getClient(int key);
+	vector<Post*>	history(){return _history;};
 
+	Client			*getClient(int key);
 	void			addClient(Client *client);
 	void			rmClient(Client *client);
 	void			trigger_mssg(Channel *channel, Client *client, enum post type);
