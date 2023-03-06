@@ -80,7 +80,7 @@ Channel*	Server::addChannel(string &topic)
 		if ((*it)->topic() == topic)
 			return *it;
 	}
-	_channels.push_back(new Channel(topic));
+	_channels.push_back(new Channel(topic, _requestCall));
 	return (_channels.back());
 }
 
@@ -103,9 +103,15 @@ void	Server::find_cmd(vector<string> str)
 	{
 		it++;
 		if (it == str.end())
-			ptr = _requestCall->channels().front();
+		{
+			if (_requestCall->hasChannel())
+				ptr = _requestCall->channels().front();
+			else
+				return ;
+		}
 		else
 			ptr = _requestCall->rtnChannel(*it);
+		cout << "HI\n";
 		if (ptr)
 			ptr->rmClient(_requestCall);
 		if (_requestCall->hasChannel())
@@ -133,11 +139,15 @@ void	Server::find_cmd(vector<string> str)
 	else if (*it == "/nick")
 	{
 		it++;
+		if (it == str.end())
+			return ;
 		_requestCall->setUser(*it);
 	}
 	else if (*it == "/name")
 	{
 		it++;
+		if (it == str.end())
+			return ;
 		_requestCall->setName(*it);	
 	}
 	else if (*it == "/peers")
@@ -186,7 +196,7 @@ void	Server::find_cmd(vector<string> str)
 	}
 	else if (*it == "/history") 
 	{
-		it++; //if no it it = current channel
+		it++; 
 		vector<Post*>::iterator itP;
 		Channel *channel;
 		if (it == str.end())

@@ -16,10 +16,9 @@ class Channel
 	vector<Post *>				_history;
     vector<Post *>::iterator	_itP;
 	
-	Client*				_admin; //later
+	vector<Client *>			_admins; 
 public:
-	// Channel(string topic, Client *admin); //later
-	Channel(string topic);
+	Channel(string topic, Client *client);
 	~Channel();
 
 	vector<Post*>	history(){return _history;};
