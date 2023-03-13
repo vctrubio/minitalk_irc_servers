@@ -15,8 +15,9 @@ class Channel
     vector<Client *>::iterator	_itC;
 	vector<Post *>				_history;
     vector<Post *>::iterator	_itP;
+	vector<Client *>			_kick;
 	
-	vector<Client *>			_admins; 
+	vector<Client *>			_admins;
 public:
 	Channel(string topic, Client *client);
 	~Channel();
@@ -31,7 +32,7 @@ public:
 	string			topic(){return _topic;};
 	vector<Client*>	clients() {return _clients;};
 	int				size(){return _clients.size();};
-	void			kick(Client *client) {for (_itC = _clients.begin(); _itC != _clients.end();) {if (*_itC == client){_clients.erase(_itC);} else _itC++;}};
+	void			kick(Client *client) {for (_itC = _clients.begin(); _itC != _clients.end();) {if (*_itC == client){_kick.push_back(client); _clients.erase(_itC);} else _itC++;}};
 };
 
 std::ostream& operator<<(std::ostream& os, Channel& channel);

@@ -1,6 +1,5 @@
 #include "Channel.hpp"
 
-// Channel::Channel(string topic, Client *admin): _topic(topic), _admin(admin)
 Channel::Channel(string topic, Client *client)
 {
 	string tmp = topic;
@@ -13,7 +12,6 @@ Channel::~Channel()
 {
 	cout << "Channeld # " << _topic << " destroyed \n";
 }
-
 
 void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)
 {

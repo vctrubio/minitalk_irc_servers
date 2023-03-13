@@ -1,15 +1,12 @@
 Gustave
 - all the cmds
-
+- todo priorities ect. KICK ........
 
 
 PROBLEMS
 - it stalls when its over MAX_CLIENTS
-- catch and throw erros, replcae for std::cout
-
 
 
 TITOR WORKINGON 
--admin on client create, vector that makes admins
-    -todo priotieis ect.
--timestamp of joining channel, but i think that may be a map
+- catch and throw EXECPTIONS, replace for std::cout
+- history
