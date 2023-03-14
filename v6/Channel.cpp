@@ -72,7 +72,6 @@ void	Channel::addClient(Client *client)
 
 	if (_clients.size() > 0)
 	{
-		cout << to_string(_clients.size()) << " SIZE IS\n";
 		welcome += ENDC;
 		welcome += " |Online: ";
 		welcome += YELLOW;

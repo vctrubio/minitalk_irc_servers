@@ -32,12 +32,12 @@ public:
 	void 	ft_add_user(int i);
 	void	init_cmd(string, int);
 	void	runSocket();
-	void	debug(string);
+	void	loop_mssg();
+	void	debug();
 };
 
 
 //example of expection
-
 class ExError : public std::exception
 {
 	public:

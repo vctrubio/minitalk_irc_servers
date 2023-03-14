@@ -7,13 +7,11 @@ Socket::Socket(int port, string password)
 
 	_sockFd = socket(AF_INET, SOCK_STREAM, 0);
 	if (_sockFd < 0)
-		cout << RED << "Failed to create socket\n"
-			 << ENDC;
+		throw runtime_error("Failed to set create socket");
 	else
 	{
 		if (setsockopt(_sockFd, SOL_SOCKET, SO_REUSEADDR, (char *)&opt, sizeof(opt)) < 0)
-			cout << RED << "Failed to setSockOpt\n"
-				 << ENDC;
+			throw runtime_error("Failed to set socket options");
 	}
 
 	_addr.sin_family = AF_INET;
@@ -21,11 +19,9 @@ Socket::Socket(int port, string password)
 	_addr.sin_port = htons(_port);
 
 	if (bind(_sockFd, (struct sockaddr *)&_addr, sizeof(_addr)) < 0)
-		cout << RED << "Failed to bind\n"
-			 << ENDC;
+		throw runtime_error ("Failed to bind");
 	if (listen(_sockFd, MAX_CLIENTS) < 0)
-		cout << RED << "Failed to listen\n"
-			 << ENDC;
+		throw runtime_error ("Failed to listen");
 
 	cout << BLUE << "The server is up and runnig" << endl;
 	cout << GREEN << "Server IP: " << _addr.sin_addr.s_addr << endl;
@@ -40,15 +36,14 @@ void Socket::ft_add_user(int i)
 	addClient(new_connection);
 	
 	string	host = new_connection->rtnHost();
-	
 	string mssg = "Connnected: ";
-	mssg +=  GREEN;
-	mssg +=  host;
-	mssg +=  ENDC;
-	mssg +=  "\n/help for CMD instructions.\n";
+	mssg += GREEN;
+	mssg += host;
+	mssg += ENDC;
+	mssg += "\n/help for CMD instructions.\n";
 	mssg += "/doc for IRC documentation.\n";
 	mssg += "/join channel to connect to #channels\n";
-	mssg +=  "/nick [nickname] to change your nickname\n/name [name] to change your name\n"; //are we allowed to change Name tho?
+	mssg += "/nick [nickname] to change your nickname\n/name [name] to change your name\n"; //are we allowed to change Name tho?
 	send(i, mssg.c_str(), mssg.size(), 0);
 }
 
@@ -95,12 +90,12 @@ void Socket::runSocket()
 
 		_activity = select(max_sd + 1, &_readFds, NULL, NULL, NULL);
 		if ((_activity < 0) && (errno != EINTR))
-			cout << RED << "EINTR _activity ERROR\n" << ENDC; //throw
+			throw runtime_error ("Activity Errno");
 
 		if (FD_ISSET(_sockFd, &_readFds))
 		{
 			if ((tmp_socket = accept(_sockFd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen)) < 0)
-				cout << RED << "Error: tmp_socket\n" << ENDC; //throw
+				throw runtime_error ("Tmp socket failed");
 			
 			send(tmp_socket, "Please enter the server's password: ", strlen("Please enter the server's password: "), 0);
 			valread = read(tmp_socket, password, 1024);
@@ -140,7 +135,7 @@ void Socket::runSocket()
 				if (_clientSocket[i] == 0)
 				{
 					_clientSocket[i] = tmp_socket;
-					//			cout << "ºAdding to list of _clientrSocket as " << i <<  "SD: " << sd << endl;
+					//cout << "ºAdding to list of _clientrSocket as " << i <<  "SD: " << sd << endl;
 					break;
 				}
 			}
@@ -159,7 +154,6 @@ void Socket::runSocket()
 				}
 				else
 				{
-					// FIRST: CHECK TO SEE IF 2 CHARS at teh END EXIST (PROTOCOL IN IRC) Not always granted \r\n
 					buffer[valread] = '\0'; 
 					string trimBuffer = string(buffer);
 					trimBuffer.resize(valread - 2);
@@ -168,42 +162,48 @@ void Socket::runSocket()
 				}
 			}
 		}
+		
+		loop_mssg();
 
-		//all this extra loop must be converted into an actual function...
-		if (!_clients.empty())
-		{
-			for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
-			{
-				if ((*it)->status() == true)
-				{
-					send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0); //needs to send to cinsike
-				}
-				if ((*it)->isRefreshChannel())
-				{
-					cout << "HI isRefreshChannel\n";
-					send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
-				}
-			}
-		}
+		//Debug on console purposees
 		cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;
-		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
-			cout << (**it);
-		cout << endl << "----------CH------------" << endl;
-		if (!_channels.empty())
-		{
-			for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end();) 
-			{
-				if (!(*it)->size())
-				{   
-					Channel *ptr = *it;
-					it = _channels.erase(it);
-					delete ptr;
-				}
-				else
-					it++;
-			}
-		}
+		debug();
 		printChannels();
 		cout << endl << "----------------------" << endl;
+	}
+}
+
+void	Socket::loop_mssg()
+{
+	if (!_clients.empty())
+	{
+		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
+		{
+			if ((*it)->status() == true)
+				send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0);
+			if ((*it)->isRefreshChannel())
+				send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
+		}
+	}
+}
+
+void	Socket::debug()
+{
+	for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
+		cout << (**it); //show users connected
+	cout << endl << "----------CH------------" << endl;
+	if (!_channels.empty())
+	{
+		for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end();) 
+		{
+			if (!(*it)->size())
+			{   
+				Channel *ptr = *it;
+				it = _channels.erase(it);
+				delete ptr;
+			}
+			else
+				it++;
+		}
 	}
 }

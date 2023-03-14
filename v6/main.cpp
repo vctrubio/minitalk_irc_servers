@@ -19,7 +19,7 @@ int	check_port(char *arg)
 	std::stringstream str(arg);
 	int x;
 	str >> x;
-	cout << "X is : " << x << endl;
+	// cout << "X is : " << x << endl;
 	if (x > 0 && x < 10000)
 		return x;
 	return -1; 
