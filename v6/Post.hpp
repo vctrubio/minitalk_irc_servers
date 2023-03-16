@@ -22,6 +22,7 @@ public:
 	string 	mssg(){return _mssg;};
 	~Post(){};
 
+	string	time(){return string(_strTime);};
 	void	print(int);
 };
 

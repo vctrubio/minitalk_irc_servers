@@ -21,6 +21,7 @@ class Channel
 public:
 	Channel(string topic, Client *client);
 	~Channel();
+	void csv(void);
 
 	vector<Post*>	history(){return _history;};
 	void			sendHistory(Client *client);

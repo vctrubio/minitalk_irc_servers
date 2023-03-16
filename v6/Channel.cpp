@@ -8,8 +8,35 @@ Channel::Channel(string topic, Client *client)
 	_admins.push_back(client);
 }
 
+string	getTime()
+{
+	string rtn;
+	//std::strftime(rtn, sizeof(rtn), "%Y-%m-%d %H:%M| ", std::localtime(&_time));
+
+	return rtn;
+}
+
+void	Channel::csv()
+{
+	string	filename = getTime();
+	string fileTopic = "#" + topic() + " : " + _history.front()->time() + "ChannelHistory.csv";
+	ofstream file(fileTopic);
+	if (!file)
+	{
+		cerr << "Error in creating CSV file.\n";
+		return ;
+	}
+	//file << fileTopic << "\n";
+	file << "Date Time       | User: Message\n";
+	for (_itP = _history.begin(); _itP != _history.end(); _itP++)
+		file << (*_itP)->mssg();
+}
+
+
+
 Channel::~Channel()
 {
+	csv();
 	cout << "Channeld # " << _topic << " destroyed \n";
 }
 

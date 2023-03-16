@@ -6,7 +6,5 @@ Gustave
 PROBLEMS
 - it stalls when its over MAX_CLIENTS
 
-
-TITOR WORKINGON 
-- catch and throw EXECPTIONS, replace for std::cout
-- history
+TITOR WORKINGON
+-csv history file on descontructor (compelete)
