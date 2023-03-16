@@ -100,7 +100,7 @@ void Socket::runSocket()
 			send(tmp_socket, "Please enter the server's password: ", strlen("Please enter the server's password: "), 0);
 			valread = read(tmp_socket, password, 1024);
 			if (valread < 0) {
-				std::cerr << "Read error\n";
+				cerr << "Read error\n";
 				close(tmp_socket);
 				continue;
 			}
@@ -112,12 +112,10 @@ void Socket::runSocket()
 					break;
 				}
 			}
-			// Compare the client's response with the correct password
 			if (_password.compare(password) == 0)
 			{
 				send(tmp_socket, "Connection Successful\n", strlen("Connection Successful\n"), 0);	
-				// Connection accepted, do something with the client
-				// ...
+				// Connection accepted, do something with the client // ...
 			}
 			else 
 			{
@@ -126,10 +124,8 @@ void Socket::runSocket()
 				close(tmp_socket);
 				continue;
 			}
-
 			//	cout << GREEN << "New Connection Established: tmp_socket " << tmp_socket << " |ip & port tbd|" << ENDC << endl;
 			ft_add_user(tmp_socket);
-
 			for (int i = 0; i < MAX_CLIENTS; i++)
 			{
 				if (_clientSocket[i] == 0)
@@ -162,10 +158,9 @@ void Socket::runSocket()
 				}
 			}
 		}
-		
 		loop_mssg();
 
-		//Debug on console purposees
+		//Debug on console purposes
 		cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;
 		debug();
 		printChannels();
@@ -175,15 +170,12 @@ void Socket::runSocket()
 
 void	Socket::loop_mssg()
 {
-	if (!_clients.empty())
+	for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
 	{
-		for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
-		{
-			if ((*it)->status() == true)
-				send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0);
-			if ((*it)->isRefreshChannel())
-				send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
-		}
+		if ((*it)->status() == true)
+			send((*it)->id(), (*it)->rtnMssg().c_str(), (*it)->rtnMssg().length(), 0);
+		if ((*it)->isRefreshChannel())
+			send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
 	}
 }
 

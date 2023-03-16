@@ -50,7 +50,6 @@
 
 using namespace std;
 
-
 enum post
 {
     JOIN,

@@ -5,7 +5,6 @@
 #include "Server.hpp"
 #include "Post.hpp"
 
-
 int	check_port(char *arg)
 {
 	for (int i = 0; i < strlen(arg); i++)
@@ -25,18 +24,15 @@ int	check_port(char *arg)
 	return -1; 
 }
 
-
 int main(int argc, char **argv)
 {
-	int	x;
-
 	if (argc != 3)
 	{
 		cout << "Please provide proper information: \"./irc <port> <password>\"\n";
 		return -1;
 	}
 
-	x = check_port(argv[1]);
+	int x = check_port(argv[1]);
 	if (x < 1)
 	{	
 		cout << "PORT ≠ Digits 0-9999\n" << endl;

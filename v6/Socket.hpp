@@ -12,11 +12,8 @@ class Socket : public Server
 {
 	int			_port;
 	int			_sockFd;
-	string	_password;
-
+	string		_password;
 	sockaddr_in	_addr;
-	// sockaddr_in	_client;
-	// socklen_t	_cSize;
 
 	int			_activity;
 	int			_clientSocket[MAX_CLIENTS];
