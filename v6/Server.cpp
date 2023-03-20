@@ -32,7 +32,21 @@ void	Server::removeClient(Client *client)
     }	
 }
 
-void Server::printClients()
+int		Server::check_clients(string client)
+{
+	vector<Client *>::iterator	it;
+
+	it = _clients.begin();
+	while (it != _clients.end())
+	{
+		if (client == (*it)->user())
+			return 1;
+		it++;
+	}
+	return 0;
+}
+
+void	Server::printClients()
 {
     if (_clients.empty())
     {
@@ -98,10 +112,12 @@ void	Server::find_cmd(vector<string> str)
 {
 	vector<string>::iterator 	it = str.begin();
 	Channel 					*ptr;
-	
+
 	if (*it == "/leave")
 	{
 		it++;
+		if (it != str.end() && _requestCall->check_channels(*it) == 0)
+			return ;
 		if (it == str.end())
 		{
 			if (_requestCall->hasChannel())
@@ -111,13 +127,12 @@ void	Server::find_cmd(vector<string> str)
 		}
 		else
 			ptr = _requestCall->rtnChannel(*it);
-		cout << "HI\n";
 		if (ptr)
 			ptr->rmClient(_requestCall);
 		if (_requestCall->hasChannel())
 			_requestCall->refreshChannel();	
 	}
-	if (*it == "/join")
+	else if (*it == "/join")
 	{
 		it++;
 		if (it == str.end())
@@ -129,6 +144,46 @@ void	Server::find_cmd(vector<string> str)
 			_requestCall->setFront(ptr);
 		if (_requestCall->hasChannel())
 			_requestCall->refreshChannel();		
+	}
+	else if (*it == "/help")
+	{
+		string mssg;
+		mssg +=  "\n/help for CMD instructions.\n";
+		mssg += "/doc for IRC documentation.\n";
+		mssg += "/join channel to connect to #channels\n";
+		mssg +=  "/nick [nickname] to change your nickname\n";
+		mssg += "/name [name] to change your name\n"; //are we allowed to change Name tho? I think so because it's not informative nor anything like it. The machine u use does not need identification.
+		mssg +=  "/channels to view your subscribed channels\n";
+		mssg += "/peers to view who is subscribed in the current channel\n";
+		mssg += "/dm [nickname] to send a private mssg to a certain user\n";
+		mssg += "/kick [nick] [channel] to kick someone (admin only)\n";
+		send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
+	}
+	else if (*it == "/kick")
+	{
+		it++;
+		if (it == str.end())
+			return ;
+		string to_kick = *it;
+		it++;
+		if (it == str.end())
+			return ;
+		if ((check_clients(to_kick) == 0 || getClient(to_kick)->check_channels(*it) == 0))
+			return ;
+		if (it == str.end())
+		{
+			if (getClient(to_kick)->hasChannel())
+				ptr = getClient(to_kick)->channels().front();
+			else
+				return ;
+		}
+		else
+			ptr = getClient(to_kick)->rtnChannel(*it);
+
+		if (ptr)
+			ptr->kickClient(getClient(to_kick));
+		if (getClient(to_kick)->hasChannel())
+			getClient(to_kick)->refreshChannel();	
 	}
 	else if (*it == "/channels")
 	{
@@ -170,6 +225,8 @@ void	Server::find_cmd(vector<string> str)
 	{
 		it++;
 		string who = *it;
+		if (check_clients(who) == 0)
+			return ;
 		this->getClient(who);
 		it++;
 		string mssg = *it;
@@ -180,19 +237,6 @@ void	Server::find_cmd(vector<string> str)
 		}
 		mssg += '\n';
 		send(getClient(who)->id(), mssg.c_str(), mssg.size(), 0);
-	}
-	else if (*it == "/help")
-	{
-		string mssg;
-		mssg +=  "\n/help for CMD instructions.\n";
-		mssg += "/doc for IRC documentation.\n";
-		mssg += "/join channel to connect to #channels\n";
-		mssg +=  "/nick [nickname] to change your nickname\n";
-		mssg += "/name [name] to change your name\n"; //are we allowed to change Name tho? I think so because it's not informative nor anything like it. The machine u use does not need identification.
-		mssg +=  "/channels to view your subscribed channels\n";
-		mssg += "/peers to view who is subscribed in the current channel\n";
-		mssg += "/dm [nickname] to send a private mssg to a certain user\n";
-		send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
 	}
 	else if (*it == "/history") 
 	{

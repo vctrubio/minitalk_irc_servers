@@ -56,6 +56,7 @@ enum post
     MSSG,
     PRIVATE,
     LEAVE,
+    KICK,
 };
 
 #endif

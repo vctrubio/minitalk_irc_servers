@@ -62,6 +62,7 @@ void	Socket::init_cmd(string buffer, int sd)
 			getClient(sd)->channels().front()->post(mssg, sd);
 		}
 	}
+	
 }
 
 void Socket::runSocket()
@@ -152,7 +153,21 @@ void Socket::runSocket()
 				{
 					buffer[valread] = '\0'; 
 					string trimBuffer = string(buffer);
-					trimBuffer.resize(valread - 2);
+					for (int x = 0; trimBuffer[x] != '\0'; x++)
+					{
+						if (trimBuffer[x] == '\r')
+						{
+							trimBuffer.resize(valread - 2);
+							break ;
+						}
+						if (trimBuffer[x] == '\n')
+						{
+							trimBuffer.resize(valread - 1);
+							break ;
+						}
+						
+					}
+					
 					_requestCall = getClient(sd);
 					init_cmd(trimBuffer, sd);
 				}
@@ -192,7 +207,6 @@ void	Socket::debug()
 			{   
 				Channel *ptr = *it;
 				it = _channels.erase(it);
-				delete ptr;
 			}
 			else
 				it++;

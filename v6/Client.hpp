@@ -43,6 +43,7 @@ public:
 	string	mssg(){return _mssg;};
 	void	subscribe(Channel *channel);
 	void	desubscribe(Channel *channel);
+	int		check_channels(string chnl);
 
 	void	setName(string str);
 	void	setUser(string str);

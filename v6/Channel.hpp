@@ -28,6 +28,7 @@ public:
 	Client			*getClient(int key);
 	void			addClient(Client *client);
 	void			rmClient(Client *client);
+	void			kickClient(Client *client);
 	void			trigger_mssg(Channel *channel, Client *client, enum post type);
 	void			post(string messg, int id);
 	string			topic(){return _topic;};

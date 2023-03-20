@@ -10,7 +10,7 @@ Client::Client()
 
 Client::Client(string name, int id): _name(name), _id(id), _refresh(false), _refreshChannel(false)
 {
-	_user = name + "_username";
+	_user = name + "_username" + to_string(rand() % 100);
 	gethostname(_host, 60);
 	_mssg = "";
 	cout << RED << "New Client: " << _user << " : " << _id << ENDC << endl;
@@ -148,4 +148,19 @@ std::ostream& operator<<(std::ostream& os, Client& client)
 	}
 	os << endl;
 	return os;
+}
+
+int		Client::check_channels(string chnl)
+
+{
+	vector<Channel *>::iterator	it;
+
+	it = _channels.begin();
+	while (it != _channels.end())
+	{
+		if (chnl == (*it)->topic())
+			return 1;
+		it++;
+	}
+	return 0;
 }

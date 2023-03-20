@@ -60,7 +60,8 @@ void Socket::ft_add_user(int i)
 void	Socket::init_cmd(string buffer, int sd)
 {
 	vector<string>	ptr = buildVector(buffer);
-
+	cout << "\n\n\n\n COMMAND:"  << "\n\n\n\n"; 
+	
 	if (buffer[0] == '/')
 		find_cmd(ptr);
 	else
@@ -164,10 +165,12 @@ void Socket::runSocket()
 				}
 				else
 				{
-					// FIRST: CHECK TO SEE IF 2 CHARS at teh END EXIST (PROTOCOL IN IRC) Not always granted \r\n
+					// FIRST: CHECK TO SEE IF 2 CHARS at the END EXIST (PROTOCOL IN IRC) Not always granted \r\n
 					buffer[valread] = '\0'; 
+					cout << "\n\n\n\n COMMAND:" << buffer << "\n\n\n\n"; 
 					string trimBuffer = string(buffer);
 					trimBuffer.resize(valread - 1);
+					cout << "\n\n\n\n COMMAND:" << trimBuffer << "\n\n\n\n"; 
 					_requestCall = getClient(sd);
 					init_cmd(trimBuffer, sd);
 				}

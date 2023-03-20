@@ -32,6 +32,7 @@ public:
 	Channel	*addChannel(string &topic);
 	int		size(){ if (!_channels.empty()) return _clients.size(); return 0;};
 	void	find_cmd(vector<string> str);
+	int		check_clients(string client);
 };
 
 #endif
