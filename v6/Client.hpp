@@ -24,7 +24,7 @@ public:
 	Client(string name, int id);
 	~Client();
 
-	string	rtnName() {return _name;};
+	string	rtnName() {return _user;};
 	char*	rtnHost() {return _host;};
 	
 	void	putMssg(string str, Client *it,  string channel_name);

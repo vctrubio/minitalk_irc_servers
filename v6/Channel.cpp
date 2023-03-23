@@ -17,7 +17,6 @@ void	Channel::csv()
 		cerr << "Error in creating CSV file.\n";
 		return ;
 	}
-	//file << fileTopic << "\n";
 	file << "Date Time       | User: Message\n";
 	for (_itP = _history.begin(); _itP != _history.end(); _itP++)
 		file << (*_itP)->mssg();
@@ -28,8 +27,8 @@ void	Channel::csv()
 
 Channel::~Channel()
 {
-	cout << "Channeld # " << _topic << " destroyed \n";
 	csv();
+	cout << "Channeld # " << _topic << " destroyed \n";
 }
 
 void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)

@@ -161,19 +161,14 @@ void Socket::runSocket()
 						}
 						
 					}
-					
 					_requestCall = getClient(sd);
 					init_cmd(trimBuffer, sd);
 				}
 			}
 		}
 		loop_mssg();
-
-		//Debug on console purposes
 		cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;
 		debug();
-		printChannels();
-		cout << endl << "----------------------" << endl;
 	}
 }
 
@@ -190,8 +185,8 @@ void	Socket::loop_mssg()
 	{
 		if (!(*it)->size())
 		{   
-			cout << "IS EMPTY\n"; //so why wont is deconstruct?¿
 			Channel *ptr = *it;
+			delete ptr;
 			it = _channels.erase(it);
 		}
 		else
@@ -207,14 +202,7 @@ void	Socket::debug()
 	for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
 		cout << (**it);
 	cout << endl << "----------CH------------" << endl;
-	for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end();) 
-	{
-		if (!(*it)->size())
-		{   
-			Channel *ptr = *it;
-			it = _channels.erase(it);
-		}
-		else
-			it++;
-	}
+	printChannels();
+	cout << endl << "----------------------" << endl;
+
 }
