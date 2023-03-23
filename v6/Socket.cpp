@@ -15,7 +15,7 @@ Socket::Socket(int port, string password)
 	}
 
 	_addr.sin_family = AF_INET;
-	_addr.sin_addr.s_addr = INADDR_ANY; // IP = 0...?
+	_addr.sin_addr.s_addr = INADDR_ANY;
 	_addr.sin_port = htons(_port);
 
 	if (bind(_sockFd, (struct sockaddr *)&_addr, sizeof(_addr)) < 0)
@@ -41,9 +41,8 @@ void Socket::ft_add_user(int i)
 	mssg += host;
 	mssg += ENDC;
 	mssg += "\n/help for CMD instructions.\n";
-	mssg += "/doc for IRC documentation.\n";
 	mssg += "/join channel to connect to #channels\n";
-	mssg += "/nick [nickname] to change your nickname\n/name [name] to change your name\n"; //are we allowed to change Name tho?
+	mssg += "/nick [nickname] to change your nickname\n/name [name] to change your name\n"; //are we allowed to change Name or NICKNAME tho?
 	send(i, mssg.c_str(), mssg.size(), 0);
 }
 
@@ -114,10 +113,7 @@ void Socket::runSocket()
 				}
 			}
 			if (_password.compare(password) == 0)
-			{
 				send(tmp_socket, "Connection Successful\n", strlen("Connection Successful\n"), 0);	
-				// Connection accepted, do something with the client // ...
-			}
 			else 
 			{
 				cout << "\nPASSWORD: |" << _password << "| VS INPUT: |" << password << "|\nResult: " << _password.compare(password) << std::endl;	
@@ -125,14 +121,12 @@ void Socket::runSocket()
 				close(tmp_socket);
 				continue;
 			}
-			//	cout << GREEN << "New Connection Established: tmp_socket " << tmp_socket << " |ip & port tbd|" << ENDC << endl;
 			ft_add_user(tmp_socket);
 			for (int i = 0; i < MAX_CLIENTS; i++)
 			{
 				if (_clientSocket[i] == 0)
 				{
 					_clientSocket[i] = tmp_socket;
-					//cout << "ºAdding to list of _clientrSocket as " << i <<  "SD: " << sd << endl;
 					break;
 				}
 			}
@@ -192,24 +186,35 @@ void	Socket::loop_mssg()
 		if ((*it)->isRefreshChannel())
 			send((*it)->id(), (*it)->prompt().c_str(), (*it)->prompt().size(), 0);
 	}
+	for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end();) 
+	{
+		if (!(*it)->size())
+		{   
+			cout << "IS EMPTY\n"; //so why wont is deconstruct?¿
+			Channel *ptr = *it;
+			it = _channels.erase(it);
+		}
+		else
+		{
+			cout << "IS NOT\n";
+			it++;
+		}
+	}
 }
 
 void	Socket::debug()
 {
 	for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
-		cout << (**it); //show users connected
+		cout << (**it);
 	cout << endl << "----------CH------------" << endl;
-	if (!_channels.empty())
+	for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end();) 
 	{
-		for (vector<Channel *>::iterator it = _channels.begin(); it != _channels.end();) 
-		{
-			if (!(*it)->size())
-			{   
-				Channel *ptr = *it;
-				it = _channels.erase(it);
-			}
-			else
-				it++;
+		if (!(*it)->size())
+		{   
+			Channel *ptr = *it;
+			it = _channels.erase(it);
 		}
+		else
+			it++;
 	}
 }

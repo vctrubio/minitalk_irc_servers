@@ -2,15 +2,12 @@
 
 Client::Client()
 {
-	_name = "Bobito";
-	_refresh = false;
-	_refreshChannel = false;
-	_mssg = "";
 }
 
 Client::Client(string name, int id): _name(name), _id(id), _refresh(false), _refreshChannel(false)
 {
-	_user = name + "_username" + to_string(rand() % 100);
+	_user = name + "_username" + to_string
+	(rand() % 100);
 	gethostname(_host, 60);
 	_mssg = "";
 	cout << RED << "New Client: " << _user << " : " << _id << ENDC << endl;
@@ -20,7 +17,6 @@ Client::~Client()
 {
 	for (_itC = _channels.begin(); _itC != _channels.end(); _itC++)
 		(*_itC)->kick(this);
-	cout << "Client Deconstructor.\n";
 }
 
 void	Client::setFront(Channel *ptr)

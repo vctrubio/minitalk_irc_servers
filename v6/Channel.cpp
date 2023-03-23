@@ -8,17 +8,8 @@ Channel::Channel(string topic, Client *client)
 	_admins.push_back(client);
 }
 
-string	getTime()
-{
-	string rtn;
-	//std::strftime(rtn, sizeof(rtn), "%Y-%m-%d %H:%M| ", std::localtime(&_time));
-
-	return rtn;
-}
-
 void	Channel::csv()
 {
-	string	filename = getTime();
 	string fileTopic = "#" + topic() + " : " + _history.front()->time() + "ChannelHistory.csv";
 	ofstream file(fileTopic);
 	if (!file)
@@ -30,14 +21,15 @@ void	Channel::csv()
 	file << "Date Time       | User: Message\n";
 	for (_itP = _history.begin(); _itP != _history.end(); _itP++)
 		file << (*_itP)->mssg();
+	cout << "XCREATED?\n";
 }
 
 
 
 Channel::~Channel()
 {
-	csv();
 	cout << "Channeld # " << _topic << " destroyed \n";
+	csv();
 }
 
 void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)
