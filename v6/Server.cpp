@@ -4,11 +4,6 @@ Server::Server(string password): _password(password)
 {
 }
 
-Server::~Server()
-{
-}
-
-
 void	Server::addClient(Client *client)
 {
 	_clients.push_back(client);
@@ -52,7 +47,7 @@ void	Server::printClients()
     {
         cout << "No clients in list\n";
         return ;
-    }	
+    }
 }
 
 void	Server::printChannels()

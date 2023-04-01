@@ -19,10 +19,10 @@ protected:
 public:
 	Server(){};
 	Server(string password);
-	~Server();
+	~Server(){};
 
 	Client	*getClient(int key); //HOW TO MAKE THIS GLOBAL so also channel can use it
-	Client	*getClient(string nick); //HOW TO MAKE THIS GLOBAL so also channel can use it
+	Client	*getClient(string nick);
 	void	addClient(Client *);
 	void	removeClient(Client *client);
 	void	printClients();
