@@ -34,7 +34,7 @@ int main(int argc, char **argv)
 	int x = check_port(argv[1]);
 	if (x < 1)
 	{	
-		cout << "PORT ≠ Digits 0-9999\n" << endl;
+		cout << "PORT ≠ Digits 1-9999\n" << endl;
 		return -1;
 	}
 
