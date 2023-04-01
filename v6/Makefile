@@ -1,6 +1,6 @@
 CC = g++
-FLAGS = -std=c++98 
-# FLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
+# FLAGS = -std=c++98 
+FLAGS = -Wall -Wextra -Werror -std=c++98 -g -fsanitize=address
 RM = rm -f
 
 NAME = irc
