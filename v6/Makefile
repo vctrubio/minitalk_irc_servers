@@ -16,10 +16,10 @@ run: all
 	./$(NAME)
 
 clean:
-		$(RM) $(OBJS)
+	$(RM) $(OBJS) $(NAME)
 
 fclean: clean
-		$(RM) $(NAME)
+	$(RM) $(NAME)
 
 re: fclean $(NAME)
 

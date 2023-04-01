@@ -20,11 +20,6 @@ Post::Post(Client *client, Channel* channel, string mssg, post action, time_t ti
     }
 };
 
-
-Post::Post(Client *client, string mssg, post action): _client(client)
-{
-}
-
 void	Post::print(int sd)
 {
 	send(sd, _mssg.c_str(), _mssg.size(), 0);

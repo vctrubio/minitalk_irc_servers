@@ -4,7 +4,7 @@ Client::Client()
 {
 }
 
-Client::Client(string name, int id): _name(name), _id(id), _refresh(false), _refreshChannel(false)
+Client::Client(string name, int id): _name(name), _refresh(false), _refreshChannel(false), _id(id)
 {
 	_user = name + "_username" + to_string
 	(rand() % 100);
@@ -112,7 +112,7 @@ void Client::desubscribe(Channel *channel)
 	
 }
 
-void	Client::putMssg(string mssg, Client *it, string channel_name)
+void	Client::putMssg(string mssg, string channel_name)
 {
 	if (_channels.front()->topic() != channel_name)
 		_mssg = "[#" + channel_name + "]" + mssg + "\n";
@@ -136,10 +136,11 @@ std::ostream& operator<<(std::ostream& os, Client& client)
 	{
 		vector<Channel*>::iterator 	it;
 		vector<Channel*>			ptr = client.channels();
-		int i = -1;
-		while(++i < ptr.size())
+		unsigned long int 			i = 0;
+		while(i < ptr.size())
 		{
 			os << i << " : " << ptr[i] << "; ";
+			i++;
 		}
 	}
 	os << endl;
