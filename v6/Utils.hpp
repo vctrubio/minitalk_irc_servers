@@ -8,7 +8,7 @@ vector<string>	buildVector(string str);
 
 
 //FOR UI Interface
-void	welcome(string name);
+void	welcome();
 void	putUnderScore(string &out);
 void	putLine(string &out, char c);
 void	putRight(string in, string &out, char c);

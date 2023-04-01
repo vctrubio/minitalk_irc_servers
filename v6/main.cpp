@@ -7,7 +7,7 @@
 
 int	check_port(char *arg)
 {
-	for (int i = 0; i < strlen(arg); i++)
+	for (size_t i = 0; i < strlen(arg); i++)
 	{
 		if (!isdigit(arg[i])) 
 		{

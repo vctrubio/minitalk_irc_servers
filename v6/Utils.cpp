@@ -19,7 +19,7 @@ vector<string>	buildVector(string str)
 	return (tokens);
 }
 
-void	welcome(string name)
+void	welcome()
 {
 
 	string	mssg = GREEN;
@@ -75,7 +75,7 @@ void	putRight(string in, string &out, char c)
 	{
 		if (size == 0 || size == WIDTH + 1)
 			out += "|";
-		else if (size <= in.length() - 1)
+		else if (size <= (int)in.length() - 1)
 		{
 			out += in;
 			size += in.length();
@@ -101,7 +101,7 @@ void	putHistory(vector<Post*> history, string &out)
 		{
 			if (size == 0 || size == WIDTH + 1)
 				out += "|";
-			else if (size <= (*it)->mssg().length() - 1)
+			else if (size <= (int)(*it)->mssg().length() - 1)
 			{
 				out += (*it)->mssg();
 				size += (*it)->mssg().length();
@@ -132,7 +132,7 @@ void	putChannel(Channel *channel, string &out, int i, int p)
 			out += "|";
 			size++;
 		}
-		else if (size <= channel->topic().length() - 1)
+		else if (size <= (int)channel->topic().length() - 1)
 		{
 			if (p == 0)
 				out += GREEN;

@@ -1,7 +1,7 @@
 #include "Socket.hpp"
 
 Socket::Socket(int port, string password)
-	: _port(port), Server(password), _password(password)
+	:Server(password), _port(port), _password(password)
 {
 	int opt = 1; 
 
@@ -104,7 +104,7 @@ void Socket::runSocket()
 				close(tmp_socket);
 				continue;
 			}
-			for (int i = 0; i < strlen(password); i++) 
+			for (int i = 0; i < (int)strlen(password); i++) 
 			{        
 				if (password[i] == '\r' || password[i] == '\n') 
 				{
