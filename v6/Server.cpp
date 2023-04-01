@@ -134,6 +134,7 @@ void	Server::find_cmd(vector<string> str)
 	}
 	else if (*it == "/join")
 	{
+		
 		it++;
 		if (it == str.end())
 			return ;

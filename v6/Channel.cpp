@@ -10,6 +10,8 @@ Channel::Channel(string topic, Client *client)
 
 void	Channel::csv()
 {
+	if (_history.empty())
+		return ;
 	string fileTopic = "#" + topic() + " : " + _history.front()->time() + "ChannelHistory.csv";
 	ofstream file(fileTopic);
 	if (!file)
@@ -20,10 +22,7 @@ void	Channel::csv()
 	file << "Date Time       | User: Message\n";
 	for (_itP = _history.begin(); _itP != _history.end(); _itP++)
 		file << (*_itP)->mssg();
-	cout << "XCREATED?\n";
 }
-
-
 
 Channel::~Channel()
 {
@@ -173,7 +172,6 @@ void	Channel::kickClient(Client *client)
 void	Channel::post(string mssg, int id)
 {
 	_history.push_back(new Post(getClient(id), this, mssg, MSSG, time(NULL)));
-	
 	for (vector<Client *>::iterator it = _clients.begin(); it != _clients.end(); ++it)
 	{
 		if ((*it)->id() == id)
@@ -203,7 +201,6 @@ std::ostream& operator<<(std::ostream& os, Channel& channel)
 		os << "Client " << i << ": " << (*client).rtnName() << std::endl;
 	}
 	return os;
-
 }
 
 

@@ -190,10 +190,7 @@ void	Socket::loop_mssg()
 			it = _channels.erase(it);
 		}
 		else
-		{
-			cout << "IS NOT\n";
 			it++;
-		}
 	}
 }
 
@@ -204,5 +201,4 @@ void	Socket::debug()
 	cout << endl << "----------CH------------" << endl;
 	printChannels();
 	cout << endl << "----------------------" << endl;
-
 }
