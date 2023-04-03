@@ -27,6 +27,7 @@ public:
 	void			sendHistory(Client *client);
 	Client			*getClient(int key);
 	void			addClient(Client *client);
+	void			addAdmin(Client *client);
 	void			rmClient(Client *client);
 	void			kickClient(Client *client);
 	void			trigger_mssg(Channel *channel, Client *client, enum post type);
@@ -35,6 +36,7 @@ public:
 	vector<Client*>	clients() {return _clients;};
 	int				size(){return _clients.size();};
 	void			kick(Client *client) {for (_itC = _clients.begin(); _itC != _clients.end();) {if (*_itC == client){_kick.push_back(client); _clients.erase(_itC);} else _itC++;}};
+	bool			rtnAdmins(Client *client);
 };
 
 std::ostream& operator<<(std::ostream& os, Channel& channel);

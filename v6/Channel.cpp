@@ -96,6 +96,11 @@ void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)
 
 }
 
+void	Channel::addAdmin(Client *client)
+{
+	_admins.push_back(client);
+}
+
 void	Channel::addClient(Client *client)
 {
 	_clients.push_back(client);
@@ -203,5 +208,14 @@ std::ostream& operator<<(std::ostream& os, Channel& channel)
 	return os;
 }
 
+bool	Channel::rtnAdmins(Client *client)
+{
+	vector<Client *>::iterator it;
+	for (it = _admins.begin(); it != _admins.end(); it++){
+		if ((*it)->rtnName() == client->rtnName())
+			return true;
+	}
+	return (false); 
+}
 
 

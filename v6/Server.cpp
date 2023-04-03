@@ -89,7 +89,22 @@ Channel*	Server::addChannel(string &topic)
 		if ((*it)->topic() == topic)
 			return *it;
 	}
+	
 	_channels.push_back(new Channel(topic, _requestCall));
+	return (_channels.back());
+}
+
+Channel*	Server::addChannel(string &topic, Client *client)
+{
+
+	for (itr_channels it = _channels.begin(); it != _channels.end(); it++)
+	{
+		if ((*it)->topic() == topic)
+			return *it;
+	}
+
+	_channels.push_back(new Channel(topic, _requestCall));
+	_channels.back()->addAdmin(client);
 	return (_channels.back());
 }
 
@@ -164,6 +179,11 @@ void	Server::find_cmd(vector<string> str)
 		it++;
 		if (it == str.end())
 			return ;
+		if (getClient(to_kick)->rtnChannel(*it)->rtnAdmins(_requestCall) == false)
+		{
+			send(_requestCall->id(), "You do not have an administrator status\n", 40, 0);
+			return ;
+		}
 		if ((check_clients(to_kick) == 0 || getClient(to_kick)->check_channels(*it) == 0))
 			return ;
 		if (it == str.end())
@@ -175,7 +195,6 @@ void	Server::find_cmd(vector<string> str)
 		}
 		else
 			ptr = getClient(to_kick)->rtnChannel(*it);
-
 		if (ptr)
 			ptr->kickClient(getClient(to_kick));
 		if (getClient(to_kick)->hasChannel())
