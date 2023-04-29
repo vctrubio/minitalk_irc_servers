@@ -22,6 +22,7 @@
 #include <iomanip>
 #include <dirent.h>
 #include <unistd.h>
+#include <signal.h>
 #include <sstream>
 
 #include <stdexcept>

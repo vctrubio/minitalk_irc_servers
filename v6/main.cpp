@@ -5,6 +5,9 @@
 #include "Server.hpp"
 #include "Post.hpp"
 
+
+
+
 int	check_port(char *arg)
 {
 	for (size_t i = 0; i < strlen(arg); i++)
@@ -23,6 +26,13 @@ int	check_port(char *arg)
 	return -1; 
 }
 
+void	sighandler(int signum)
+{
+	//need to handle cntr C and D and F and L and GG LOLA
+    // std::cout << signum << "Turning off server" << std::endl;
+    // exit(1);
+}
+
 int main(int argc, char **argv)
 {
 	if (argc != 3)
@@ -31,6 +41,7 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
+    // signal(SIGINT, sighandler);
 	int x = check_port(argv[1]);
 	if (x < 1)
 	{	
