@@ -17,6 +17,7 @@ class Post
 	char		_strTime[100];
 public:
 	Post(Client *client, Channel* channel, string mssg, post action, time_t time);
+	Post(Client *client, Channel* channel, post action, time_t time);
 	string 	mssg(){return _mssg;};
 	~Post(){};
 

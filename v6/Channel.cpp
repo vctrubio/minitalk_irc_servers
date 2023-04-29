@@ -131,6 +131,7 @@ void	Channel::addClient(Client *client)
 	welcome += "\n";
 	send(client->id(), welcome.c_str(), welcome.size(), 0);
 	trigger_mssg(this, client, JOIN);
+	_history.push_back(new Post(client, this, JOIN, time(NULL)));
 }
 
 Client	*Channel::getClient(int key) 
@@ -158,6 +159,7 @@ void	Channel::rmClient(Client *client)
 			break;
 		}
 	}
+	_history.push_back(new Post(client, this, LEAVE, time(NULL)));
 }
 
 void	Channel::kickClient(Client *client)

@@ -231,7 +231,7 @@ void Server::find_cmd(vector<string> str)
 	else if (*it == "/nick")
 	{
 		it++;
-		if (it == str.end())
+		if (it == str.end() || (it + 1) != str.end())
 			return;
 		_requestCall->setUser(*it);
 	}
