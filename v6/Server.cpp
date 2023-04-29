@@ -119,6 +119,22 @@ void Server::rmChannel(Channel *channel)
 	}
 }
 
+string	Server::build_info(Client &client)
+{
+	string str;
+
+	str = "Name: ";
+	str += client.name();
+	str += "\n";
+	str += "User: ";
+	str += client.user();
+	str += "\n";
+	str += "Host: ";
+	str += client.host();
+	str += "\n";
+	return str;
+}
+
 void Server::find_cmd(vector<string> str)
 {
 	vector<string>::iterator it = str.begin();
@@ -136,9 +152,9 @@ void Server::find_cmd(vector<string> str)
 		mssg += "/channels to view your subscribed channels\n";
 		mssg += "/online to see everyone online\n";
 		mssg += "/who to view who is subscribed in the current channel or /who #name to see specific channel\n"; // TODO
+		mssg += "/whois to stack them\n";
 		mssg += "/msg [nickname] to send a private mssg to a certain user\n";
 		mssg += "/kick [nick] [channel] to kick someone (admin only)\n";
-		// whois -- for user info
 		// invite --
 		send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
 	}
@@ -293,6 +309,17 @@ void Server::find_cmd(vector<string> str)
 			}
 			send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
 		}
+	}
+	else if (*it == "/whois")
+	{
+		it++;
+		if (it == str.end())
+			return ;
+		string who = *it;
+		if (check_clients(who) == 0)
+			return;
+		string mssg = build_info(*(getClient(who)));
+		send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
 	}
 	else if (*it == "/msg")
 	{

@@ -28,6 +28,7 @@ public:
 	void	printClients();
 	void	printChannels();
 
+	string	build_info(Client& client);
 	void	rmChannel(Channel *channel);
 	Channel	*addChannel(string &topic);
 	Channel	*addChannel(string &topic, Client *client);
