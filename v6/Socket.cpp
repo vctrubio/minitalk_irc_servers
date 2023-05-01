@@ -94,6 +94,12 @@ void Socket::runSocket()
 
 		if (FD_ISSET(_sockFd, &_readFds))
 		{
+			if (_clients.size() >= MAX_CLIENTS)
+			{
+				std::cout << "BREAKING \n";
+				break;
+			}
+
 			if ((tmp_socket = accept(_sockFd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen)) < 0)
 				throw runtime_error ("Tmp socket failed");
 			
