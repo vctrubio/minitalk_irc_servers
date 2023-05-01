@@ -4,7 +4,7 @@ Channel::Channel(string topic, Client *client)
 {
 	string tmp = topic;
 	_topic = tmp;
-	cout << "Channeld # " << _topic << " created \n";
+	cout << GREEN << "Channel #" << _topic << " created \n" << ENDC;
 	_admins.push_back(client);
 }
 
@@ -27,7 +27,7 @@ void	Channel::csv()
 Channel::~Channel()
 {
 	csv();
-	cout << "Channeld # " << _topic << " destroyed \n";
+	cout << RED << "Channel #" << _topic << " destroyed \n" << ENDC;
 }
 
 void	Channel::trigger_mssg(Channel *channel, Client *client, enum post type)

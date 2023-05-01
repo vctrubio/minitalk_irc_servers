@@ -10,7 +10,7 @@ Client::Client(string name, int id): _name(name), _refresh(false), _refreshChann
 	(rand() % 100);
 	gethostname(_host, 60);
 	_mssg = "";
-	cout << RED << "New Client: " << _user << " : " << _id << ENDC << endl;
+	cout << GREEN << "+ Client: " << _user << ENDC " [" << _id << "]" << endl;
 }
 
 Client::~Client()

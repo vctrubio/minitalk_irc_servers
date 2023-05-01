@@ -23,9 +23,9 @@ Socket::Socket(int port, string password)
 	if (listen(_sockFd, MAX_CLIENTS) < 0)
 		throw runtime_error ("Failed to listen");
 
-	cout << BLUE << "The server is up and runnig" << endl;
-	cout << GREEN << "Server IP: " << _addr.sin_addr.s_addr << endl;
-	cout << BLUE << "Listening on port " << GREEN << _port << ENDC << endl;
+	std::cout << BLUE << "The server is up and runnig" << std::endl;
+	std::cout << GREEN << "Server Size: " << MAX_CLIENTS << std::endl;
+	std::cout << BLUE << "Listening on port " << GREEN << _port << ENDC << std::endl;
 }
 
 void Socket::ft_add_user(int i)
@@ -71,6 +71,8 @@ void Socket::runSocket()
 	int tmp_socket;
 	char buffer[265];
 	char password[1024];
+	std::string	errmsgCapacity = "\033[0;31mMax Cap\n\033[0m";
+	std::string	errmsgPassword = "\033[0;31mWrong Password\n\033[0m";
 
 	while (42)
 	{
@@ -85,7 +87,6 @@ void Socket::runSocket()
 				FD_SET(sd, &_readFds);
 			if (sd > max_sd)
 				max_sd = sd;
-			// TO TEST if client > client_size
 		}
 
 		_activity = select(max_sd + 1, &_readFds, NULL, NULL, NULL);
@@ -94,22 +95,25 @@ void Socket::runSocket()
 
 		if (FD_ISSET(_sockFd, &_readFds))
 		{
-			if (_clients.size() >= MAX_CLIENTS)
-			{
-				std::cout << "BREAKING \n";
-				break;
-			}
 
 			if ((tmp_socket = accept(_sockFd, (struct sockaddr *)&_addr, (socklen_t *)&addrlen)) < 0)
 				throw runtime_error ("Tmp socket failed");
+
+			if (_clients.size() >= MAX_CLIENTS)
+			{
+				send(tmp_socket, errmsgCapacity.c_str(), errmsgCapacity.length(), 0);
+				close(tmp_socket);
+				continue;
+			}
 			
 			send(tmp_socket, "Please enter the server's password: ", strlen("Please enter the server's password: "), 0);
 			valread = read(tmp_socket, password, 1024);
 			if (valread < 0) {
-				cerr << "Read error\n";
+				std::cout << "Error in valread\n";
 				close(tmp_socket);
 				continue;
 			}
+
 			for (int i = 0; i < (int)strlen(password); i++) 
 			{        
 				if (password[i] == '\r' || password[i] == '\n') 
@@ -122,8 +126,7 @@ void Socket::runSocket()
 				send(tmp_socket, "Connection Successful\n", strlen("Connection Successful\n"), 0);	
 			else 
 			{
-				cout << "\nPASSWORD: |" << _password << "| VS INPUT: |" << password << "|\nResult: " << _password.compare(password) << std::endl;	
-				send(tmp_socket, "Failed to connect\n", strlen("Failed to connect\n"), 0);
+				send(tmp_socket, errmsgPassword.c_str(), errmsgPassword.length() , 0);
 				close(tmp_socket);
 				continue;
 			}
@@ -173,8 +176,8 @@ void Socket::runSocket()
 			}
 		}
 		loop_mssg();
-		cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;
-		debug();
+		// std::cout << RED << "-----------PRINTING----------" << ENDC << "Buffer: " << YELLOW << buffer << ENDC << endl;
+		// debug();
 	}
 }
 
@@ -203,8 +206,8 @@ void	Socket::loop_mssg()
 void	Socket::debug()
 {
 	for (vector<Client*>::iterator it = _clients.begin(); it != _clients.end(); it++)
-		cout << (**it);
-	cout << endl << "----------CH------------" << endl;
+		std::cout << (**it);
+	std::cout << endl << "----------CH------------" << endl;
 	printChannels();
-	cout << endl << "----------------------" << endl;
+	std::cout << endl << "----------------------" << endl;
 }

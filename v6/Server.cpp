@@ -17,7 +17,7 @@ void Server::removeClient(Client *client)
 	{
 		if (*it == client)
 		{
-			cout << "User " << (*it)->rtnName() << RED << " Disconnected " << ENDC << endl;
+			cout << RED << "- Client: " << (*it)->rtnName() << ENDC << endl;
 			Client *ptr = *it;
 			it = _clients.erase(it);
 			delete ptr;
