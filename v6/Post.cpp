@@ -6,12 +6,12 @@ Post::Post(Client *client, Channel* channel, string mssg, post action, time_t ti
     if (action == JOIN)
     {
         _mssg = string(_strTime);
-        _mssg += client->rtnName() +  ": joined" + "\n";
+        _mssg += client->rtnName() +  ": <joined>" + "\n";
     }
     else if (action == LEAVE)
     {
         _mssg = string(_strTime);
-        _mssg += client->rtnName() + ": left" + "\n";
+        _mssg += client->rtnName() + ": <left>" + "\n";
     }
     else if (action == MSSG)
     {
@@ -26,12 +26,12 @@ Post::Post(Client *client, Channel* channel, post action, time_t time): _client(
     if (action == JOIN)
     {
         _mssg = string(_strTime);
-        _mssg += client->rtnName() +  ": joined" + "\n";
+        _mssg += client->rtnName() +  ": <joined>" + "\n";
     }
     else if (action == LEAVE)
     {
         _mssg = string(_strTime);
-        _mssg += client->rtnName() + ": left" + "\n";
+        _mssg += client->rtnName() + ": <left>" + "\n";
     }
 };
 

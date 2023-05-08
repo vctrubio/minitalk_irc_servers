@@ -28,9 +28,9 @@ int	check_port(char *arg)
 
 void	sighandler(int signum)
 {
-	//need to handle cntr C and D and F and L and GG LOLA
-    // std::cout << signum << "Turning off server" << std::endl;
-    // exit(1);
+	// need to handle cntr C and D and F and L and GG LOLA
+    std::cout << signum << "Turning off server" << std::endl;
+    exit(1);
 }
 
 int main(int argc, char **argv)
@@ -41,7 +41,7 @@ int main(int argc, char **argv)
 		return -1;
 	}
 
-    // signal(SIGINT, sighandler);
+    signal(SIGINT, sighandler);
 	int x = check_port(argv[1]);
 	if (x < 1)
 	{	
