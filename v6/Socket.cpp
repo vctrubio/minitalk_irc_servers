@@ -168,7 +168,7 @@ void Socket::runSocket()
 							trimBuffer.resize(valread - 1);
 							break ;
 						}
-						
+
 					}
 					_requestCall = getClient(sd);
 					init_cmd(trimBuffer, sd);
