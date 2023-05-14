@@ -109,7 +109,6 @@ void Client::desubscribe(Channel *channel)
 			return ;
 		}
 	};
-	
 }
 
 void	Client::putMssg(string mssg, string channel_name)
