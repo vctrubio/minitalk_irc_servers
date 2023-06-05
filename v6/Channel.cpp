@@ -20,7 +20,7 @@ void	Channel::csv()
 		return ;
 	}
 	file << "Date Time       | User: Message\n";
-	for (_itP = _history.begin(); _itP != _history.end(); _itP++)
+		for (_itP = _history.begin(); _itP != _history.end(); _itP++)
 		file << (*_itP)->mssg();
 }
 
