@@ -68,7 +68,8 @@ Client *Server::getClient(int key)
 		if (client->id() == key)
 			return client;
 	}
-	throw std::out_of_range("Key not found in map"); // needs a fucking try/catch dummy
+	throw std::out_of_range("Key not found in map");
+	return nullptr;
 }
 
 Client *Server::getClient(string nick)
@@ -79,7 +80,8 @@ Client *Server::getClient(string nick)
 		if (client->user() == nick)
 			return client;
 	}
-	throw std::out_of_range("Key not found in map"); // needs a fucking try/catch dummy
+	throw std::out_of_range("Key not found in map");
+	return nullptr;
 }
 
 Channel *Server::addChannel(string &topic)
@@ -147,15 +149,16 @@ void Server::find_cmd(vector<string> str)
 		mssg += "/doc for IRC documentation.\n";
 		mssg += "/join channel to connect to #channels\n";
 		mssg += "/nick [nickname] to change your nickname\n";
-		mssg += "/name [name] to change your name\n"; // are we allowed to change Name tho? I think so because it's not informative nor anything like it. The machine u use does not need identification.
+		mssg += "/name [name] to change your name\n";
 		mssg += "/list to view all channels\n";
 		mssg += "/channels to view your subscribed channels\n";
 		mssg += "/online to see everyone online\n";
-		mssg += "/who to view who is subscribed in the current channel or /who #name to see specific channel\n"; // TODO
+		mssg += "/who to view who is subscribed in the current channel or /who #name to see specific channel\n"; // BUGGING
 		mssg += "/whois to stalk them\n";
 		mssg += "/whoimi to stalk yourself\n";
 		mssg += "/msg [nickname] to send a private mssg to a certain user\n";
 		mssg += "/kick [nick] [channel] to kick someone (admin only)\n";
+		mssg += "/invite [nick] to invite to current channel\n";
 		// invite --
 		send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
 	}
@@ -349,6 +352,27 @@ void Server::find_cmd(vector<string> str)
 		}
 		mssg += '\n';
 		send(getClient(who)->id(), mssg.c_str(), mssg.size(), 0);
+	}
+	else if (*it == "/invite")
+	{
+		it++;
+		if (_requestCall->channels().empty())
+			return ;
+		try
+		{
+			Client	*client = getClient(*it);
+			Channel	*channel = _requestCall->channels().front();
+			if (client)
+			{
+				channel->addClient(client);
+				string mssg = _requestCall->name() + " has added you to the channel!\n";
+				send(client->id(), mssg.c_str(), mssg.size(), 0);
+			}
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
 	}
 	else if (*it == "/history")
 	{

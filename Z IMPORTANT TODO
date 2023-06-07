@@ -2,3 +2,16 @@
 - when user changes name, notify group
 
 - IRC SYNTAX
+
+
+◦ You must be able to authenticate, set a nickname, a username, join a channel, send and receive private messages using your reference client.
+(WHAT is authenticatio?)
+
+◦ All the messages sent from one client to a channel have to be forwarded to every other client that joined the channel.
+(THIS is good)
+
+◦ You must have operators and regular users.
+(YES we have, but admin can set other people as admin?)
+
+◦ Then, you have to implement the commands that are specific to operators.
+(HMMM??)
