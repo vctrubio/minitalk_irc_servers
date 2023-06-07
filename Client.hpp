@@ -8,9 +8,9 @@ class Channel;
 
 class Client
 {
-	string	_name; //Full name
-	string	_user; //Nickname
-	char	_host[60]; //hostname
+	string	_name;
+	string	_user;
+	char	_host[60];
 	string	_mssg;
 	bool	_refresh;
 	bool	_refreshChannel;
@@ -53,6 +53,7 @@ public:
 	Channel*			rtnChannel(string topic);
 	bool				hasChannel() { return _channels.empty() ? false : true;};
 	bool				hasChannel(Channel *channel) {for(_itC = _channels.begin(); _itC != _channels.end(); _itC++) {if(*_itC == channel) return true;} return false;};
+
 };
 
 

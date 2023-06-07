@@ -152,7 +152,8 @@ void Server::find_cmd(vector<string> str)
 		mssg += "/channels to view your subscribed channels\n";
 		mssg += "/online to see everyone online\n";
 		mssg += "/who to view who is subscribed in the current channel or /who #name to see specific channel\n"; // TODO
-		mssg += "/whois to stack them\n";
+		mssg += "/whois to stalk them\n";
+		mssg += "/whoimi to stalk yourself\n";
 		mssg += "/msg [nickname] to send a private mssg to a certain user\n";
 		mssg += "/kick [nick] [channel] to kick someone (admin only)\n";
 		// invite --
@@ -262,23 +263,30 @@ void Server::find_cmd(vector<string> str)
 	}
 	else if (*it == "/online")
 	{
-		vector<Client *>::iterator _itC;
+		vector<Client *>::iterator itC;
 		string mssg;
 		int i = 1;
-		for (_itC = _clients.begin(); _itC != _clients.end(); _itC++)
+		for (itC = _clients.begin(); itC != _clients.end(); itC++)
 		{
-			if (*_itC == _requestCall)
+			if (*itC == _requestCall)
 				continue;
 			mssg += to_string(i++);
 			mssg += ": [";
-			mssg += (*_itC)->user();
+			mssg += (*itC)->user();
 			mssg += " : ";
-			mssg += (*_itC)->name();
+			mssg += (*itC)->name();
 			mssg += "]\n";
 		}
 		send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
 	}
-	else if (*it == "/who") //--channels //current channel or specific channel
+	else if (*it == "/whoimi")
+	{
+		stringstream mssg;
+		mssg << *_requestCall;
+		string hm = mssg.str();
+		send(_requestCall->id(), hm.c_str(), hm.size(), 0);
+	}
+	else if (*it == "/who")
 	{
 		it++;
 		if (it == str.end())
@@ -297,7 +305,7 @@ void Server::find_cmd(vector<string> str)
 			string mssg;
 			for (itC = ptr->clients().begin(); itC != ptr->clients().end(); itC++)
 			{
-				// if (*_itC == _requestCall)
+				// if (*itC == _requestCall)
 				// 	continue;
 				mssg += to_string(i++);
 				mssg += ": [";
@@ -305,7 +313,6 @@ void Server::find_cmd(vector<string> str)
 				mssg += " : ";
 				// mssg += (*itC)->name(); //this also segfault
 				mssg += "]\n";
-				cout << "!22222222\n";
 			}
 			send(_requestCall->id(), mssg.c_str(), mssg.size(), 0);
 		}
@@ -337,8 +344,8 @@ void Server::find_cmd(vector<string> str)
 		mssg += *it;
 		while (++it != str.end())
 		{
-			mssg += *it;
 			mssg += ' ';
+			mssg += *it;
 		}
 		mssg += '\n';
 		send(getClient(who)->id(), mssg.c_str(), mssg.size(), 0);

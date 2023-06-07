@@ -124,13 +124,10 @@ std::ostream& operator<<(std::ostream& os, Client& client)
 {
 	os << "Client information:" << std::endl;
 	os << "Name: " << client.name() << std::endl;
-	os << "User: " << client.user() << std::endl;
+	os << "Username: " << client.user() << std::endl;
 	os << "Host: " << client.host() << std::endl;
-	os << "Message: " << client.mssg() << std::endl;
-	os << "Refresh status: " << client.status() << std::endl;
-	os << "ID: " << client.id() << std::endl;
 
-	os << "Channel:" ;
+	os << "Channels:\n" ;
 	if (client.channels().size() > 0)
 	{
 		vector<Channel*>::iterator 	it;
@@ -138,7 +135,7 @@ std::ostream& operator<<(std::ostream& os, Client& client)
 		unsigned long int 			i = 0;
 		while(i < ptr.size())
 		{
-			os << i << " : " << ptr[i] << "; ";
+			os << i << " : " << ptr[i] << ";\n";
 			i++;
 		}
 	}
