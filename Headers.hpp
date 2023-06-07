@@ -35,7 +35,7 @@
 #include <sys/types.h>
 #include <arpa/inet.h>
 
-#define MAX_CLIENTS 2
+#define MAX_CLIENTS 8
 #define PORT 8000
 #define BUFF_SIZE 1000
 #define WIDTH 100
