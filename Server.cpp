@@ -238,6 +238,7 @@ void Server::find_cmd(vector<string> str)
 		if (it == str.end() || (it + 1) != str.end())
 			return;
 		_requestCall->setUser(*it);
+		sendNotice(_requestCall->channels(), _requestCall->rtnName() + " has changed his nickname.\n");
 	}
 	else if (*it == "/name")
 	{
@@ -245,6 +246,7 @@ void Server::find_cmd(vector<string> str)
 		if (it == str.end())
 			return;
 		_requestCall->setName(*it);
+		sendNotice(_requestCall->channels(), _requestCall->rtnName() + " has changed his name.\n");
 	}
 	else if (*it == "/list")
 	{
@@ -386,5 +388,19 @@ void Server::find_cmd(vector<string> str)
 		if (!channel)
 			return;
 		channel->sendHistory(_requestCall);
+	}
+}
+
+
+//here.
+void	sendNotice(vector<Channel*> channels, string mssg)
+{
+	for (vector<Channel*>::iterator channel = channels.begin(); channel != channels.end(); channel++)
+	{
+		// for (vector<Client>::iterator client = channel.clients().begin(); channel != channels.clients().end(); client++)
+		// {
+
+		// 		send(client->id(), mssg.c_str(), mssg.size(), 0);
+		// }
 	}
 }
